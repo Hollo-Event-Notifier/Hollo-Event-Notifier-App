@@ -1,5 +1,7 @@
 import {NgModule, Optional, Provider, SkipSelf} from '@angular/core';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ApplicationStateService} from "./services/application-state.service";
+import {SnackbarService} from "./services/snackbar.service";
 
 const IMPORTS = [
   MatSnackBarModule
@@ -8,7 +10,10 @@ const IMPORTS = [
 // TODO: Delete never type
 const EXPORTS: never[] = [];
 
-const PROVIDERS: Provider[] = [];
+const PROVIDERS: Provider[] = [
+  ApplicationStateService,
+  SnackbarService
+];
 
 const API_SERVICES: Provider[] = [];
 
