@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+  description: >-
+    This file holds the REST API documentation of the Hollo Event Notifier project.
+  version: 1.0.0
+  title: Service Search App REST API documentation
+  license:
+    name:
+    url:
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      requestBody:
+        description: user credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Set-Cookie:
+              description: >-
+                Cookie authentication key for use with the `api_key`
+                apiKey authentication.
+              schema:
+                type: string
+                example: TOKEN=abcde12345; Path=/; HttpOnly; Secure;
+        '401':
+          description: Invalid username/password supplied
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    UserCredentials:
+      title: A Users login credentials
+      description: These should be provided to obtain JWT token
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
