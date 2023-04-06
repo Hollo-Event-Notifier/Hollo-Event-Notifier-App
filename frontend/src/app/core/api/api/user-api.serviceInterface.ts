@@ -25,6 +25,12 @@ export interface UserApiServiceInterface {
     configuration: Configuration;
 
     /**
+     * Checks if the user has valid JWT token in cookie
+     * 
+     */
+    checkToken(extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
      * Logs user into the system
      * 
      * @param userCredentialsDto user credentials
