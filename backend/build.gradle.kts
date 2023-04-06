@@ -39,6 +39,7 @@ dependencies {
 
     // TODO: check this
     implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
