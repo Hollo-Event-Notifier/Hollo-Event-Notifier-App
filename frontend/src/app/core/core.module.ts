@@ -2,20 +2,33 @@ import {NgModule, Optional, Provider, SkipSelf} from '@angular/core';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ApplicationStateService} from "./services/application-state.service";
 import {SnackbarService} from "./services/snackbar.service";
+import {ApiModule, BASE_PATH, Configuration, UserApiService} from "./api";
+import {HttpClientModule} from "@angular/common/http";
+import {AuthGuardService} from "./services/auth-guard.service";
 
 const IMPORTS = [
-  MatSnackBarModule
+  MatSnackBarModule,
+  HttpClientModule,
+  ApiModule.forRoot(() => {
+    const config = new Configuration()
+    config.withCredentials = true
+    return config
+  }),
 ];
 
 // TODO: Delete never type
 const EXPORTS: never[] = [];
 
 const PROVIDERS: Provider[] = [
+  {provide: BASE_PATH, useValue: 'http://localhost:8080'},
   ApplicationStateService,
-  SnackbarService
+  SnackbarService,
+  AuthGuardService,
 ];
 
-const API_SERVICES: Provider[] = [];
+const API_SERVICES: Provider[] = [
+  UserApiService
+];
 
 @NgModule({
   imports: [...IMPORTS],
