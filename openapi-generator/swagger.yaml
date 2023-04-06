@@ -10,6 +10,8 @@ info:
 tags:
   - name: user
     description: Operations about user
+security: # global security constraint
+  - cookieAuth: []
 paths:
   /user/login:
     post:
@@ -17,7 +19,8 @@ paths:
         - user
       summary: Logs user into the system
       description: ''
-      operationId: loginUser
+      operationId: login
+      security: [] # no auth for this endpoint
       requestBody:
         description: user credentials
         required: true
@@ -42,6 +45,33 @@ paths:
             text/plain:
               schema:
                 type: string
+  /user/logout:
+    post:
+      tags:
+        - user
+      summary: Logs user out of system
+      description: ''
+      operationId: logout
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Set-Cookie:
+              description: Clear cookies
+        '401':
+          description: Invalid or non existing cookie was sent
+  /user/check-token:
+    get:
+      tags:
+        - user
+      summary: Checks if the user has valid JWT token in cookie
+      description: ''
+      operationId: checkToken
+      responses:
+        '200':
+          description: Valid JWT token was sent in cookie
+        '401':
+          description: Invalid or non existing cookie was sent
 components:
   schemas:
     UserCredentials:
@@ -57,7 +87,7 @@ components:
         password:
           type: string
   securitySchemes:
-    api_key:
+    cookieAuth:
       type: apiKey
-      name: api_key
-      in: header
+      name: X-AUTH-TOKEN
+      in: cookie
