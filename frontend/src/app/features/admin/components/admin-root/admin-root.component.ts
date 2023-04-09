@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {RouterOutletNames} from "../../../../core/enums/router-outlet-names";
+import {AdminRoutes} from "../../enums/admin-routes";
 
 @Component({
   selector: 'app-admin-root',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-root.component.scss']
 })
 export class AdminRootComponent {
+  readonly routerOutletName = RouterOutletNames.Admin;
+  readonly adminRoutes = AdminRoutes;
 
 }

@@ -1,9 +1,26 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {AdminRootComponent} from "./components/admin-root/admin-root.component";
+import {RouterOutletNames} from "../../core/enums/router-outlet-names";
+import {AdminRoutes} from "./enums/admin-routes";
+import {SettingsComponent} from "./components/settings/settings.component";
+import {AppRoutes} from "../../app-routes";
 
 const routes: Routes = [
-  {path: '', component: AdminRootComponent},
+  {
+    path: AdminRoutes.Root,
+    component: AdminRootComponent,
+    children: [
+      {
+        path: AdminRoutes.Settings,
+        component: SettingsComponent,
+      },
+      {
+        path: AdminRoutes.EventDisplay,
+        loadComponent: () => import('../event-display/event-display.component').then(m => m.EventDisplayComponent),
+      },
+    ]
+  },
 ];
 
 @NgModule({
