@@ -25,7 +25,7 @@ export class LoginComponent {
     })
   });
 
-  constructor(private userService: UserService) {
+  constructor(private readonly userService: UserService) {
   }
 
   togglePasswordVisibility(): void {

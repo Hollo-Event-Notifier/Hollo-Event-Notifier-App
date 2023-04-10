@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {AdminRootComponent} from "./components/admin-root/admin-root.component";
-import {RouterOutletNames} from "../../core/enums/router-outlet-names";
 import {AdminRoutes} from "./enums/admin-routes";
 import {SettingsComponent} from "./components/settings/settings.component";
 import {AppRoutes} from "../../app-routes";
