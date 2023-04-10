@@ -6,9 +6,10 @@
   align-items: center;
 
   mat-card {
+    min-width: 350px;
+    min-height: 280px;
     width: 25%;
     height: 40%;
-    min-width: 300px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
