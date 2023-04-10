@@ -3,7 +3,6 @@ import {RouterModule, Routes} from "@angular/router";
 import {AdminRootComponent} from "./components/admin-root/admin-root.component";
 import {AdminRoutes} from "./enums/admin-routes";
 import {SettingsComponent} from "./components/settings/settings.component";
-import {AppRoutes} from "../../app-routes";
 
 const routes: Routes = [
   {
