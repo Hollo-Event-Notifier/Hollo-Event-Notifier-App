@@ -159,12 +159,12 @@ export class UserApiService implements UserApiServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginUser(userCredentialsDto: UserCredentialsDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<any>;
-    public loginUser(userCredentialsDto: UserCredentialsDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
-    public loginUser(userCredentialsDto: UserCredentialsDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
-    public loginUser(userCredentialsDto: UserCredentialsDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<any> {
+    public login(userCredentialsDto: UserCredentialsDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<any>;
+    public login(userCredentialsDto: UserCredentialsDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<HttpResponse<any>>;
+    public login(userCredentialsDto: UserCredentialsDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<HttpEvent<any>>;
+    public login(userCredentialsDto: UserCredentialsDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain', context?: HttpContext}): Observable<any> {
         if (userCredentialsDto === null || userCredentialsDto === undefined) {
-            throw new Error('Required parameter userCredentialsDto was null or undefined when calling loginUser.');
+            throw new Error('Required parameter userCredentialsDto was null or undefined when calling login.');
         }
 
         let localVarHeaders = this.defaultHeaders;

@@ -51,13 +51,4 @@ interface UserApi {
     fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
-
-
-    @RequestMapping(
-            method = [RequestMethod.POST],
-            value = ["/user/logout"]
-    )
-    fun logout(): ResponseEntity<Unit> {
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-    }
 }

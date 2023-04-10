@@ -17,7 +17,7 @@ export class UserService {
   }
 
   loginUser(credentials: UserCredentialsDto): void {
-    this.userApi.loginUser(credentials)
+    this.userApi.login(credentials)
       .pipe(take(1))
       .subscribe({
       next: () => this.router.navigate([AppRoutes.Admin]).then(),

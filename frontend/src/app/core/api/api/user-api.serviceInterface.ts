@@ -35,6 +35,6 @@ export interface UserApiServiceInterface {
      * 
      * @param userCredentialsDto user credentials
      */
-    loginUser(userCredentialsDto: UserCredentialsDto, extraHttpRequestParams?: any): Observable<{}>;
+    login(userCredentialsDto: UserCredentialsDto, extraHttpRequestParams?: any): Observable<{}>;
 
 }

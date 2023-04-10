@@ -45,21 +45,6 @@ paths:
             text/plain:
               schema:
                 type: string
-  /user/logout:
-    post:
-      tags:
-        - user
-      summary: Logs user out of system
-      description: ''
-      operationId: logout
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            Set-Cookie:
-              description: Clear cookies
-        '401':
-          description: Invalid or non existing cookie was sent
   /user/check-token:
     get:
       tags:

@@ -35,23 +35,6 @@ class UserController(
             }
             .build()
 
-    override fun logout(): ResponseEntity<Unit> = ResponseEntity
-        .ok()
-        .headers {
-            it.set(
-                HttpHeaders.SET_COOKIE,
-                ResponseCookie
-                    .from(cookieName, "asd")
-                    .httpOnly(false) // TODO: should be addressed later
-                    .secure(false) // TODO: add when HTTPS setup
-                    .sameSite(SameSite.STRICT.attributeValue())
-                    .path("/")
-                    .maxAge(0)
-                    .build().toString()
-            )
-        }
-        .build()
-
     override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build();
 
 }
