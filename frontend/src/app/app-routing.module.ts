@@ -1,10 +1,32 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AppRoutes} from "./app-routes";
+import {AuthGuardService} from "./core/services/auth-guard.service";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: AppRoutes.EventDisplay,
+    loadComponent: () => import('./features/event-display/event-display.component').then(m => m.EventDisplayComponent),
+  },
+  {
+    path: AppRoutes.Login,
+    loadComponent: () => import('./features/login/login.component').then(m => m.LoginComponent),
+  },
+  {
+    path: AppRoutes.Admin,
+    loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

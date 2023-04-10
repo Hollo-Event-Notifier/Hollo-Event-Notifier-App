@@ -1,9 +1,9 @@
 package hu.hollo.news.api
 
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.context.request.NativeWebRequest
-import java.io.IOException
 
+import javax.servlet.http.HttpServletResponse
+import java.io.IOException
 
 object ApiUtil {
     fun setExampleResponse(req: NativeWebRequest, contentType: String, example: String) {

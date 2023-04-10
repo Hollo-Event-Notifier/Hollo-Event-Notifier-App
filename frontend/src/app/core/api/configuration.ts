@@ -87,13 +87,13 @@ export class Configuration {
             this.credentials = {};
         }
 
-        // init default api_key credential
-        if (!this.credentials['api_key']) {
-            this.credentials['api_key'] = () => {
+        // init default cookieAuth credential
+        if (!this.credentials['cookieAuth']) {
+            this.credentials['cookieAuth'] = () => {
                 if (this.apiKeys === null || this.apiKeys === undefined) {
                     return undefined;
                 } else {
-                    return this.apiKeys['api_key'] || this.apiKeys['api_key'];
+                    return this.apiKeys['cookieAuth'] || this.apiKeys['X-AUTH-TOKEN'];
                 }
             };
         }

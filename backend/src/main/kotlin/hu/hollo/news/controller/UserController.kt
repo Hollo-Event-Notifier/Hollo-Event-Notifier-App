@@ -3,6 +3,7 @@ package hu.hollo.news.controller
 import hu.hollo.news.api.UserApi
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.service.UserService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.server.Cookie.SameSite
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseCookie
@@ -12,17 +13,20 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.toJavaDuration
 
 @RestController
-class UserController(private val userService: UserService) : UserApi {
-    override fun loginUser(userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> =
+class UserController(
+    private val userService: UserService,
+    @Value("\${auth_cookie_name}") private val cookieName: String
+) : UserApi {
+    override fun login(userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> =
         ResponseEntity
             .ok()
             .headers {
                 it.set(
                     HttpHeaders.SET_COOKIE,
-                    ResponseCookie
-                        .from("X-AUTH-TOKEN", userService.loginUser(userCredentialsDto).tokenValue)
-                        .httpOnly(false) // should be addressed later
-                        .secure(false) // add when HTTPS setup
+                    ResponseCookie // TODO: add all neccessary security restrictions
+                        .from(cookieName, userService.loginUser(userCredentialsDto).tokenValue)
+                        .httpOnly(false) // TODO: should be addressed later
+                        .secure(false) // TODO: add when HTTPS setup
                         .sameSite(SameSite.STRICT.attributeValue())
                         .path("/")
                         .maxAge(1.hours.toJavaDuration())
@@ -30,5 +34,7 @@ class UserController(private val userService: UserService) : UserApi {
                 )
             }
             .build()
+
+    override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build();
 
 }

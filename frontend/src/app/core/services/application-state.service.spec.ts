@@ -1,6 +1,5 @@
-import {TestBed} from '@angular/core/testing';
-
-import {ApplicationStateService} from './application-state.service';
+import { TestBed } from '@angular/core/testing';
+import { ApplicationStateService } from './application-state.service';
 
 describe('ApplicationStateService', () => {
   let service: ApplicationStateService;
@@ -13,6 +12,11 @@ describe('ApplicationStateService', () => {
   });
 
   it('should be created', () => {
+    // Arrange
+
+    // Act
+
+    // Assert
     expect(service).toBeTruthy();
   });
 });

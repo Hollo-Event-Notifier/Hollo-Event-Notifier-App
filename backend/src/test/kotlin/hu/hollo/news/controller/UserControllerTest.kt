@@ -18,11 +18,12 @@ import kotlin.time.toJavaDuration
 internal class UserControllerTest {
     private lateinit var userServiceMock: UserService
     private lateinit var underTest: UserController
+    private val tokenNameStub = "X-AUTH-TOKEN"
 
     @BeforeEach
     fun setUp() {
         userServiceMock = mock(UserService::class.java)
-        underTest = UserController(userServiceMock)
+        underTest = UserController(userServiceMock, tokenNameStub)
     }
 
     @Nested
@@ -38,7 +39,7 @@ internal class UserControllerTest {
             `when`(userServiceMock.loginUser(userDtoStub)).thenReturn(jwtMock)
 
             val expected = ResponseCookie
-                .from("X-AUTH-TOKEN", tokenValueStub)
+                .from(tokenNameStub, tokenValueStub)
                 .httpOnly(false)
                 .secure(false)
                 .sameSite(SameSite.STRICT.attributeValue())
@@ -54,7 +55,7 @@ internal class UserControllerTest {
                 }
 
             // act
-            val got = underTest.loginUser(userDtoStub)
+            val got = underTest.login(userDtoStub)
 
             val gotCookieAttributes = got.headers[HttpHeaders.SET_COOKIE]?.let {
                 it[0].split("; ")
@@ -79,7 +80,7 @@ internal class UserControllerTest {
                 .thenAnswer { throw exceptionStub }
 
             // act
-            val got = assertThrows<UsernameNotFoundException> { underTest.loginUser(userDtoStub) }
+            val got = assertThrows<UsernameNotFoundException> { underTest.login(userDtoStub) }
 
             // assert
             assertEquals(exceptionStub, got)
@@ -93,7 +94,7 @@ internal class UserControllerTest {
             `when`(userServiceMock.loginUser(userDtoStub)).thenAnswer { throw exceptionStub }
 
             // act
-            val got = assertThrows<BadCredentialsException> { underTest.loginUser(userDtoStub) }
+            val got = assertThrows<BadCredentialsException> { underTest.login(userDtoStub) }
 
             // assert
             assertEquals(exceptionStub, got)

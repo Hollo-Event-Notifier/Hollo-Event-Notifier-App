@@ -1,0 +1,33 @@
+<mat-toolbar
+  color="primary"
+>
+  <div class="main-menu">
+    <button
+      mat-flat-button
+      color="primary"
+      class="menu-element"
+      [routerLink]="adminRoutes.Settings"
+    >
+      <mat-icon id="settingsIcon">settings</mat-icon>
+      <label for="settingsIcon">Settings</label>
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="menu-element"
+      [routerLink]="adminRoutes.EventDisplay"
+    >
+      <mat-icon id="eventsIcon">calendar_today</mat-icon>
+      <label for="eventsIcon">Events</label>
+    </button>
+  </div>
+  <button
+    mat-flat-button
+    color="primary"
+    class="menu-element"
+  >
+    <mat-icon id="logout-icon">logout</mat-icon>
+    <label for="logout-icon">Logout</label>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>
