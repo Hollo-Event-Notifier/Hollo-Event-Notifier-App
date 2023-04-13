@@ -1,0 +1,189 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  mat-card {
+    width: 99%;
+    height: 99%;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto repeat(7, 1fr);
+    grid-template-rows: repeat(24, 1fr);
+    gap: 5px 5px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    ".            days-monday    days-tuesday    days-wednesday    days-thursday   days-friday   days-saturday   days-sunday"
+    "hours-0-1    monday-0-1     tuesday-0-1     wednesday-0-1     thursday-0-1    friday-0-1    saturday-0-1    sunday-0-1"
+    "hours-1-2    monday-1-2     tuesday-1-2     wednesday-1-2     thursday-1-2    friday-1-2    saturday-1-2    sunday-1-2"
+    "hours-2-3    monday-2-3     tuesday-2-3     wednesday-2-3     thursday-2-3    friday-2-3    saturday-2-3    sunday-2-3"
+    "hours-3-4    monday-3-4     tuesday-3-4     wednesday-3-4     thursday-3-4    friday-3-4    saturday-3-4    sunday-3-4"
+    "hours-4-5    monday-4-5     tuesday-4-5     wednesday-4-5     thursday-4-5    friday-4-5    saturday-4-5    sunday-4-5"
+    "hours-5-6    monday-5-6     tuesday-5-6     wednesday-5-6     thursday-5-6    friday-5-6    saturday-5-6    sunday-5-6"
+    "hours-6-7    monday-6-7     tuesday-6-7     wednesday-6-7     thursday-6-7    friday-6-7    saturday-6-7    sunday-6-7"
+    "hours-7-8    monday-7-8     tuesday-7-8     wednesday-7-8     thursday-7-8    friday-7-8    saturday-7-8    sunday-7-8"
+    "hours-8-9    monday-8-9     tuesday-8-9     wednesday-8-9     thursday-8-9    friday-8-9    saturday-8-9    sunday-8-9"
+    "hours-9-10   monday-9-10    tuesday-9-10    wednesday-9-10    thursday-9-10   friday-9-10   saturday-9-10   sunday-9-10"
+    "hours-10-11  monday-10-11   tuesday-10-11   wednesday-10-11   thursday-10-11  friday-10-11  saturday-10-11  sunday-10-11"
+    "hours-11-12  monday-11-12   tuesday-11-12   wednesday-11-12   thursday-11-12  friday-11-12  saturday-11-12  sunday-11-12"
+    "hours-12-13  monday-12-13   tuesday-12-13   wednesday-12-13   thursday-12-13  friday-12-13  saturday-12-13  sunday-12-13"
+    "hours-13-14  monday-13-14   tuesday-13-14   wednesday-13-14   thursday-13-14  friday-13-14  saturday-13-14  sunday-13-14"
+    "hours-14-15  monday-14-15   tuesday-14-15   wednesday-14-15   thursday-14-15  friday-14-15  saturday-14-15  sunday-14-15"
+    "hours-15-16  monday-15-16   tuesday-15-16   wednesday-15-16   thursday-15-16  friday-15-16  saturday-15-16  sunday-15-16"
+    "hours-16-17  monday-16-17   tuesday-16-17   wednesday-16-17   thursday-16-17  friday-16-17  saturday-16-17  sunday-16-17"
+    "hours-17-18  monday-17-18   tuesday-17-18   wednesday-17-18   thursday-17-18  friday-17-18  saturday-17-18  sunday-17-18"
+    "hours-18-19  monday-18-19   tuesday-18-19   wednesday-18-19   thursday-18-19  friday-18-19  saturday-18-19  sunday-18-19"
+    "hours-19-20  monday-19-20   tuesday-19-20   wednesday-19-20   thursday-19-20  friday-19-20  saturday-19-20  sunday-19-20"
+    "hours-20-21  monday-20-21   tuesday-20-21   wednesday-20-21   thursday-20-21  friday-20-21  saturday-20-21  sunday-20-21"
+    "hours-21-22  monday-21-22   tuesday-21-22   wednesday-21-22   thursday-21-22  friday-21-22  saturday-21-22  sunday-21-22"
+    "hours-22-23  monday-22-23   tuesday-22-23   wednesday-22-23   thursday-22-23  friday-22-23  saturday-22-23  sunday-22-23"
+    "hours-23-24  monday-23-24   tuesday-23-24   wednesday-23-24   thursday-23-24  friday-23-24  saturday-23-24  sunday-23-24";
+
+    .days-monday {
+      grid-area: days-monday;
+    }
+
+    .days-tuesday {
+      grid-area: days-tuesday;
+    }
+
+    .days-wednesday {
+      grid-area: days-wednesday;
+    }
+
+    .days-thursday {
+      grid-area: days-thursday;
+    }
+
+    .days-tuesday {
+      grid-area: days-tuesday;
+    }
+
+    .days-friday {
+      grid-area: days-friday;
+    }
+
+    .days-saturday {
+      grid-area: days-saturday;
+    }
+
+    .days-sunday {
+      grid-area: days-sunday;
+    }
+
+    .hours-0-1 {
+      grid-area: hours-0-1;
+    }
+
+    .hours-1-2 {
+      grid-area: hours-1-2;
+    }
+
+    .hours-2-3 {
+      grid-area: hours-2-3;
+    }
+
+    .hours-3-4 {
+      grid-area: hours-3-4;
+    }
+
+    .hours-4-5 {
+      grid-area: hours-4-5;
+    }
+
+    .hours-5-6 {
+      grid-area: hours-5-6;
+    }
+
+    .hours-6-7 {
+      grid-area: hours-6-7;
+    }
+
+    .hours-7-8 {
+      grid-area: hours-7-8;
+    }
+
+    .hours-8-9 {
+      grid-area: hours-8-9;
+    }
+
+    .hours-9-10 {
+      grid-area: hours-9-10;
+    }
+
+    .hours-10-11 {
+      grid-area: hours-10-11;
+    }
+
+    .hours-11-12 {
+      grid-area: hours-11-12;
+    }
+
+    .hours-12-13 {
+      grid-area: hours-12-13;
+    }
+
+    .hours-13-14 {
+      grid-area: hours-13-14;
+    }
+
+    .hours-14-15 {
+      grid-area: hours-14-15;
+    }
+
+    .hours-15-16 {
+      grid-area: hours-15-16;
+    }
+
+    .hours-16-17 {
+      grid-area: hours-16-17;
+    }
+
+    .hours-17-18 {
+      grid-area: hours-17-18;
+    }
+
+    .hours-18-19 {
+      grid-area: hours-18-19;
+    }
+
+    .hours-19-20 {
+      grid-area: hours-19-20;
+    }
+
+    .hours-20-21 {
+      grid-area: hours-20-21;
+    }
+
+    .hours-21-22 {
+      grid-area: hours-21-22;
+    }
+
+    .hours-22-23 {
+      grid-area: hours-22-23;
+    }
+
+    .hours-23-24 {
+      grid-area: hours-23-24;
+    }
+
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .black-border {
+      border: solid 5px black;
+    }
+
+    .none {
+      display: none;
+    }
+  }
+}
+

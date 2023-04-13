@@ -1,10 +1,13 @@
 package hu.hollo.news.service
 
+import hu.hollo.news.exception.NotFoundException
 import hu.hollo.news.model.dto.EventDto
 import hu.hollo.news.repository.EventsRepository
 import hu.hollo.news.service.adapter.EventsAdapter
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import java.util.*
 
 @Service
 class EventsService(
@@ -16,4 +19,10 @@ class EventsService(
         eventsRepository
             .findBetweenStartAndEnd(startDate, endDate)
             .map { event -> eventsAdapter.adaptDbToDto(event) }
+
+    fun getEventById(id: UUID): EventDto =
+        eventsAdapter.adaptDbToDto(
+            eventsRepository.findByIdOrNull(id)
+                ?: throw NotFoundException("Event does not exist with id=$id")
+        )
 }
