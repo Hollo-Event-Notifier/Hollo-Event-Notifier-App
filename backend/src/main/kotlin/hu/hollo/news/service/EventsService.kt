@@ -1,7 +1,7 @@
 package hu.hollo.news.service
 
 import hu.hollo.news.exception.BadRequestException
-import hu.hollo.news.exception.NotFoundException
+import hu.hollo.news.exception.EventNotFoundException
 import hu.hollo.news.model.dto.EventDto
 import hu.hollo.news.repository.EventsRepository
 import hu.hollo.news.service.adapter.EventsAdapter
@@ -24,7 +24,7 @@ class EventsService(
     fun getEventById(id: UUID): EventDto =
         eventsAdapter.adaptDbToDto(
             eventsRepository.findByIdOrNull(id)
-                ?: throw NotFoundException("Event does not exist with id=$id")
+                ?: throw EventNotFoundException(id)
         )
 
     fun createEvent(eventDto: EventDto): EventDto {
@@ -39,7 +39,7 @@ class EventsService(
 
     fun updateEvent(id: UUID, eventDto: EventDto): EventDto {
         if (!eventsRepository.existsById(id)) {
-            throw NotFoundException("Event does not exist with id=$id")
+            throw EventNotFoundException(id)
         }
 
         val eventInDb = eventsRepository.findByIdOrNull(id)!!
@@ -55,11 +55,10 @@ class EventsService(
         return eventsAdapter.adaptDbToDto(eventsRepository.save(eventInDb))
     }
     fun deleteEvent(id: UUID) {
-        val dbEventToDelete = eventsAdapter.adaptDtoToDb(getEventById(id))
-
-        if (dbEventToDelete.id != null) {
-            throw BadRequestException("No such event to delete")
+        if(!eventsRepository.existsById(id)) {
+            throw EventNotFoundException(id)
         }
-        eventsRepository.delete(dbEventToDelete)
+
+        eventsRepository.deleteById(id)
     }
 }
