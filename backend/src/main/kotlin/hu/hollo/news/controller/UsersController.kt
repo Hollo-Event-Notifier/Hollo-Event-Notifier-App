@@ -1,6 +1,6 @@
 package hu.hollo.news.controller
 
-import hu.hollo.news.api.UserApi
+import hu.hollo.news.api.UsersApi
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.service.UserService
 import org.springframework.beans.factory.annotation.Value
@@ -13,10 +13,11 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.toJavaDuration
 
 @RestController
-class UserController(
+class UsersController(
     private val userService: UserService,
     @Value("\${auth_cookie_name}") private val cookieName: String
-) : UserApi {
+) : UsersApi {
+
     override fun login(userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> =
         ResponseEntity
             .ok()
