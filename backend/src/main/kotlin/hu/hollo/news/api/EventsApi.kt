@@ -5,7 +5,8 @@
 */
 package hu.hollo.news.api
 
-import hu.hollo.news.model.dto.UserCredentialsDto
+import hu.hollo.news.model.dto.ErrorDto
+import hu.hollo.news.model.dto.EventDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -30,25 +31,15 @@ import kotlin.collections.Map
 
 @Validated
 @RequestMapping("\${api.base-path:}")
-interface UserApi {
+interface EventsApi {
 
 
     @RequestMapping(
             method = [RequestMethod.GET],
-            value = ["/user/check-token"]
+            value = ["/events"],
+            produces = ["application/json"]
     )
-    fun checkToken(): ResponseEntity<Unit> {
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-    }
-
-
-    @RequestMapping(
-            method = [RequestMethod.POST],
-            value = ["/user/login"],
-            produces = ["text/plain"],
-            consumes = ["application/json"]
-    )
-    fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> {
+    fun getEvents(@NotNull  @Valid @RequestParam(value = "startDate", required = true) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) startDate: java.time.OffsetDateTime,@NotNull  @Valid @RequestParam(value = "endDate", required = true) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) endDate: java.time.OffsetDateTime): ResponseEntity<List<EventDto>> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 }
