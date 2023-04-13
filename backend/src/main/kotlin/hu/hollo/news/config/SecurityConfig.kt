@@ -39,7 +39,7 @@ class SecurityConfig {
             it.contentSecurityPolicy("script-src 'self'")
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/user/login").permitAll()
+            it.requestMatchers("/users/login").permitAll()
             it.anyRequest().authenticated()
         }
         .oauth2ResourceServer {
