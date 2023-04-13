@@ -2,7 +2,7 @@ import {NgModule, Optional, Provider, SkipSelf} from '@angular/core';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ApplicationStateService} from "./services/application-state.service";
 import {SnackbarService} from "./services/snackbar.service";
-import {ApiModule, BASE_PATH, Configuration, UserApiService} from "./api";
+import {ApiModule, BASE_PATH, Configuration, UsersApiService} from "./api";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth-guard.service";
 
@@ -27,7 +27,7 @@ const PROVIDERS: Provider[] = [
 ];
 
 const API_SERVICES: Provider[] = [
-  UserApiService
+  UsersApiService
 ];
 
 @NgModule({
