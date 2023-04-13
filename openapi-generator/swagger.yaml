@@ -210,7 +210,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  requestBodies:
   responses:
     # Generic Error responses
     BadRequest:
