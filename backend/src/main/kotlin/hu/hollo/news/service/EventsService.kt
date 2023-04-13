@@ -1,5 +1,6 @@
 package hu.hollo.news.service
 
+import hu.hollo.news.exception.BadRequestException
 import hu.hollo.news.exception.NotFoundException
 import hu.hollo.news.model.dto.EventDto
 import hu.hollo.news.repository.EventsRepository
@@ -25,4 +26,14 @@ class EventsService(
             eventsRepository.findByIdOrNull(id)
                 ?: throw NotFoundException("Event does not exist with id=$id")
         )
+
+    fun createEvent(eventDto: EventDto): EventDto {
+        val dbEventToCreate = eventsAdapter.adaptDtoToDb(eventDto)
+
+        if (dbEventToCreate.id != null) {
+            throw BadRequestException("Events id should not be provided!")
+        }
+
+        return eventsAdapter.adaptDbToDto(eventsRepository.save(dbEventToCreate))
+    }
 }
