@@ -17,6 +17,11 @@ const routes: Routes = [
         path: AdminRoutes.EventDisplay,
         loadComponent: () => import('../event-display/event-display.component').then(m => m.EventDisplayComponent),
       },
+      {
+        path: '**',
+        redirectTo: AdminRoutes.EventDisplay,
+        pathMatch: 'full'
+      },
     ]
   },
 ];
