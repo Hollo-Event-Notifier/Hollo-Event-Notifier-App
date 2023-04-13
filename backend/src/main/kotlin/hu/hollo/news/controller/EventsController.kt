@@ -24,9 +24,10 @@ class EventsController(private val eventsService: EventsService) : EventsApi {
     override fun createEvent(eventDto: EventDto): ResponseEntity<EventDto> =
         ResponseEntity(eventsService.createEvent(eventDto), HttpStatus.CREATED)
 
-    override fun updateEventById(id: UUID, eventDto: EventDto): ResponseEntity<EventDto> {
-        return super.updateEventById(id, eventDto)
-    }
+    override fun updateEventById(id: UUID, eventDto: EventDto): ResponseEntity<EventDto> =
+        ResponseEntity
+            .ok()
+            .body(eventsService.updateEvent(id, eventDto))
 
     override fun deleteEventById(id: UUID): ResponseEntity<Unit> {
         return super.deleteEventById(id)

@@ -36,4 +36,22 @@ class EventsService(
 
         return eventsAdapter.adaptDbToDto(eventsRepository.save(dbEventToCreate))
     }
+
+    fun updateEvent(id: UUID, eventDto: EventDto): EventDto {
+        if (!eventsRepository.existsById(id)) {
+            throw NotFoundException("Event does not exist with id=$id")
+        }
+
+        val eventInDb = eventsRepository.findByIdOrNull(id)!!
+
+        eventInDb.title = eventDto.title
+        eventInDb.place = eventDto.place
+        eventInDb.organizer = eventDto.organizer
+        eventInDb.hasPoints = eventDto.hasPoints
+        eventInDb.startDate = eventDto.startDate.toLocalDateTime()
+        eventInDb.endDate = eventDto.endDate.toLocalDateTime()
+        eventInDb.link = eventDto.link?.toURL()
+
+        return eventsAdapter.adaptDbToDto(eventsRepository.save(eventInDb))
+    }
 }
