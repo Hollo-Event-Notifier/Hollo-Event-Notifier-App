@@ -30,6 +30,7 @@ class EventsController(private val eventsService: EventsService) : EventsApi {
             .body(eventsService.updateEvent(id, eventDto))
 
     override fun deleteEventById(id: UUID): ResponseEntity<Unit> {
-        return super.deleteEventById(id)
+        eventsService.deleteEvent(id)
+        return ResponseEntity.noContent().build()
     }
 }

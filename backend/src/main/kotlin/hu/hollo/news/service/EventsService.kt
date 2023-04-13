@@ -54,4 +54,12 @@ class EventsService(
 
         return eventsAdapter.adaptDbToDto(eventsRepository.save(eventInDb))
     }
+    fun deleteEvent(id: UUID) {
+        val dbEventToDelete = eventsAdapter.adaptDtoToDb(getEventById(id))
+
+        if (dbEventToDelete.id != null) {
+            throw BadRequestException("No such event to delete")
+        }
+        eventsRepository.delete(dbEventToDelete)
+    }
 }
