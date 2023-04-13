@@ -61,17 +61,17 @@ export class EventDisplayComponent {
   private generateAreas(): string {
     let areas: Array<Array<string>>;
 
-    areas
-
-    for (let i = 0; i < ; i++) {
-
-    }
-
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 24; j++) {
-        areas
-      }
-    }
+    // areas
+    //
+    // for (let i = 0; i < ; i++) {
+    //
+    // }
+    //
+    // for (let i = 0; i < 8; i++) {
+    //   for (let j = 0; j < 24; j++) {
+    //     areas
+    //   }
+    // }
 
     return 'areas.toString()';
   }
