@@ -1,18 +1,18 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthGuardService } from './auth-guard.service';
-import {UserApiService, UserApiServiceInterface} from '../api';
 import { of } from 'rxjs';
+import {UsersApiService, UsersApiServiceInterface} from "../api";
 
 describe('AuthGuardService', () => {
   let service: AuthGuardService;
-  let userApiServiceSpy: jasmine.SpyObj<UserApiServiceInterface>;
+  let userApiServiceSpy: jasmine.SpyObj<UsersApiServiceInterface>;
 
   beforeEach(() => {
     userApiServiceSpy = jasmine.createSpyObj('UserApiService', ['checkToken']);
     TestBed.configureTestingModule({
       providers: [
         AuthGuardService,
-        { provide: UserApiService, useValue: userApiServiceSpy }
+        { provide: UsersApiService, useValue: userApiServiceSpy }
       ]
     });
     service = TestBed.inject(AuthGuardService);

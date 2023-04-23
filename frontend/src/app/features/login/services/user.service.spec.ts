@@ -1,6 +1,6 @@
 import {UserService} from "./user.service";
 import {Subject} from "rxjs";
-import {UserApiService, UserApiServiceInterface, UserCredentialsDto} from "../../../core/api";
+import {UserCredentialsDto, UsersApiService, UsersApiServiceInterface} from "../../../core/api";
 import {SnackbarService} from "../../../core/services/snackbar.service";
 import {Router} from "@angular/router";
 import {TestBed} from "@angular/core/testing";
@@ -11,8 +11,8 @@ import {AppRoutes} from "../../../app-routes";
 describe('UserService', () => {
   let underTest: UserService;
   let responseMock: Subject<string>;
-  let userApiMock: Partial<UserApiServiceInterface> = {
-    loginUser: () => responseMock.asObservable(),
+  let userApiMock: Partial<UsersApiServiceInterface> = {
+    login: () => responseMock.asObservable(),
   };
   let snackBarSpy: jasmine.SpyObj<SnackbarService>;
   let routerSpy: jasmine.SpyObj<Router>;
@@ -28,7 +28,7 @@ describe('UserService', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       providers: [
-        {provide: UserApiService, useValue: userApiMock},
+        {provide: UsersApiService, useValue: userApiMock},
         {provide: SnackbarService, useValue: snackBarSpy},
         {provide: Router, useValue: routerSpy},
         UserService
@@ -44,7 +44,7 @@ describe('UserService', () => {
 
     // assert
     expect(underTest).toBeTruthy();
-    expect(underTest['userApi']).toBe(userApiMock as UserApiService);
+    expect(underTest['userApi']).toBe(userApiMock as UsersApiService);
     expect(underTest['snackBar']).toBe(snackBarSpy);
     expect(underTest['router']).toBe(routerSpy);
   });
