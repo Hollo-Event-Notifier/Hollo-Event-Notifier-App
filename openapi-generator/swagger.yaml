@@ -50,7 +50,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   /users/check-token:
-    post:
+    get:
       tags:
         - users
       summary: Checks if the user has valid JWT token in cookie
