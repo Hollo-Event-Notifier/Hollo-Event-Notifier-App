@@ -35,7 +35,7 @@ interface UsersApi {
 
 
     @RequestMapping(
-            method = [RequestMethod.POST],
+            method = [RequestMethod.GET],
             value = ["/users/check-token"],
             produces = ["application/json"]
     )
