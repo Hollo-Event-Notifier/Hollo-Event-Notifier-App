@@ -1,16 +1,17 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {SharedModule} from "../../shared/shared.module";
-import {CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventInput} from "@fullcalendar/core";
-import {createEventId, INITIAL_EVENTS} from "./utils/event-utils";
+import {CalendarOptions, DateSelectArg, EventClickArg, EventInput} from "@fullcalendar/core";
+import {createEventId} from "./utils/event-utils";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import {EventDto} from "../../core/api";
 import {ApplicationStateService} from "../../core/services/application-state.service";
 import {EventsService} from "./services/events.service";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {AsyncPipe} from "@angular/common";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {EventEditorComponent} from "./components/event-editor.component";
 
 @Component({
   selector: 'app-event-display',
@@ -20,6 +21,7 @@ import {AsyncPipe} from "@angular/common";
   imports: [
     SharedModule,
     AsyncPipe,
+    MatDialogModule
   ],
 })
 export class EventDisplayComponent implements OnInit, OnDestroy {
@@ -56,9 +58,11 @@ export class EventDisplayComponent implements OnInit, OnDestroy {
   constructor(
     private readonly changeDetector: ChangeDetectorRef,
     private readonly state: ApplicationStateService,
-    private readonly eventsService: EventsService
+    private readonly eventsService: EventsService,
+    private matDialog: MatDialog
   ) {
     this.events$ = this.state.events;
+
   }
 
   ngOnInit(): void {
@@ -88,6 +92,19 @@ export class EventDisplayComponent implements OnInit, OnDestroy {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    alert('Event clicked!');
+    this.matDialog.open(EventEditorComponent,
+      {
+        data: {
+          //EventDto
+          title: "title",
+          place: "place",
+          organizer: "organizer",
+          hasPoints: "hasPoints",
+          startDate: "startDate",
+          endDate: "endDate",
+          link: "link",
+          id: "id"
+        }
+      });
   }
 }

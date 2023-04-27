@@ -6,9 +6,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
 import {LoginComponent} from "./features/login/login.component";
 import {EventDisplayComponent} from "./features/event-display/event-display.component";
+import { EventEditorComponent } from './features/event-display/components/event-editor.component';
+import {SharedModule} from "./shared/shared.module";
 
 const DECLARATIONS = [
-  AppComponent
+  AppComponent,
+  EventEditorComponent
 ];
 
 const IMPORTS = [
@@ -17,7 +20,8 @@ const IMPORTS = [
   BrowserAnimationsModule,
   CoreModule,
   LoginComponent,
-  EventDisplayComponent
+  EventDisplayComponent,
+  SharedModule
 ];
 
 const PROVIDERS: Provider[] = [];
