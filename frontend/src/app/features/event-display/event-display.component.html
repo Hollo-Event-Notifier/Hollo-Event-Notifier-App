@@ -1,8 +1,0 @@
-<full-calendar [options]='calendarOptions' [events]="(events$ | async)">
-  <ng-template let-arg>
-    <div class="event-container">
-      <p>{{ arg.event.title }}</p>
-      <p>{{ arg.timeText }}</p>
-    </div>
-  </ng-template>
-</full-calendar>

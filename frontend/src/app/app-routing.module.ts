@@ -6,7 +6,7 @@ import {AuthGuardService} from "./core/services/auth-guard.service";
 const routes: Routes = [
   {
     path: AppRoutes.EventDisplay,
-    loadComponent: () => import('./features/event-display/event-display.component').then(m => m.EventDisplayComponent),
+    loadChildren: () => import('./features/event-display/event-display.module').then(m => m.EventDisplayModule),
   },
   {
     path: AppRoutes.Login,
