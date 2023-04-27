@@ -1,31 +1,25 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {SharedModule} from "../../shared/shared.module";
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {SharedModule} from "../../../../shared/shared.module";
 import {CalendarOptions, DateSelectArg, EventClickArg, EventInput} from "@fullcalendar/core";
-import {createEventId} from "./utils/event-utils";
+import {createEventId} from "../../utils/event-utils";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import {ApplicationStateService} from "../../core/services/application-state.service";
-import {EventsService} from "./services/events.service";
+import {ApplicationStateService} from "../../../../core/services/application-state.service";
+import {EventsService} from "../../services/events.service";
 import {Observable, Subject} from "rxjs";
-import {AsyncPipe} from "@angular/common";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {EventEditorComponent} from "./components/event-editor.component";
+import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
+import {EventMapperService} from "../../services/event-mapper.service";
+import {cl} from "@fullcalendar/core/internal-common";
 
 @Component({
   selector: 'app-event-display',
   templateUrl: './event-display.component.html',
-  styleUrls: ['./event-display.component.scss'],
-  standalone: true,
-  imports: [
-    SharedModule,
-    AsyncPipe,
-    MatDialogModule
-  ],
+  styleUrls: ['./event-display.component.scss']
 })
-export class EventDisplayComponent implements OnInit, OnDestroy {
-  private readonly unsubscribe$ = new Subject<void>();
+export class EventDisplayComponent implements OnInit {
   events$!: Observable<EventInput[]>;
 
   calendarOptions: CalendarOptions = {
@@ -59,19 +53,15 @@ export class EventDisplayComponent implements OnInit, OnDestroy {
     private readonly changeDetector: ChangeDetectorRef,
     private readonly state: ApplicationStateService,
     private readonly eventsService: EventsService,
-    private matDialog: MatDialog
+    private readonly eventMapperService: EventMapperService,
+    private readonly matDialog: MatDialog,
   ) {
     this.events$ = this.state.events;
-
+    this.events$.subscribe(value => console.log(value))
   }
 
   ngOnInit(): void {
     this.eventsService.getEvents(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-04-29T00:00:00.000Z'))
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
@@ -92,19 +82,7 @@ export class EventDisplayComponent implements OnInit, OnDestroy {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    this.matDialog.open(EventEditorComponent,
-      {
-        data: {
-          //EventDto
-          title: "title",
-          place: "place",
-          organizer: "organizer",
-          hasPoints: "hasPoints",
-          startDate: "startDate",
-          endDate: "endDate",
-          link: "link",
-          id: "id"
-        }
-      });
+    this.matDialog.open(EventEditorDialogComponent, {data: clickInfo.event})
+      .afterClosed().subscribe(value => console.log(value));
   }
 }
