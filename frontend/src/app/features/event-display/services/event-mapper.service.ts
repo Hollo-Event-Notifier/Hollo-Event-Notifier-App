@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EventDto} from "../../../core/api";
 import {EventInput} from "@fullcalendar/core";
+import {EventImpl} from "@fullcalendar/core/internal";
 
 @Injectable()
 export class EventMapperService {
@@ -8,7 +9,7 @@ export class EventMapperService {
   constructor() {
   }
 
-  mapEventDtoToEventInput(dto: EventDto): EventInput {
+  mapEventDtoToCalendarEvent(dto: EventDto): EventInput {
     return {
       id: dto.id,
       start: new Date(dto.startDate),
@@ -17,12 +18,13 @@ export class EventMapperService {
       extendedProps: {
         place: dto.place,
         organizer: dto.organizer,
-        hasPoints: dto.hasPoints
+        hasPoints: dto.hasPoints,
+        link: dto.link,
       }
     }
   }
 
-  mapEventInputToEventDto(input: EventInput): EventDto {
+  mapCalendarEventToEventDto(input: EventInput | EventImpl): EventDto {
     return {
       title: input.title!!,
       place: input.extendedProps!!['place'],
@@ -31,7 +33,7 @@ export class EventMapperService {
       startDate: new Date(input.start!!.toString()).toISOString(),
       endDate: new Date(input.end!!.toString()).toISOString(),
       id: input.id!!,
-      link: input.url!!
+      link: input.extendedProps!!['link'],
     }
   }
 }
