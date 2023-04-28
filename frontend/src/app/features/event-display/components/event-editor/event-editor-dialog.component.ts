@@ -5,6 +5,7 @@ import {EventMapperService} from "../../services/event-mapper.service";
 import {EventDto} from "../../../../core/api";
 import {EventEditorData} from "../../models/event-editor-data";
 import {EventForm} from "../../models/event-form";
+import {EventDisplayComponent} from "../event-display/event-display.component";
 
 @Component({
   selector: 'app-components',
@@ -46,6 +47,7 @@ export class EventEditorDialogComponent {
     }),
   });
 
+
   constructor(
     private readonly dialogRef: MatDialogRef<EventEditorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) readonly data: EventEditorData,
@@ -77,5 +79,8 @@ export class EventEditorDialogComponent {
   onCancel() {
     this.dialogRef.close();
   }
+
+  showDeleteButton: boolean = false
+  protected readonly EventDisplayComponent = EventDisplayComponent;
 }
 

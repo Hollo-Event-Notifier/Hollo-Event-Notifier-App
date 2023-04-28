@@ -20,6 +20,7 @@ import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
   styleUrls: ['./event-display.component.scss']
 })
 export class EventDisplayComponent implements OnInit {
+  static showDeleteButton : boolean
   events$!: Observable<EventInput[]>;
 
   calendarOptions: CalendarOptions = {
@@ -67,6 +68,7 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
+    EventDisplayComponent.showDeleteButton = false;
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
         title: 'Create Event',
@@ -88,6 +90,7 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    EventDisplayComponent.showDeleteButton = true;
     const calendarApi = clickInfo.view.calendar;
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
