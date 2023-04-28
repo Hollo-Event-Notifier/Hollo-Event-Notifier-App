@@ -5,4 +5,7 @@ export interface EventForm {
   place: FormControl<string>;
   organizer: FormControl<string>;
   hasPoints: FormControl<boolean>;
+  startDate: FormControl<string>;
+  endDate: FormControl<string>;
+  link: FormControl<string>;
 }
