@@ -1,17 +1,10 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {EventInput} from "@fullcalendar/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventMapperService} from "../../services/event-mapper.service";
-
-interface EventForm {
-  title: FormControl<string>;
-  place: FormControl<string>;
-  organizer: FormControl<string>;
-  hasPoints: FormControl<boolean>;
-  startDate: FormControl<string>;
-  endDate: FormControl<string>;
-}
+import {EventDto} from "../../../../core/api";
+import {EventEditorData} from "../../models/event-editor-data";
+import {EventForm} from "../../models/event-form";
 
 @Component({
   selector: 'app-components',
@@ -44,26 +37,37 @@ export class EventEditorDialogComponent {
       validators: Validators.required,
       nonNullable: true
     }),
+    link: new FormControl<string>('', {
+      nonNullable: true,
+    }),
   });
 
   constructor(
     private readonly dialogRef: MatDialogRef<EventEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data: EventInput,
+    @Inject(MAT_DIALOG_DATA) readonly data: EventEditorData,
     private readonly eventMapperService: EventMapperService
   ) {
-    const mappedEvent = this.eventMapperService.mapEventInputToEventDto(data);
     this.formGroup.setValue({
-      title: mappedEvent.title,
-      place: mappedEvent.place,
-      organizer: mappedEvent.organizer,
-      hasPoints: mappedEvent.hasPoints,
-      startDate: mappedEvent.startDate,
-      endDate: mappedEvent.endDate,
+      title: data.event.title,
+      place: data.event.place,
+      organizer: data.event.organizer,
+      hasPoints: data.event.hasPoints,
+      startDate: data.event.startDate,
+      endDate: data.event.endDate,
+      link: data.event.link!! ? data.event.link : '',
     });
   }
 
   onSave() {
-    this.dialogRef.close(this.formGroup.value);
+    this.dialogRef.close({
+      ...this.formGroup.value,
+      id: this.data.event.id,
+      link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined
+    } as EventDto);
+  }
+
+  onDelete() {
+    this.dialogRef.close(this.data.event.id);
   }
 
   onCancel() {

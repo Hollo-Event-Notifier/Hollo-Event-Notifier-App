@@ -1,4 +1,22 @@
 <div class="container">
+  <mat-dialog-actions>
+    <h1>{{data.title}}</h1>
+    <div class="actions-container">
+      <button mat-icon-button (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="onSave()"
+        [disabled]="!formGroup.valid"
+      >
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-actions>
   <mat-dialog-content>
     <form [formGroup]="formGroup">
       <mat-form-field>
@@ -26,7 +44,7 @@
           type="text"
           [formControl]="formGroup.controls.organizer"
         >
-        <mat-error *ngIf="formGroup.controls.title.hasError('required')">This field is required!</mat-error>
+        <mat-error *ngIf="formGroup.controls.organizer.hasError('required')">This field is required!</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Start Date</mat-label>
@@ -35,7 +53,7 @@
           type="text"
           [formControl]="formGroup.controls.startDate"
         >
-        <mat-error *ngIf="formGroup.controls.title.hasError('required')">This field is required!</mat-error>
+        <mat-error *ngIf="formGroup.controls.startDate.hasError('required')">This field is required!</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>End Date</mat-label>
@@ -44,26 +62,19 @@
           type="text"
           [formControl]="formGroup.controls.endDate"
         >
-        <mat-error *ngIf="formGroup.controls.title.hasError('required')">This field is required!</mat-error>
+        <mat-error *ngIf="formGroup.controls.endDate.hasError('required')">This field is required!</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Link</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="formGroup.controls.link"
+        >
       </mat-form-field>
       <mat-checkbox [formControl]="formGroup.controls.hasPoints">
         Has points
       </mat-checkbox>
     </form>
   </mat-dialog-content>
-  <mat-dialog-actions>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onCancel()"
-    > Cancel</button>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!formGroup.valid"
-      (click)="onSave()"
-    >
-      Save
-    </button>
-  </mat-dialog-actions>
 </div>
