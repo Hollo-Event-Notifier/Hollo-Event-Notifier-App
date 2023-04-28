@@ -1,18 +1,18 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SharedModule} from "../../../../shared/shared.module";
-import {CalendarOptions, DateSelectArg, EventClickArg, EventInput} from "@fullcalendar/core";
-import {createEventId} from "../../utils/event-utils";
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {CalendarOptions, DateSelectArg, EventChangeArg, EventClickArg, EventInput} from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import {ApplicationStateService} from "../../../../core/services/application-state.service";
 import {EventsService} from "../../services/events.service";
-import {Observable, Subject} from "rxjs";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {Observable} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
 import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
 import {EventMapperService} from "../../services/event-mapper.service";
-import {cl} from "@fullcalendar/core/internal-common";
+import {EventEditorData} from "../../models/event-editor-data";
+import {EventDto} from "../../../../core/api";
+import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
 
 @Component({
   selector: 'app-event-display',
@@ -40,8 +40,10 @@ export class EventDisplayComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    firstDay: 1,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
+    eventChange: this.handleEventChange.bind(this)
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -57,7 +59,7 @@ export class EventDisplayComponent implements OnInit {
     private readonly matDialog: MatDialog,
   ) {
     this.events$ = this.state.events;
-    this.events$.subscribe(value => console.log(value))
+    // this.events$.subscribe(value => changeDetector.detectChanges())
   }
 
   ngOnInit(): void {
@@ -65,24 +67,46 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    this.matDialog.open(EventEditorDialogComponent, {
+      data: {
+        title: 'Create Event',
+        event: {
+          startDate: selectInfo.start.toISOString(),
+          endDate: selectInfo.end.toISOString(),
+          link: '',
+          place: '',
+          title: '',
+          organizer: '',
+          hasPoints: false
+        }
+      } as EventEditorData
+    }).afterClosed().subscribe((value: EventDto) => {
+      if (value !== undefined && instanceOfEventDto(value)) {
+        this.eventsService.createEvent(value);
+      }
+    });
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    this.matDialog.open(EventEditorDialogComponent, {data: clickInfo.event})
-      .afterClosed().subscribe(value => console.log(value));
+    const calendarApi = clickInfo.view.calendar;
+    this.matDialog.open(EventEditorDialogComponent, {
+      data: {
+        title: 'Update Event',
+        event: this.eventMapperService.mapCalendarEventToEventDto(clickInfo.event)
+      } as EventEditorData
+    }).afterClosed().subscribe((value: EventDto | string) => {
+      // TODO: add change detection
+      if (value !== undefined) {
+        if (typeof value === 'string') {
+          this.eventsService.deleteEvent(value);
+        } else if (instanceOfEventDto(value)) {
+          this.eventsService.updateEvent(value);
+        }
+      }
+    });
+  }
+
+  handleEventChange(changeInfo: EventChangeArg) {
+    this.eventsService.updateEvent(this.eventMapperService.mapCalendarEventToEventDto(changeInfo.event));
   }
 }
