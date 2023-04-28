@@ -3,6 +3,7 @@ import {ApplicationState} from "../models/application-state";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {EventDto} from "../api";
 import {EventApi, EventInput} from "@fullcalendar/core";
+import {instanceOfCalendarEvent} from "../utils/calendar-event.type-guard";
 
 @Injectable()
 export class ApplicationStateService {
@@ -19,10 +20,21 @@ export class ApplicationStateService {
       );
   }
 
-  patchState(newState: Partial<ApplicationState>) {
-    this.state.next({
-      ...this.state.getValue(),
-      ...newState
-    });
+  patchState(newState: Partial<ApplicationState> | EventInput | string) {
+    const oldState = this.state.getValue();
+
+    if (typeof newState === 'string') {
+      oldState.events.filter(event => event.id === newState);
+      this.state.next({...oldState});
+    } else if (instanceOfCalendarEvent(newState)) {
+      const index = oldState.events.findIndex(event => event.id === newState.id);
+      index !== -1 ? oldState.events[index] = newState : oldState.events.push(newState);
+      this.state.next({...oldState});
+    } else {
+      this.state.next({
+        ...this.state.getValue(),
+        ...newState
+      });
+    }
   }
 }
