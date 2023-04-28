@@ -38,7 +38,11 @@ export class EventEditorDialogComponent {
       nonNullable: true
     }),
     link: new FormControl<string>('', {
-      nonNullable: true,
+      validators: Validators.pattern(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+      ),
+
+
+  nonNullable: true,
     }),
   });
 

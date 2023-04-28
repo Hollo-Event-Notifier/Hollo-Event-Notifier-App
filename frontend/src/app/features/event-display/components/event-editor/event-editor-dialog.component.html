@@ -71,6 +71,7 @@
           type="text"
           [formControl]="formGroup.controls.link"
         >
+        <mat-error *ngIf="formGroup.controls.link.hasError('pattern')">Not a valid URL</mat-error>
       </mat-form-field>
       <mat-checkbox [formControl]="formGroup.controls.hasPoints">
         Has points
