@@ -15,6 +15,7 @@ import {EventDto} from "../../../../core/api";
 import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
 import {EventEditorMode} from "../../enums/event-editor-mode";
 
+// TODO: add change detection
 @Component({
   selector: 'app-event-display',
   templateUrl: './event-display.component.html',
@@ -60,7 +61,6 @@ export class EventDisplayComponent implements OnInit {
     private readonly matDialog: MatDialog,
   ) {
     this.events$ = this.state.events;
-    // this.events$.subscribe(value => changeDetector.detectChanges())
   }
 
   ngOnInit(): void {
@@ -95,7 +95,6 @@ export class EventDisplayComponent implements OnInit {
         mode: EventEditorMode.Update
       } as EventEditorData
     }).afterClosed().subscribe((value: EventDto | string) => {
-      // TODO: add change detection
       if (value !== undefined) {
         if (typeof value === 'string') {
           this.eventsService.deleteEvent(value);
