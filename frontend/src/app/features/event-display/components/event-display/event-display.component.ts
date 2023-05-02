@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
 import {EventMapperService} from "../../services/event-mapper.service";
-import {EventEditorData} from "../../models/event-editor-data";
+import {EventEditorData, EventEditorMode} from "../../models/event-editor-data";
 import {EventDto} from "../../../../core/api";
 import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
 
@@ -20,7 +20,6 @@ import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
   styleUrls: ['./event-display.component.scss']
 })
 export class EventDisplayComponent implements OnInit {
-  static showDeleteButton : boolean
   events$!: Observable<EventInput[]>;
 
   calendarOptions: CalendarOptions = {
@@ -68,10 +67,8 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    EventDisplayComponent.showDeleteButton = false;
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
-        title: 'Create Event',
         event: {
           startDate: selectInfo.start.toISOString(),
           endDate: selectInfo.end.toISOString(),
@@ -80,7 +77,8 @@ export class EventDisplayComponent implements OnInit {
           title: '',
           organizer: '',
           hasPoints: false
-        }
+        },
+        mode: EventEditorMode.Create
       } as EventEditorData
     }).afterClosed().subscribe((value: EventDto) => {
       if (value !== undefined && instanceOfEventDto(value)) {
@@ -90,12 +88,11 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    EventDisplayComponent.showDeleteButton = true;
     const calendarApi = clickInfo.view.calendar;
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
-        title: 'Update Event',
-        event: this.eventMapperService.mapCalendarEventToEventDto(clickInfo.event)
+        event: this.eventMapperService.mapCalendarEventToEventDto(clickInfo.event),
+        mode: EventEditorMode.Update
       } as EventEditorData
     }).afterClosed().subscribe((value: EventDto | string) => {
       // TODO: add change detection

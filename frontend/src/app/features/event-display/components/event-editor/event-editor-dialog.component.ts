@@ -1,9 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EventMapperService} from "../../services/event-mapper.service";
 import {EventDto} from "../../../../core/api";
-import {EventEditorData} from "../../models/event-editor-data";
+import {EventEditorData, EventEditorMode} from "../../models/event-editor-data";
 import {EventForm} from "../../models/event-form";
 import {EventDisplayComponent} from "../event-display/event-display.component";
 
@@ -46,12 +45,11 @@ export class EventEditorDialogComponent {
   nonNullable: true,
     }),
   });
-
+  eventEditorMode: typeof EventEditorMode = EventEditorMode;
 
   constructor(
     private readonly dialogRef: MatDialogRef<EventEditorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) readonly data: EventEditorData,
-    private readonly eventMapperService: EventMapperService
   ) {
     this.formGroup.setValue({
       title: data.event.title,
