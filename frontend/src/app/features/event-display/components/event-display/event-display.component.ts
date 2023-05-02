@@ -10,9 +10,10 @@ import {Observable} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
 import {EventMapperService} from "../../services/event-mapper.service";
-import {EventEditorData, EventEditorMode} from "../../models/event-editor-data";
+import {EventEditorData} from "../../models/event-editor-data";
 import {EventDto} from "../../../../core/api";
 import {instanceOfEventDto} from "../../utils/event-dto.type-guard";
+import {EventEditorMode} from "../../enums/event-editor-mode";
 
 @Component({
   selector: 'app-event-display',
@@ -88,7 +89,6 @@ export class EventDisplayComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    const calendarApi = clickInfo.view.calendar;
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
         event: this.eventMapperService.mapCalendarEventToEventDto(clickInfo.event),

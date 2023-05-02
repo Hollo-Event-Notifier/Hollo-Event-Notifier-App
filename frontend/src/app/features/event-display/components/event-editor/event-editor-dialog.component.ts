@@ -2,9 +2,9 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventDto} from "../../../../core/api";
-import {EventEditorData, EventEditorMode} from "../../models/event-editor-data";
+import {EventEditorData} from "../../models/event-editor-data";
 import {EventForm} from "../../models/event-form";
-import {EventDisplayComponent} from "../event-display/event-display.component";
+import {EventEditorMode} from "../../enums/event-editor-mode";
 
 @Component({
   selector: 'app-components',
@@ -38,11 +38,8 @@ export class EventEditorDialogComponent {
       nonNullable: true
     }),
     link: new FormControl<string>('', {
-      validators: Validators.pattern(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
-      ),
-
-
-  nonNullable: true,
+      validators: Validators.pattern(/^(http|https):\/\/[a-z0-9]+([\-.][a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/),
+      nonNullable: true,
     }),
   });
   eventEditorMode: typeof EventEditorMode = EventEditorMode;
@@ -77,8 +74,5 @@ export class EventEditorDialogComponent {
   onCancel() {
     this.dialogRef.close();
   }
-
-  showDeleteButton: boolean = false
-  protected readonly EventDisplayComponent = EventDisplayComponent;
 }
 
