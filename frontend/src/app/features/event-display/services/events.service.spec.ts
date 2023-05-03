@@ -8,7 +8,7 @@ import {Provider} from "@angular/core";
 import {of} from "rxjs";
 import {EventInput} from "@fullcalendar/core";
 
-fdescribe('EventsService', () => {
+describe('EventsService', () => {
   let underTest: EventsService;
   let eventsApiServiceSpy: jasmine.SpyObj<EventsApiServiceInterface>;
   let stateSpy: jasmine.SpyObj<ApplicationStateService>;
