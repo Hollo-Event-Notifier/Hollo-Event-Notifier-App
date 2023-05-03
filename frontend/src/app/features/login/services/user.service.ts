@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {SnackbarService} from "../../../core/services/snackbar.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
-import {UserApiService, UserCredentialsDto} from "../../../core/api";
+import {UserCredentialsDto, UsersApiService} from "../../../core/api";
 import {AppRoutes} from "../../../app-routes";
 import {take} from "rxjs";
 
@@ -10,7 +10,7 @@ import {take} from "rxjs";
 export class UserService {
 
   constructor(
-    private userApi: UserApiService,
+    private userApi: UsersApiService,
     private snackBar: SnackbarService,
     private router: Router
   ) {

@@ -15,15 +15,15 @@ import org.springframework.security.oauth2.jwt.Jwt
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.toJavaDuration
 
-internal class UserControllerTest {
+internal class UsersControllerTest {
     private lateinit var userServiceMock: UserService
-    private lateinit var underTest: UserController
+    private lateinit var underTest: UsersController
     private val tokenNameStub = "X-AUTH-TOKEN"
 
     @BeforeEach
     fun setUp() {
         userServiceMock = mock(UserService::class.java)
-        underTest = UserController(userServiceMock, tokenNameStub)
+        underTest = UsersController(userServiceMock, tokenNameStub)
     }
 
     @Nested

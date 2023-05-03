@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
 import {LoginComponent} from "./features/login/login.component";
-import {EventDisplayComponent} from "./features/event-display/event-display.component";
+import {EventDisplayModule} from "./features/event-display/event-display.module";
 
 const DECLARATIONS = [
   AppComponent
@@ -17,7 +17,7 @@ const IMPORTS = [
   BrowserAnimationsModule,
   CoreModule,
   LoginComponent,
-  EventDisplayComponent
+  EventDisplayModule
 ];
 
 const PROVIDERS: Provider[] = [];

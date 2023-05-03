@@ -8,19 +8,21 @@ info:
     name:
     url:
 tags:
-  - name: user
+  - name: users
     description: Operations about user
+  - name: events
+    description: Operations about events
 security: # global security constraint
-  - cookieAuth: []
+  - cookieAuth: [ ]
 paths:
-  /user/login:
+  /users/login:
     post:
       tags:
-        - user
+        - users
       summary: Logs user into the system
       description: ''
       operationId: login
-      security: [] # no auth for this endpoint
+      security: [ ] # no auth for this endpoint
       requestBody:
         description: user credentials
         required: true
@@ -39,25 +41,200 @@ paths:
               schema:
                 type: string
                 example: TOKEN=abcde12345; Path=/; HttpOnly; Secure;
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
-          description: Invalid username/password supplied
+          description: Invalid username or password supplied
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-  /user/check-token:
+                $ref: '#/components/schemas/Error'
+  /users/check-token:
     get:
       tags:
-        - user
+        - users
       summary: Checks if the user has valid JWT token in cookie
       description: ''
       operationId: checkToken
       responses:
         '200':
           description: Valid JWT token was sent in cookie
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
-          description: Invalid or non existing cookie was sent
+          $ref: '#/components/responses/Unauthorized'
+  /events:
+    get:
+      tags:
+        - events
+      summary: Provides all events between given start-date and end-date
+      description: ''
+      operationId: getEvents
+      parameters:
+        - in: query
+          name: startDate
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: Start date of time intervall
+        - in: query
+          name: endDate
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: End date of time intervall
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - events
+      summary: Create new event
+      description: ''
+      operationId: createEvent
+      requestBody:
+        description: event to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /events/{id}:
+    get:
+      tags:
+        - events
+      summary: Provides an event with the corresponding id
+      description: ''
+      operationId: getEventById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID of requested event
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+        - events
+      summary: Updates event with given ID
+      description: ''
+      operationId: updateEventById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID of event to update
+      requestBody:
+        description: event to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - events
+      summary: Deltes event with given ID
+      description: ''
+      operationId: deleteEventById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID of event to update
+      responses:
+        '204':
+          description: event deleted successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    # Generic Error responses
+    BadRequest:
+      description: The provided request format is not correct
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Invalid or non existing authorization cookie was sent
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      name: X-AUTH-TOKEN
+      in: cookie
   schemas:
     UserCredentials:
       title: A Users login credentials
@@ -71,8 +248,45 @@ components:
           type: string
         password:
           type: string
-  securitySchemes:
-    cookieAuth:
-      type: apiKey
-      name: X-AUTH-TOKEN
-      in: cookie
+    Event:
+      title: An Event represented in the application
+      description: This DTO represents an event in the dormitory
+      type: object
+      required:
+        - title
+        - place
+        - organizer
+        - hasPoints
+        - startDate
+        - endDate
+      properties:
+        title:
+          type: string
+        place:
+          type: string
+        organizer:
+          type: string
+        hasPoints:
+          type: boolean
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        link:
+          type: string
+          format: uri
+        id:
+          type: string
+          format: uuid
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message

@@ -20,7 +20,7 @@ import { Configuration }                                     from '../configurat
 
 
 
-export interface UserApiServiceInterface {
+export interface UsersApiServiceInterface {
     defaultHeaders: HttpHeaders;
     configuration: Configuration;
 

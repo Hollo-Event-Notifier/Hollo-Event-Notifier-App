@@ -15,7 +15,12 @@ const routes: Routes = [
       },
       {
         path: AdminRoutes.EventDisplay,
-        loadComponent: () => import('../event-display/event-display.component').then(m => m.EventDisplayComponent),
+        loadChildren: () => import('../event-display/event-display.module').then(m => m.EventDisplayModule),
+      },
+      {
+        path: '**',
+        redirectTo: AdminRoutes.EventDisplay,
+        pathMatch: 'full'
       },
     ]
   },

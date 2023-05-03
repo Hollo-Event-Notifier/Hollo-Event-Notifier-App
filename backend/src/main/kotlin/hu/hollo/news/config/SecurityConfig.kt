@@ -3,6 +3,7 @@ package hu.hollo.news.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy.STATELESS
@@ -39,7 +40,8 @@ class SecurityConfig {
             it.contentSecurityPolicy("script-src 'self'")
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/user/login").permitAll()
+            it.requestMatchers("/users/login").permitAll()
+            it.requestMatchers(HttpMethod.GET,"/events").permitAll()
             it.anyRequest().authenticated()
         }
         .oauth2ResourceServer {

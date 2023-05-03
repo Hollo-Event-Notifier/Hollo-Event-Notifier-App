@@ -5,6 +5,7 @@
 */
 package hu.hollo.news.api
 
+import hu.hollo.news.model.dto.ErrorDto
 import hu.hollo.news.model.dto.UserCredentialsDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -30,12 +31,13 @@ import kotlin.collections.Map
 
 @Validated
 @RequestMapping("\${api.base-path:}")
-interface UserApi {
+interface UsersApi {
 
 
     @RequestMapping(
             method = [RequestMethod.GET],
-            value = ["/user/check-token"]
+            value = ["/users/check-token"],
+            produces = ["application/json"]
     )
     fun checkToken(): ResponseEntity<Unit> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
@@ -44,8 +46,8 @@ interface UserApi {
 
     @RequestMapping(
             method = [RequestMethod.POST],
-            value = ["/user/login"],
-            produces = ["text/plain"],
+            value = ["/users/login"],
+            produces = ["application/json"],
             consumes = ["application/json"]
     )
     fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> {
