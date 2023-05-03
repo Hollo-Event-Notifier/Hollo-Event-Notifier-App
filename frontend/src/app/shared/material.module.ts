@@ -18,7 +18,8 @@ const MATERIAL_MODULES = [
   MatToolbarModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatDialogModule,
 ]
 
 @NgModule({

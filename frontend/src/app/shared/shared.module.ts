@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {MaterialModule} from "./material.module";
 import {AsyncPipe, NgIf, NgStyle} from "@angular/common";
 import {FullCalendarModule} from '@fullcalendar/angular';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 const DIRECTIVES = [
