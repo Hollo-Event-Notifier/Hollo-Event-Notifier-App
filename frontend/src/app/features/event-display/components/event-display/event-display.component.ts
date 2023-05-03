@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarOptions, DateSelectArg, EventChangeArg, EventClickArg, EventInput} from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -54,7 +54,6 @@ export class EventDisplayComponent implements OnInit {
   };
 
   constructor(
-    private readonly changeDetector: ChangeDetectorRef,
     private readonly state: ApplicationStateService,
     private readonly eventsService: EventsService,
     private readonly eventMapperService: EventMapperService,
