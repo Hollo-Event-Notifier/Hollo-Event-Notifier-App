@@ -4,7 +4,6 @@ import {AsyncPipe, NgIf, NgStyle} from "@angular/common";
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {ReactiveFormsModule} from "@angular/forms";
 
-
 const DIRECTIVES = [
   NgStyle,
   NgIf,
