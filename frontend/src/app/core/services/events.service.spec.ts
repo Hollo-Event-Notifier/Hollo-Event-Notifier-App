@@ -1,8 +1,8 @@
 import {EventsService} from './events.service';
-import {EventDto, EventsApiService, EventsApiServiceInterface} from '../../../core/api';
-import {ApplicationStateService} from '../../../core/services/application-state.service';
+import {EventDto, EventsApiService, EventsApiServiceInterface} from '../api';
+import {ApplicationStateService} from './application-state.service';
 import {EventMapperService} from './event-mapper.service';
-import {SnackbarService} from '../../../core/services/snackbar.service';
+import {SnackbarService} from './snackbar.service';
 import {TestBed} from "@angular/core/testing";
 import {Provider} from "@angular/core";
 import {of} from "rxjs";
