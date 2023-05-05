@@ -1,0 +1,9 @@
+<app-full-calendar-wrapper
+  [events]="(events$ | async)!!"
+  (dateSelect)="onDateSelect($event)"
+  (eventClick)="onEventClick($event)"
+  (eventChange)="onEventChange($event)"
+  [isEditable]="true"
+  [hasWeekends]="true"
+  [isSelectable]="true"
+></app-full-calendar-wrapper>
