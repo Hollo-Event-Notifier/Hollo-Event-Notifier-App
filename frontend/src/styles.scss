@@ -42,8 +42,14 @@ $custom-theme: mat.define-light-theme((
   ),
 ));
 
+
+@include mat.all-component-themes($custom-theme);
+/*
+@include mat.private-form-field-theme($custom-theme);
 @include mat.button-theme($custom-theme);
 @include mat.toolbar-color($custom-theme);
+ */
+
 
 
 html, body { height: 100%; }

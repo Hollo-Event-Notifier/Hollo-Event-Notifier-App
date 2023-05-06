@@ -7,13 +7,24 @@
 
   mat-card {
     min-width: 350px;
-    min-height: 280px;
+    min-height: 400px;
     width: 25%;
     height: 40%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
+    mat-card-title {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    mat-card-subtitle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     mat-card-content {
       width: 100%;
       display: flex;
