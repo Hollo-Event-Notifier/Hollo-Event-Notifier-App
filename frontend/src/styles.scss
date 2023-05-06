@@ -1,4 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+/* color: #364354, #FFF531
+ "@angular/material/prebuilt-themes/indigo-pink.css"
+ */
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+$color-grey-blue: #364354;
+$white: #ffff;
+
+$custom-palette: (
+  50:  $color-grey-blue,
+  100: $color-grey-blue,
+  200: $color-grey-blue,
+  300: $color-grey-blue,
+  400: $color-grey-blue,
+  500: $color-grey-blue,
+  600: $color-grey-blue,
+  700: $color-grey-blue,
+  800: $color-grey-blue,
+  900: $color-grey-blue,
+  contrast: (
+    50:  $white,
+    100: $white,
+    200: $white,
+    400: $white,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white,
+  )
+);
+
+$primary: mat.define-palette($custom-palette);
+$accent: mat.define-palette($custom-palette);
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  ),
+));
+
+@include mat.button-theme($custom-theme);
+@include mat.toolbar-color($custom-theme);
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
