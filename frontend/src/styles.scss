@@ -4,6 +4,37 @@
 
 @use '@angular/material' as mat;
 
+$custom-typography: mat.define-typography-config(
+  $font-family: 'Oswald',
+  /*$headline-1: mat.define-typography-level(2px, 24px, 600, bold),*/
+  /*$headline-2: mat.define-typography-level(2px, 24px, 600, bold),*/
+  /*$headline-3: mat.define-typography-level(2px, 24px, 600, bold),*/
+  /*$headline-4: mat.define-typography-level(2px, 24px, 600, bold),*/
+  /*$headline-5: mat.define-typography-level(2px, 24px, 600, bold),*/
+  $headline-6: mat.define-typography-level(
+    $font-weight: 600,
+    $font-size: 20px,
+    $line-height: 1,
+    $letter-spacing: 1.5px
+  ),
+  /*$subtitle-1: mat.define-typography-level(24px, 24px, 600, bold),*/
+  /*$subtitle-2: mat.define-typography-level(24px, 24px, 600, bold),*/
+  $body-1: mat.define-typography-level(
+    $font-weight: 600,
+    $font-size: 15px,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  /*$body-2: mat.define-typography-level(24px, 24px, bold),*/
+  /*$caption: mat.define-typography-level(24px, 24px, bold),*/
+  $button: mat.define-typography-level(
+    $font-weight: 600,
+    $font-size: 15px,
+    $line-height: 4,
+    $letter-spacing: normal
+  ),
+);
+
 @include mat.core();
 $color-grey-blue: #364354;
 $white: #ffff;
@@ -40,15 +71,12 @@ $custom-theme: mat.define-light-theme((
     primary: $primary,
     accent: $accent,
   ),
+  typography: $custom-typography,
 ));
 
 
 @include mat.all-component-themes($custom-theme);
-/*
-@include mat.private-form-field-theme($custom-theme);
-@include mat.button-theme($custom-theme);
-@include mat.toolbar-color($custom-theme);
- */
+
 
 
 
