@@ -24,7 +24,7 @@ export class ApplicationStateService {
     const oldState = this.state.getValue();
 
     if (typeof newState === 'string') {
-      oldState.events.filter(event => event.id === newState);
+      oldState.events = oldState.events.filter(event => event.id !== newState);
       this.state.next({...oldState});
     } else if (instanceOfCalendarEvent(newState)) {
       const index = oldState.events.findIndex(event => event.id === newState.id);
