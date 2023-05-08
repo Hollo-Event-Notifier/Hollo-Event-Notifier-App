@@ -4,7 +4,8 @@ import {
   DateSelectArg,
   EventAddArg,
   EventChangeArg,
-  EventClickArg, EventInput,
+  EventClickArg,
+  EventInput,
   EventRemoveArg
 } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -18,7 +19,7 @@ import {EventMapperService} from "../../../core/services/event-mapper.service";
 @Component({
   selector: 'app-full-calendar-wrapper',
   templateUrl: './full-calendar-wrapper.component.html',
-  styleUrls: ['./full-calendar-wrapper.component.scss']
+  styleUrls: ['./full-calendar-wrapper.component.scss'],
 })
 export class FullCalendarWrapperComponent implements OnInit {
   @Output('dateSelect') dateSelectEmitter = new EventEmitter<EventDto>();
@@ -31,7 +32,6 @@ export class FullCalendarWrapperComponent implements OnInit {
   @Input() isEditable: boolean = false;
   @Input() hasWeekends: boolean = false;
   @Input() isSelectable: boolean = false;
-
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -49,6 +49,11 @@ export class FullCalendarWrapperComponent implements OnInit {
     selectMirror: true,
     dayMaxEvents: true,
     firstDay: 1,
+    select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    eventChange: this.handleEventChange.bind(this),
+    eventAdd: this.handleEventAdd.bind(this),
+    eventRemove: this.handleEventRemove.bind(this),
   };
 
   constructor(private readonly eventMapperService: EventMapperService) {
@@ -60,15 +65,12 @@ export class FullCalendarWrapperComponent implements OnInit {
       weekends: this.hasWeekends,
       editable: this.isEditable,
       selectable: this.isSelectable,
-      select: this.handleDateSelect.bind(this),
-      eventClick: this.handleEventClick.bind(this),
-      eventChange: this.handleEventChange.bind(this),
-      eventAdd: this.handleEventAdd.bind(this),
-      eventRemove: this.handleEventRemove.bind(this),
     }
   }
 
   private handleDateSelect(selectInfo: DateSelectArg): void {
+    selectInfo.view.calendar.unselect();
+
     this.dateSelectEmitter.emit({
       startDate: selectInfo.start.toISOString(),
       endDate: selectInfo.end.toISOString(),
