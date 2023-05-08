@@ -1,128 +1,54 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {SharedModule} from '../../../../shared/shared.module';
+import {MatChipsModule} from '@angular/material/chips';
 import {EventDto} from '../../../../core/api';
-import {EventEditorData} from '../../models/event-display-data';
-import {EventEditorMode} from '../../enums/event-display-mode';
 import {EventDisplayDialogComponent} from './event-display-dialog.component';
-import {MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatIconModule} from "@angular/material/icon";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-describe('EventEditorDialogComponent', () => {
+describe('EventDisplayDialogComponent', () => {
   let component: EventDisplayDialogComponent;
   let fixture: ComponentFixture<EventDisplayDialogComponent>;
-
-  const eventEditorDataMock: EventEditorData = {
-    event: {
-      id: '123',
-      title: 'Test Title',
-      place: 'Test Place',
-      organizer: 'Test Organizer',
-      hasPoints: true,
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
-      link: 'https://example.com',
-    },
-    mode: EventEditorMode.Create
-  }
+  const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
 
   beforeEach(waitForAsync(() => {
+    // Arrange: set up the TestBed environment
     TestBed.configureTestingModule({
-      declarations: [EventDisplayDialogComponent],
       imports: [
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        BrowserAnimationsModule
+        EventDisplayDialogComponent,
+        SharedModule
       ],
-      providers: [
-        {
-          provide: MatDialogRef, useValue: {
-            close: jasmine.createSpy('close')
-          }
-        },
-        {provide: MAT_DIALOG_DATA, useValue: eventEditorDataMock}
-      ]
+    }).overrideComponent(EventDisplayDialogComponent, {
+      add: {
+        providers: [
+          {provide: MatDialogRef, useValue: dialogRefSpy},
+          {
+            provide: MAT_DIALOG_DATA,
+            useValue: {
+              // Set the properties of the mock event data here
+            } as EventDto,
+          },
+        ],
+      }
     }).compileComponents();
   }));
 
   beforeEach(() => {
+    // Arrange: create the component fixture and instance
     fixture = TestBed.createComponent(EventDisplayDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
+    // Assert
     expect(component).toBeTruthy();
   });
 
-  it('should initialize form group with values from input data', () => {
-    // Arrange
-    const expectedFormValues: EventDto = {
-      title: eventEditorDataMock.event.title,
-      place: eventEditorDataMock.event.place,
-      organizer: eventEditorDataMock.event.organizer,
-      hasPoints: eventEditorDataMock.event.hasPoints,
-      startDate: eventEditorDataMock.event.startDate,
-      endDate: eventEditorDataMock.event.endDate,
-      link: eventEditorDataMock.event.link
-    };
-
+  it('should call `close` method when `onClose` is called', () => {
     // Act
-
-    // Assert
-    expect(component.formGroup.value).toEqual(expectedFormValues);
-  });
-
-  it('should emit updated event data on save', () => {
-    // Arrange
-    const expectedEventDto = {
-      id: '123',
-      title: 'New Title',
-      place: 'New Place',
-      organizer: 'New Organizer',
-      hasPoints: false,
-      startDate: eventEditorDataMock.event.startDate,
-      endDate: eventEditorDataMock.event.endDate,
-      link: eventEditorDataMock.event.link
-    } as EventDto;
-
-    // Act
-    component.formGroup.patchValue({
-      title: 'New Title',
-      place: 'New Place',
-      organizer: 'New Organizer',
-      hasPoints: false
-    });
     component.onClose();
 
     // Assert
-    expect(component['dialogRef'].close).toHaveBeenCalledWith(expectedEventDto);
-  });
-
-  it('should emit event id on delete', () => {
-    // Arrange: done in beforeEach
-
-    // Act
-    component.onDelete();
-
-    // Assert
-    expect(component['dialogRef'].close).toHaveBeenCalledWith('123');
-  });
-
-  it('should close dialog on cancel', () => {
-    // Arrange: done in beforeEach
-
-    // Act
-    component.onCancel();
-
-    // Assert
-    expect(component['dialogRef'].close).toHaveBeenCalled();
+    expect(dialogRefSpy.close).toHaveBeenCalled();
   });
 });
