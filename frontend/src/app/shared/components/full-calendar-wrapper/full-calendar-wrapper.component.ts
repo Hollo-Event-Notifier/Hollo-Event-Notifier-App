@@ -15,7 +15,6 @@ import listPlugin from "@fullcalendar/list";
 import {EventDto} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
 
-// TODO: add change detection
 @Component({
   selector: 'app-full-calendar-wrapper',
   templateUrl: './full-calendar-wrapper.component.html',
