@@ -34,19 +34,10 @@ export class AdminEventDisplayComponent implements OnInit {
   }
 
   onDateSelect(emptyEventWithDates: EventDto) {
-    this.matDialog.open(EventEditorDialogComponent, {
-      data: {
-        event: emptyEventWithDates,
-        mode: EventEditorMode.Create
-      } as EventEditorData
-    }).afterClosed().subscribe((value: EventDto) => {
-      if (value !== undefined && instanceOfEventDto(value)) {
-        this.eventsService.createEvent(value);
-      }
-    });
+    this.openCreateDialog(emptyEventWithDates);
   }
 
-  onEventClick(eventToUpdate: EventDto) {
+  onEventClick(eventToUpdate: EventDto): void {
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
         event: eventToUpdate,
@@ -63,7 +54,34 @@ export class AdminEventDisplayComponent implements OnInit {
     });
   }
 
-  onEventChange(eventToUpdate: EventDto) {
+  onEventChange(eventToUpdate: EventDto): void {
     this.eventsService.updateEvent(eventToUpdate);
+  }
+
+  onFabClick(): void {
+    const startDate = new Date();
+    const endDate = new Date(startDate);
+    endDate.setHours(endDate.getHours() + 1)
+    this.openCreateDialog({
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      hasPoints: false,
+      organizer: '',
+      place: '',
+      title: ''
+    });
+  }
+
+  private openCreateDialog(event: EventDto): void {
+    this.matDialog.open(EventEditorDialogComponent, {
+      data: {
+        event: event,
+        mode: EventEditorMode.Create
+      } as EventEditorData
+    }).afterClosed().subscribe((value: EventDto) => {
+      if (value !== undefined && instanceOfEventDto(value)) {
+        this.eventsService.createEvent(value);
+      }
+    });
   }
 }
