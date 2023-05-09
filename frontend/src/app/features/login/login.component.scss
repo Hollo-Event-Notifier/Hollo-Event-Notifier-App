@@ -57,13 +57,9 @@
         margin-bottom: 20px;
         border: 2px solid white;
         background-color: white;
-        @include mat.elevation(1, #c4c4c4, 0.5);
       }
       button:disabled {
         color: #c4c4c4;
-      }
-      button:hover {
-        @include mat.elevation(5, #c4c4c4, 0.5);
       }
       button:enabled{
         color: #364354;

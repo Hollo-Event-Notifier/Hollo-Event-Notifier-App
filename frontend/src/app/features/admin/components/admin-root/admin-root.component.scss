@@ -24,9 +24,5 @@ mat-toolbar {
     border: 2px solid white;
     border-radius: 15px;
     margin: 5px;
-    @include mat.elevation(1, #c4c4c4, 0.5);
-  }
-  button:hover {
-    @include mat.elevation(3, #c4c4c4, 0.5);
   }
 }

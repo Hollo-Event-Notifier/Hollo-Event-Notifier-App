@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CalendarOptions, DateSelectArg, EventChangeArg, EventClickArg, EventInput} from "@fullcalendar/core";
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -19,7 +19,8 @@ import {EventEditorMode} from "../../enums/event-editor-mode";
 @Component({
   selector: 'app-event-display',
   templateUrl: './event-display.component.html',
-  styleUrls: ['./event-display.component.scss']
+  styleUrls: ['./event-display.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EventDisplayComponent implements OnInit {
   events$!: Observable<EventInput[]>;

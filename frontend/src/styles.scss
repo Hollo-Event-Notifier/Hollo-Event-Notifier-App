@@ -1,42 +1,25 @@
-/* color: #364354, #FFF531
- "@angular/material/prebuilt-themes/indigo-pink.css"
- */
-
 @use '@angular/material' as mat;
 
 $custom-typography: mat.define-typography-config(
   $font-family: 'Oswald',
-  /*$headline-1: mat.define-typography-level(2px, 24px, 600, bold),*/
-  /*$headline-2: mat.define-typography-level(2px, 24px, 600, bold),*/
-  /*$headline-3: mat.define-typography-level(2px, 24px, 600, bold),*/
-  /*$headline-4: mat.define-typography-level(2px, 24px, 600, bold),*/
-  /*$headline-5: mat.define-typography-level(2px, 24px, 600, bold),*/
-  $headline-6: mat.define-typography-level(
-    $font-weight: 600,
-    $font-size: 20px,
-    $line-height: 1,
-    $letter-spacing: 1.5px
-  ),
-  /*$subtitle-1: mat.define-typography-level(24px, 24px, 600, bold),*/
-  /*$subtitle-2: mat.define-typography-level(24px, 24px, 600, bold),*/
-  $body-1: mat.define-typography-level(
-    $font-weight: 600,
-    $font-size: 15px,
-    $line-height: 1,
-    $letter-spacing: normal
-  ),
-  /*$body-2: mat.define-typography-level(24px, 24px, bold),*/
-  /*$caption: mat.define-typography-level(24px, 24px, bold),*/
-  $button: mat.define-typography-level(
-    $font-weight: 600,
-    $font-size: 15px,
-    $line-height: 4,
-    $letter-spacing: normal
+  $headline-1: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-2: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-3: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-4: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-5: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-6: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $subtitle-1: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $subtitle-2: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $body-1: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $body-2: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $caption: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $button: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 4, $letter-spacing: normal
   ),
 );
 
 @include mat.core();
 $color-grey-blue: #364354;
+$color-default-event: #3f51b5;
 $white: #ffff;
 
 $custom-palette: (
@@ -77,34 +60,16 @@ $custom-theme: mat.define-light-theme((
 
 @include mat.all-component-themes($custom-theme);
 
-:root {
-  --fc-small-font-size: .85em;
-  --fc-page-bg-color: #fff;
-  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
-  --fc-neutral-text-color: #808080;
-  --fc-border-color: #ddd;
-
-  --fc-button-text-color: #fff;
-  --fc-button-bg-color: #2C3E50;
-  --fc-button-border-color: #2C3E50;
-  --fc-button-hover-bg-color: #1e2b37;
-  --fc-button-hover-border-color: #1a252f;
-  --fc-button-active-bg-color: #1a252f;
-  --fc-button-active-border-color: #151e27;
-
-  --fc-event-bg-color: #7a0521;
-  --fc-event-border-color: #015bb2;
-  --fc-event-text-color: #ce0000;
+.fc-event-title, .fc-day-header {
+  font-family: 'Oswald', sans-serif;
 }
-
-
-
-
 
 html, body {
   height: 100%;
   font-family: Oswald, serif;
+
 }
 body {
-  margin: 0;}
+  margin: 0;
+}
 
