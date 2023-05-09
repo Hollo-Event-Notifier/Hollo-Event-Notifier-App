@@ -22,7 +22,6 @@ export class AdminEventDisplayComponent implements OnInit {
   constructor(
     private readonly state: ApplicationStateService,
     private readonly eventsService: EventsService,
-    private readonly eventMapperService: EventMapperService,
     private readonly matDialog: MatDialog,
   ) {
     this.events$ = this.state.events;
