@@ -1,0 +1,5 @@
+<app-full-calendar-wrapper
+  [hasWeekends]="true"
+  (eventClick)="onEventClick($event)"
+  [events]="(events$ | async)!!"
+></app-full-calendar-wrapper>

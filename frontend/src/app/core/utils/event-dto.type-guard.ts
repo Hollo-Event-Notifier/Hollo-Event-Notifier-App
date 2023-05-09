@@ -1,6 +1,6 @@
-import {EventDto} from "../../../core/api";
+import {EventDto} from "../api";
 
-export function instanceOfEventDto(object: any): object is EventDto {
+export function instanceOfEventDto(object: object): object is EventDto {
   return 'title' in object &&
     'place' in object &&
     'organizer' in object &&

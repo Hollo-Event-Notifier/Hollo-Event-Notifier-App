@@ -24,12 +24,12 @@ export class ApplicationStateService {
     const oldState = this.state.getValue();
 
     if (typeof newState === 'string') {
-      oldState.events.filter(event => event.id === newState);
+      oldState.events = oldState.events.filter(event => event.id !== newState);
       this.state.next({...oldState});
     } else if (instanceOfCalendarEvent(newState)) {
       const index = oldState.events.findIndex(event => event.id === newState.id);
       index !== -1 ? oldState.events[index] = newState : oldState.events.push(newState);
-      this.state.next({...oldState});
+      this.state.next({...oldState, events: [...oldState.events]});
     } else {
       this.state.next({
         ...this.state.getValue(),
