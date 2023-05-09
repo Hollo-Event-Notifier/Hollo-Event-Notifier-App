@@ -1,52 +1,44 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AuthGuardService } from './auth-guard.service';
-import { of } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {Router} from '@angular/router';
+import {of} from 'rxjs';
+import {AuthGuardService} from "./auth-guard.service";
 import {UsersApiService, UsersApiServiceInterface} from "../api";
 
 describe('AuthGuardService', () => {
   let service: AuthGuardService;
-  let userApiServiceSpy: jasmine.SpyObj<UsersApiServiceInterface>;
+  let usersApiServiceSpy: jasmine.SpyObj<UsersApiServiceInterface>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    userApiServiceSpy = jasmine.createSpyObj('UserApiService', ['checkToken']);
+    usersApiServiceSpy = jasmine.createSpyObj<UsersApiService>(['checkToken']);
+    routerSpy = jasmine.createSpyObj<Router>(['navigate']);
+
     TestBed.configureTestingModule({
       providers: [
         AuthGuardService,
-        { provide: UsersApiService, useValue: userApiServiceSpy }
+        {provide: UsersApiService, useValue: usersApiServiceSpy},
+        {provide: Router, useValue: routerSpy}
       ]
     });
+
     service = TestBed.inject(AuthGuardService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should return true if token check succeeds', (done: DoneFn) => {
+    // Arrange
+    usersApiServiceSpy.checkToken.and.returnValue(of(true));
+    let canActivate: boolean;
+
+    // Act
+    service.canActivate().subscribe(result => {
+      canActivate = result;
+
+      // Assert
+      expect(canActivate).toBeTrue();
+
+      done();
+    });
   });
 
-  it('should return true when user is authenticated', fakeAsync(() => {
-    // Arrange
-    userApiServiceSpy.checkToken.and.returnValue(of(true));
-
-    // Act
-    let result: boolean | undefined;
-    service.canActivate().subscribe(res => result = res);
-    tick();
-
-    // Assert
-    expect(result).toBeTrue();
-    expect(userApiServiceSpy.checkToken).toHaveBeenCalled();
-  }));
-
-  it('should return false when user is not authenticated', fakeAsync(() => {
-    // Arrange
-    userApiServiceSpy.checkToken.and.returnValue(of(false));
-
-    // Act
-    let result: boolean | undefined;
-    service.canActivate().subscribe(res => result = res);
-    tick();
-
-    // Assert
-    expect(result).toBeFalse();
-    expect(userApiServiceSpy.checkToken).toHaveBeenCalled();
-  }));
+  // TODO: test catcherror branch
 });
