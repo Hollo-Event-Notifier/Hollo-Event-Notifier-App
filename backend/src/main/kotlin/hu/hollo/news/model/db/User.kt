@@ -14,9 +14,6 @@ class User(
     )
     var username: String,
 
-    @Column(nullable = false)
-    var password: String,
-
     @Email
     @Column(
         nullable = false,
@@ -24,6 +21,11 @@ class User(
     )
     var email: String,
 
+    @Column(nullable = false)
+    var role: Role,
+
+    @Column(nullable = false)
+    var password: String = "",
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -43,6 +45,6 @@ class User(
     override fun hashCode() = 13
 
     override fun toString(): String {
-        return "${this.javaClass.simpleName}(username='$username', password='$password', email='$email',  id='$id')"
+        return "${this.javaClass.simpleName}(username='$username', password='$password', email='$email', role='$role',  id='$id')"
     }
 }
