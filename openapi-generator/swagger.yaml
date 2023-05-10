@@ -15,6 +15,52 @@ tags:
 security: # global security constraint
   - cookieAuth: [ ]
 paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: Provides all user in application
+      description: ''
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+        - users
+      summary: Updates existing user in application
+      description: ''
+      operationId: updateUser
+      requestBody:
+        description: user credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /users/login:
     post:
       tags:
@@ -189,7 +235,7 @@ paths:
     delete:
       tags:
         - events
-      summary: Deltes event with given ID
+      summary: Deletes event with given ID
       description: ''
       operationId: deleteEventById
       parameters:
@@ -277,6 +323,26 @@ components:
         link:
           type: string
           format: uri
+        id:
+          type: string
+          format: uuid
+    User:
+      title: A user represented in the application
+      description: This DTo represents a user in the application
+      type: object
+      required:
+        - username
+        - email
+        - role
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [ SystemAdmin, EventAdmin ]
         id:
           type: string
           format: uuid
