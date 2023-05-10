@@ -2,12 +2,15 @@ package hu.hollo.news.controller
 
 import hu.hollo.news.api.UsersApi
 import hu.hollo.news.model.dto.UserCredentialsDto
+import hu.hollo.news.model.dto.UserDto
 import hu.hollo.news.service.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.server.Cookie.SameSite
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.RestController
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.toJavaDuration
@@ -36,6 +39,14 @@ class UsersController(
             }
             .build()
 
-    override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build();
+    override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build()
 
+    override fun getAllUsers(): ResponseEntity<List<UserDto>> = ResponseEntity.ok(userService.getAllUsers())
+
+    override fun updateUser(userDto: UserDto): ResponseEntity<UserDto> =
+        ResponseEntity.ok(
+            userService.updateUser(
+                userDto, SecurityContextHolder.getContext().authentication.principal as Jwt
+            )
+        )
 }
