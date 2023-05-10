@@ -7,6 +7,7 @@ package hu.hollo.news.api
 
 import hu.hollo.news.model.dto.ErrorDto
 import hu.hollo.news.model.dto.UserCredentialsDto
+import hu.hollo.news.model.dto.UserDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -45,12 +46,33 @@ interface UsersApi {
 
 
     @RequestMapping(
+            method = [RequestMethod.GET],
+            value = ["/users"],
+            produces = ["application/json"]
+    )
+    fun getAllUsers(): ResponseEntity<List<UserDto>> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
             method = [RequestMethod.POST],
             value = ["/users/login"],
             produces = ["application/json"],
             consumes = ["application/json"]
     )
     fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.POST],
+            value = ["/users"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun updateUser( @Valid @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 }
