@@ -1,9 +1,11 @@
 package hu.hollo.news.config
 
 import hu.hollo.news.model.db.Event
+import hu.hollo.news.model.db.Role
 import hu.hollo.news.model.db.User
 import hu.hollo.news.repository.EventsRepository
 import hu.hollo.news.repository.UserRepository
+import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,9 +18,16 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
 
     private val users = listOf(
         User(
-            "vbkristof",
-            passwordEncoder.encode("password"),
-            "kristofvargabalazs@gmail.com",
+            username = "vbkristof",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.SystemAdmin,
+            email = "kristofvargabalazs@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy.business@gmail.com"
         )
     )
 
