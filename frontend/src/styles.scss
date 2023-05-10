@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 $custom-typography: mat.define-typography-config(
-  $font-family: 'Oswald',
+  $font-family: custom-font,
   $headline-1: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
   $headline-2: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
   $headline-3: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
@@ -60,13 +60,15 @@ $custom-theme: mat.define-light-theme((
 
 @include mat.all-component-themes($custom-theme);
 
-.fc-event-title, .fc-day-header {
-  font-family: 'Oswald', sans-serif;
+
+.mat-mdc-card{
+  @include mat.elevation(12, #c4c4c4, 0.8);
 }
+
 
 html, body {
   height: 100%;
-  font-family: Oswald, serif;
+  font-family: custom-font;
 
 }
 body {
