@@ -5,6 +5,8 @@ import {SnackbarService} from "./services/snackbar.service";
 import {ApiModule, BASE_PATH, Configuration, UsersApiService} from "./api";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth-guard.service";
+import {EventMapperService} from "./services/event-mapper.service";
+import {EventsService} from "./services/events.service";
 
 const IMPORTS = [
   MatSnackBarModule,
@@ -24,6 +26,8 @@ const PROVIDERS: Provider[] = [
   ApplicationStateService,
   SnackbarService,
   AuthGuardService,
+  EventsService,
+  EventMapperService
 ];
 
 const API_SERVICES: Provider[] = [

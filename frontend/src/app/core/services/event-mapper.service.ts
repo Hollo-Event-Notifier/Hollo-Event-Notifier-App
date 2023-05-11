@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EventDto} from "../../../core/api";
+import {EventDto} from "../api";
 import {EventInput} from "@fullcalendar/core";
 import {EventImpl} from "@fullcalendar/core/internal";
 

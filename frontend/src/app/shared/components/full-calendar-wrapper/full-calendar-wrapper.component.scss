@@ -1,0 +1,10 @@
+full-calendar {
+  width: 100%;
+  height: 100%;
+
+  // TODO: remove ng-deep and add correct theming
+  ::ng-deep .fc-event-main:hover {
+    cursor: grab;
+    background-color: #478ee8;
+  }
+}

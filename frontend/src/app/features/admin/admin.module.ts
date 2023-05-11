@@ -3,10 +3,14 @@ import {AdminRootComponent} from './components/admin-root/admin-root.component';
 import {AdminRoutingModule} from "./admin-routing.module";
 import {SharedModule} from "../../shared/shared.module";
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminEventDisplayComponent } from './components/admin-event-display/admin-event-display.component';
+import {EventEditorDialogComponent} from "./components/event-editor/event-editor-dialog.component";
 
 const DECLARATIONS = [
   AdminRootComponent,
-  SettingsComponent
+  SettingsComponent,
+  AdminEventDisplayComponent,
+  EventEditorDialogComponent
 ];
 
 const IMPORTS = [

@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AdminRootComponent} from "./components/admin-root/admin-root.component";
 import {AdminRoutes} from "./enums/admin-routes";
 import {SettingsComponent} from "./components/settings/settings.component";
+import {AdminEventDisplayComponent} from "./components/admin-event-display/admin-event-display.component";
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
       },
       {
         path: AdminRoutes.EventDisplay,
-        loadChildren: () => import('../event-display/event-display.module').then(m => m.EventDisplayModule),
+        component: AdminEventDisplayComponent,
       },
       {
         path: '**',

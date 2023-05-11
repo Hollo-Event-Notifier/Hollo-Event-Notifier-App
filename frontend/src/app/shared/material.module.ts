@@ -8,6 +8,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatChipsModule} from "@angular/material/chips";
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -19,7 +20,8 @@ const MATERIAL_MODULES = [
   MatDialogModule,
   MatSlideToggleModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatChipsModule
 ]
 
 @NgModule({

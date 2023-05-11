@@ -1,6 +1,5 @@
-import {TestBed} from '@angular/core/testing';
 import {EventMapperService} from './event-mapper.service';
-import {EventDto} from "../../../core/api";
+import {EventDto} from "../api";
 import {EventInput} from "@fullcalendar/core";
 
 describe('EventMapperService', () => {
@@ -37,7 +36,6 @@ describe('EventMapperService', () => {
 
     // Act
     const result = underTest.mapEventDtoToCalendarEvent(dto);
-
     // Assert
     expect(result).toEqual(expected);
   });
