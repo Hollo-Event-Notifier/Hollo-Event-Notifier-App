@@ -3,7 +3,6 @@ import {Observable} from "rxjs";
 import {EventInput} from "@fullcalendar/core";
 import {ApplicationStateService} from "../../../../core/services/application-state.service";
 import {EventsService} from "../../../../core/services/events.service";
-import {EventMapperService} from "../../../../core/services/event-mapper.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDto} from "../../../../core/api";
 import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
@@ -12,7 +11,7 @@ import {EventEditorData} from "../../models/event-editor-data";
 import {instanceOfEventDto} from "../../../../core/utils/event-dto.type-guard";
 
 @Component({
-  selector: 'app-admin-event-display',
+  selector: 'app-admin-event-display-dialog',
   templateUrl: './admin-event-display.component.html',
   styleUrls: ['./admin-event-display.component.scss']
 })

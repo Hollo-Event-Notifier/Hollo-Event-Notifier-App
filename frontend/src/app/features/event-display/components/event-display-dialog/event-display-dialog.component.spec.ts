@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SharedModule} from '../../../../shared/shared.module';
-import {MatChipsModule} from '@angular/material/chips';
 import {EventDto} from '../../../../core/api';
 import {EventDisplayDialogComponent} from './event-display-dialog.component';
 

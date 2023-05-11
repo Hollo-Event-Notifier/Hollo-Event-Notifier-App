@@ -1,10 +1,41 @@
-full-calendar {
-  width: 100%;
-  height: 100%;
+:root {
+  --fc-small-font-size: .80em;
+  --fc-event-bg-color: #3f51b5;
+  --fc-event-border-color: #3f51b5;
+  --fc-event-text-color: #ffffff;
 
-  // TODO: remove ng-deep and add correct theming
-  ::ng-deep .fc-event-main:hover {
-    cursor: grab;
-    background-color: #478ee8;
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+  --fc-neutral-text-color: #808080;
+  --fc-border-color: #ddd;
+
+  --fc-button-text-color: #fff;
+  --fc-button-bg-color: #364354;
+  --fc-button-border-color: #364354;
+}
+
+full-calendar{
+  .fc-scroller {
+    color: #364354;
+    font-family: custom-font;
+    font-weight: 600;
+  }
+  .fc-toolbar.fc-header-toolbar {
+    color: #364354;
+    font-family: custom-font;
+    font-weight: 600;
+  }
+  .fc-toolbar-title{
+    color: #364354;
+    font-family: custom-font;
+    font-weight: 600;
+  }
+  .fc-event-title {
+    font-family: custom-font;
+    font-weight: 100;
+  }
+  .fc-event-time{
+    font-family: custom-font;
+    font-weight: 200;
   }
 }

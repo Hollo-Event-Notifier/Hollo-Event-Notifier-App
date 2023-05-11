@@ -6,10 +6,10 @@ import {EventInput} from "@fullcalendar/core";
 import {ApplicationStateService} from "../../core/services/application-state.service";
 import {EventsService} from "../../core/services/events.service";
 import {MatDialog} from "@angular/material/dialog";
-import {EventDisplayDialogComponent} from "./components/event-display/event-display-dialog.component";
+import {EventDisplayDialogComponent} from "./components/event-display-dialog/event-display-dialog.component";
 
 @Component({
-  selector: 'app-event-display',
+  selector: 'app-event-display-dialog',
   templateUrl: './event-display.component.html',
   styleUrls: ['./event-display.component.scss'],
   imports: [SharedModule,],
