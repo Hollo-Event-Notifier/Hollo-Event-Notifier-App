@@ -1,4 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$custom-typography: mat.define-typography-config(
+  $font-family: custom-font,
+  $headline-1: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-2: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-3: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-4: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-5: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $headline-6: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $subtitle-1: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $subtitle-2: mat.define-typography-level($font-weight: 600, $font-size: 20px, $line-height: 1, $letter-spacing: 1.5px),
+  $body-1: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $body-2: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $caption: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 1, $letter-spacing: normal),
+  $button: mat.define-typography-level($font-weight: 600, $font-size: 15px, $line-height: 4, $letter-spacing: normal
+  ),
+);
+
+@include mat.core();
+$color-grey-blue: #364354;
+$color-default-event: #3f51b5;
+$white: #ffff;
+
+$custom-palette: (
+  50:  $color-grey-blue,
+  100: $color-grey-blue,
+  200: $color-grey-blue,
+  300: $color-grey-blue,
+  400: $color-grey-blue,
+  500: $color-grey-blue,
+  600: $color-grey-blue,
+  700: $color-grey-blue,
+  800: $color-grey-blue,
+  900: $color-grey-blue,
+  contrast: (
+    50:  $white,
+    100: $white,
+    200: $white,
+    400: $white,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white,
+  )
+);
+
+$primary: mat.define-palette($custom-palette);
+$accent: mat.define-palette($custom-palette);
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  ),
+  typography: $custom-typography,
+));
+
+
+@include mat.all-component-themes($custom-theme);
+
+
+.mat-mdc-card{
+  @include mat.elevation(12, #c4c4c4, 0.8);
+}
+
+
+html, body {
+  height: 100%;
+  font-family: custom-font;
+
+}
+body {
+  margin: 0;
+}
+

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {
   CalendarOptions,
   DateSelectArg,
@@ -19,6 +19,7 @@ import {EventMapperService} from "../../../core/services/event-mapper.service";
   selector: 'app-full-calendar-wrapper',
   templateUrl: './full-calendar-wrapper.component.html',
   styleUrls: ['./full-calendar-wrapper.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FullCalendarWrapperComponent implements OnInit {
   @Output('dateSelect') dateSelectEmitter = new EventEmitter<EventDto>();
