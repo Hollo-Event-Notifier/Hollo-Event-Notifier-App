@@ -1,6 +1,7 @@
 name: Pull Request Validation
 
 on: 
+  push:
   pull_request:
     branches:
     - development
