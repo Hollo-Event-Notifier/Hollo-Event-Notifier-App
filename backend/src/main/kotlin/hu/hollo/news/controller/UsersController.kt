@@ -29,7 +29,7 @@ class UsersController(
             .headers {
                 it.set(
                     HttpHeaders.SET_COOKIE,
-                    ResponseCookie // TODO: add all neccessary security restrictions
+                    ResponseCookie // TODO: add all necessary security restrictions
                         .from(cookieName, userService.loginUser(userCredentialsDto).tokenValue)
                         .httpOnly(false) // TODO: should be addressed later
                         .secure(false) // TODO: add when HTTPS setup
@@ -60,9 +60,9 @@ class UsersController(
             )
         )
 
-    override fun deleteUserById(idToDelete: UUID): ResponseEntity<Unit> {
+    override fun deleteUserById(id: UUID): ResponseEntity<Unit> {
         userService.deleteUser(
-            idToDelete,
+            id,
             SecurityContextHolder.getContext().authentication.principal as Jwt
         )
         return ResponseEntity.noContent().build()
