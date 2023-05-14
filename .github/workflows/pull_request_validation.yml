@@ -1,0 +1,7 @@
+name: Pull Request Validation
+run-name: Pull Request Validation
+on: [pull_request]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
