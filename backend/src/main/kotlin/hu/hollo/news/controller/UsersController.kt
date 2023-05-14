@@ -1,6 +1,7 @@
 package hu.hollo.news.controller
 
 import hu.hollo.news.api.UsersApi
+import hu.hollo.news.model.dto.CreateUserRequestDto
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.model.dto.UserDto
 import hu.hollo.news.service.UserService
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.toJavaDuration
 
@@ -49,4 +51,21 @@ class UsersController(
                 userDto, SecurityContextHolder.getContext().authentication.principal as Jwt
             )
         )
+
+    override fun createUser(createUserRequestDto: CreateUserRequestDto): ResponseEntity<UserDto> =
+        ResponseEntity.ok(
+            userService.createUser(
+                createUserRequestDto,
+                SecurityContextHolder.getContext().authentication.principal as Jwt
+            )
+        )
+
+    override fun deleteUserById(idToDelete: UUID): ResponseEntity<Unit> {
+        userService.deleteUser(
+            idToDelete,
+            SecurityContextHolder.getContext().authentication.principal as Jwt
+        )
+        return ResponseEntity.noContent().build()
+    }
+
 }
