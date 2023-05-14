@@ -10,7 +10,6 @@ import hu.hollo.news.model.dto.CreateUserRequestDto
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.model.dto.UserDto
 import hu.hollo.news.repository.UserRepository
-import hu.hollo.news.service.adapter.RoleAdapter
 import hu.hollo.news.service.adapter.UserAdapter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -30,8 +29,7 @@ class UserService(
     private val jwtEncoder: JwtEncoder,
     private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
-    private val userAdapter: UserAdapter,
-    private val roleAdapter: RoleAdapter
+    private val userAdapter: UserAdapter
 ) {
     fun loginUser(credentials: UserCredentialsDto): Jwt {
         val foundUser = userRepository.findByUsername(credentials.username)
