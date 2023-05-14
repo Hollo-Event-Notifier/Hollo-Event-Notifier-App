@@ -2,9 +2,7 @@ name: Validation
 
 on: 
   push:
-  pull_request:
-    branches:
-    - development
+  
 jobs:
   frontend-build:
     name: Frontend Build
