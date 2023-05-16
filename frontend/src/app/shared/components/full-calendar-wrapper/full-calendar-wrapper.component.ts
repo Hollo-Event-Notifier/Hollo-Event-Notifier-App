@@ -54,6 +54,13 @@ export class FullCalendarWrapperComponent implements OnInit {
     eventChange: this.handleEventChange.bind(this),
     eventAdd: this.handleEventAdd.bind(this),
     eventRemove: this.handleEventRemove.bind(this),
+    buttonText: {
+      today: 'Today',
+      month: 'Month',
+      week: 'Week',
+      day: 'Day',
+      list: 'List'
+    },
   };
 
   constructor(private readonly eventMapperService: EventMapperService) {
@@ -65,6 +72,7 @@ export class FullCalendarWrapperComponent implements OnInit {
       weekends: this.hasWeekends,
       editable: this.isEditable,
       selectable: this.isSelectable,
+      locale: 'en'
     }
   }
 
@@ -98,5 +106,27 @@ export class FullCalendarWrapperComponent implements OnInit {
   }
 
   private handleEventRemove(removeInfo: EventRemoveArg): void {
+  }
+
+  switchLanguage(language: string) {
+    this.calendarOptions.locale = language;
+    if (language === 'en') {
+      this.calendarOptions.buttonText = {
+        today: 'Today',
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        list: 'List'
+      };
+    }
+    else {
+      this.calendarOptions.buttonText = {
+        today: 'Ma',
+        month: 'Hónap',
+        week: 'Hét',
+        day: 'Nap',
+        list: 'Lista'
+      };
+    }
   }
 }

@@ -6,6 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
 import {LoginComponent} from "./features/login/login.component";
 import {EventDisplayComponent} from "./features/event-display/event-display.component";
+import { HttpClientModule } from '@angular/common/http';
+import { TranslocoRootModule } from './core/transloco-root.module';
 
 const DECLARATIONS = [
   AppComponent
@@ -17,7 +19,9 @@ const IMPORTS = [
   BrowserAnimationsModule,
   CoreModule,
   LoginComponent,
-  EventDisplayComponent
+  EventDisplayComponent,
+  TranslocoRootModule,
+  HttpClientModule
 ];
 
 const PROVIDERS: Provider[] = [];
