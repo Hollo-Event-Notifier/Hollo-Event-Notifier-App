@@ -14,6 +14,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import {EventDto} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
+import {TranslocoRootModule} from "../../../core/transloco-root.module";
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -54,13 +55,6 @@ export class FullCalendarWrapperComponent implements OnInit {
     eventChange: this.handleEventChange.bind(this),
     eventAdd: this.handleEventAdd.bind(this),
     eventRemove: this.handleEventRemove.bind(this),
-    buttonText: {
-      today: 'Today',
-      month: 'Month',
-      week: 'Week',
-      day: 'Day',
-      list: 'List'
-    },
   };
 
   constructor(private readonly eventMapperService: EventMapperService) {
@@ -129,4 +123,6 @@ export class FullCalendarWrapperComponent implements OnInit {
       };
     }
   }
+
+  protected readonly TranslocoRootModule = TranslocoRootModule;
 }
