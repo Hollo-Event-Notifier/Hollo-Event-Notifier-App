@@ -36,4 +36,6 @@ jobs:
           distribution: 'adopt'
 
       - name: Build and Test
-        run: ./gradlew build
+        run: |
+          cd backend
+          ./gradlew build
