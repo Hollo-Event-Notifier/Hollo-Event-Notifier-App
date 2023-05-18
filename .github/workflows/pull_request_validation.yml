@@ -22,6 +22,7 @@ jobs:
       - name: Build Angular Application
         run: npm --prefix frontend run build
   
+  
   backend-build:
     name: Backend Build
     runs-on: ubuntu-latest
