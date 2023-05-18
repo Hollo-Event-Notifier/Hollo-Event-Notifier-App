@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AdminRoutes} from "../../enums/admin-routes";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-admin-root',
@@ -8,4 +9,10 @@ import {AdminRoutes} from "../../enums/admin-routes";
 })
 export class AdminRootComponent {
   readonly adminRoutes = AdminRoutes;
+
+  constructor(private translocoService: TranslocoService) {
+  }
+  switchLanguage(language : string) {
+    this.translocoService.setActiveLang(language);
+  }
 }

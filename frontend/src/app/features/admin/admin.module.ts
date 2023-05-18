@@ -5,6 +5,7 @@ import {SharedModule} from "../../shared/shared.module";
 import { SettingsComponent } from './components/settings/settings.component';
 import { AdminEventDisplayComponent } from './components/admin-event-display/admin-event-display.component';
 import {EventEditorDialogComponent} from "./components/event-editor/event-editor-dialog.component";
+import {TranslocoModule} from "@ngneat/transloco";
 
 const DECLARATIONS = [
   AdminRootComponent,
@@ -15,12 +16,13 @@ const DECLARATIONS = [
 
 const IMPORTS = [
   AdminRoutingModule,
-  SharedModule
+  SharedModule,
+  TranslocoModule
 ];
 
 @NgModule({
   declarations: [...DECLARATIONS],
-  imports: [...IMPORTS]
+    imports: [...IMPORTS]
 })
 export class AdminModule {
 }

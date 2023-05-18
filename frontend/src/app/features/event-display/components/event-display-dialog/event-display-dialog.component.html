@@ -1,4 +1,4 @@
-<div class="container" *transloco="let t">
+<div class="container" *transloco="let t; read:'event-display-dialog'">
   <mat-dialog-actions>
     <h1>{{data.title}}</h1>
     <div class="actions-container">
@@ -7,7 +7,7 @@
         color="warn"
         highlighted
       >
-        {{t('Has points')}}
+        {{t('has_points')}}
       </mat-chip>
       <button
         mat-icon-button
@@ -23,8 +23,8 @@
       <button (click)="switchLanguage('hu')">Hungarian</button>
     </div>
     <h1>{{data.startDate | date}} - {{data.endDate | date}}</h1>
-    <h1>{{t("Place")}}: {{data.place}}</h1>
-    <h1>{{t("Organizer")}}: {{data.organizer}}</h1>
+    <h1>{{t("place")}}: {{data.place}}</h1>
+    <h1>{{t("organizer")}}: {{data.organizer}}</h1>
     <h1>Link: {{data.link}}</h1>
   </mat-dialog-content>
 </div>
