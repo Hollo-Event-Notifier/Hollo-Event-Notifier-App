@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {EventMapperService} from "./services/event-mapper.service";
 import {EventsService} from "./services/events.service";
+import {TranslationService} from "./services/translation.service";
 
 const IMPORTS = [
   MatSnackBarModule,
@@ -27,7 +28,8 @@ const PROVIDERS: Provider[] = [
   SnackbarService,
   AuthGuardService,
   EventsService,
-  EventMapperService
+  EventMapperService,
+  TranslationService,
 ];
 
 const API_SERVICES: Provider[] = [
@@ -40,7 +42,8 @@ const API_SERVICES: Provider[] = [
   providers: [...PROVIDERS, ...API_SERVICES]
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(
+    @Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error(`CoreModule has already been loaded. Import CoreModule in the AppModule only.`);
     }

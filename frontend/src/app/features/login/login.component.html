@@ -1,7 +1,3 @@
-<div>
-  <button (click)="switchLanguage('en')">English</button>
-  <button (click)="switchLanguage('hu')">Hungarian</button>
-</div>
 <div class="container" *transloco="let t; read:'login-component'">
   <mat-card>
     <mat-card-header>
@@ -46,6 +42,13 @@
         (click)="login()"
       >
         {{t("login_button")}}
+      </button>
+      <button class="language-button"
+        mat-raised-button
+        color="primary"
+        (click)="changeLanguage()"
+      >
+          <mat-icon>language</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

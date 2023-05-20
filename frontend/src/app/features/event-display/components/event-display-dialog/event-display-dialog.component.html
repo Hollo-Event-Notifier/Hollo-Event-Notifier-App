@@ -18,10 +18,6 @@
     </div>
   </mat-dialog-actions>
   <mat-dialog-content>
-    <div>
-      <button (click)="switchLanguage('en')">English</button>
-      <button (click)="switchLanguage('hu')">Hungarian</button>
-    </div>
     <h1>{{data.startDate | date}} - {{data.endDate | date}}</h1>
     <h1>{{t("place")}}: {{data.place}}</h1>
     <h1>{{t("organizer")}}: {{data.organizer}}</h1>

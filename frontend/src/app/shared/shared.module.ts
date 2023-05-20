@@ -19,7 +19,7 @@ const MODULES = [
 ]
 
 const DECLARATIONS = [
-  FullCalendarWrapperComponent
+  FullCalendarWrapperComponent,
 ];
 
 @NgModule({

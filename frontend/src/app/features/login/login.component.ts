@@ -3,7 +3,10 @@ import {SharedModule} from "../../shared/shared.module";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginForm} from "./models/login-form";
 import {UserService} from "./services/user.service";
-import {TranslocoModule, TranslocoService} from "@ngneat/transloco";
+import {TranslocoModule} from "@ngneat/transloco";
+import {TranslationService} from "../../core/services/translation.service";
+import {Language} from "../../core/models/language";
+import {state} from "@angular/animations";
 
 @Component({
   selector: 'app-login',
@@ -26,17 +29,19 @@ export class LoginComponent {
     })
   });
 
+  public currentLanguage : string = this.translationService.currentLanguage
+
   constructor(
     private readonly userService: UserService,
-    private translocoService: TranslocoService) {
+    private translationService: TranslationService) {
   }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
-  switchLanguage(language : string) {
-    this.translocoService.setActiveLang(language);
+  changeLanguage() {
+    this.translationService.changeLanguage();
   }
 
   login(): void {
@@ -44,4 +49,8 @@ export class LoginComponent {
       ...this.formGroup.getRawValue()
     });
   }
+
+  protected readonly Language = Language;
+  protected readonly state = state;
+  protected readonly TranslationService = TranslationService;
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {
   CalendarOptions,
   DateSelectArg,
@@ -14,7 +14,9 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import {EventDto} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
-import {TranslocoRootModule} from "../../../core/transloco-root.module";
+import {Language} from "../../../core/models/language";
+import {ApplicationStateService} from "../../../core/services/application-state.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -22,7 +24,7 @@ import {TranslocoRootModule} from "../../../core/transloco-root.module";
   styleUrls: ['./full-calendar-wrapper.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FullCalendarWrapperComponent implements OnInit {
+export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   @Output('dateSelect') dateSelectEmitter = new EventEmitter<EventDto>();
   @Output('eventClick') eventClickEmitter = new EventEmitter<EventDto>();
   @Output('eventChange') eventChangeEmitter = new EventEmitter<EventDto>();
@@ -33,6 +35,7 @@ export class FullCalendarWrapperComponent implements OnInit {
   @Input() isEditable: boolean = false;
   @Input() hasWeekends: boolean = false;
   @Input() isSelectable: boolean = false;
+
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -57,7 +60,12 @@ export class FullCalendarWrapperComponent implements OnInit {
     eventRemove: this.handleEventRemove.bind(this),
   };
 
-  constructor(private readonly eventMapperService: EventMapperService) {
+  private languageSubscription: Subscription | undefined;
+
+  constructor(
+    private readonly state: ApplicationStateService,
+    private readonly eventMapperService: EventMapperService
+  ) {
   }
 
   ngOnInit(): void {
@@ -66,7 +74,17 @@ export class FullCalendarWrapperComponent implements OnInit {
       weekends: this.hasWeekends,
       editable: this.isEditable,
       selectable: this.isSelectable,
-      locale: 'en'
+      locale: Language.En,
+    }
+    this.languageSubscription = this.state.language
+      .subscribe(language => {
+        this.changeLanguage(language);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
     }
   }
 
@@ -102,27 +120,29 @@ export class FullCalendarWrapperComponent implements OnInit {
   private handleEventRemove(removeInfo: EventRemoveArg): void {
   }
 
-  switchLanguage(language: string) {
+  private changeLanguage(language: Language): void {
     this.calendarOptions.locale = language;
-    if (language === 'en') {
-      this.calendarOptions.buttonText = {
-        today: 'Today',
-        month: 'Month',
-        week: 'Week',
-        day: 'Day',
-        list: 'List'
-      };
-    }
-    else {
-      this.calendarOptions.buttonText = {
-        today: 'Ma',
-        month: 'Hónap',
-        week: 'Hét',
-        day: 'Nap',
-        list: 'Lista'
-      };
+    switch (language) {
+      case Language.En: {
+        this.calendarOptions.buttonText = {
+          today: 'Today',
+          month: 'Month',
+          week: 'Week',
+          day: 'Day',
+          list: 'List'
+        };
+        break;
+      }
+      case Language.Hu: {
+        this.calendarOptions.buttonText = {
+          today: 'Ma',
+          month: 'Hónap',
+          week: 'Hét',
+          day: 'Nap',
+          list: 'Lista'
+        };
+        break;
+      }
     }
   }
-
-  protected readonly TranslocoRootModule = TranslocoRootModule;
 }
