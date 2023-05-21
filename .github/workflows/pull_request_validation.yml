@@ -44,8 +44,12 @@ jobs:
     needs: frontend-build
     name: Frontend Test
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test --watch=false --code-coverage=true
+        
       - name: Upload coverage results
         uses: actions/upload-artifact@v3
         with:
