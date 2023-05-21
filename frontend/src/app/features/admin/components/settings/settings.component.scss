@@ -1,0 +1,29 @@
+.grid-container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 50px;
+  padding: 30px;
+
+  mat-card {
+    mat-card-content {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-weight: bold;
+      }
+    }
+  }
+  .fab {
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+    z-index: 2;
+  }
+}
+
+.red {
+  color: red;
+}
+
