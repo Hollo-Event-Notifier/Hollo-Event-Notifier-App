@@ -44,6 +44,11 @@ jobs:
     needs: frontend-build
     name: Frontend Test
     steps:
-      - name: Test Frontend
-        run: npm --prefix frontend run test
+      - name: Test Frontend with Coverage
+        run: npm --prefix frontend run test --watch=false --code-coverage=true
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: ./coverage
 
