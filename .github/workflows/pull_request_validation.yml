@@ -59,7 +59,12 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Test
+      - name: Restore Build Artifacts for Testing
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      - name: Test Backend
         run: |
           cd backend
           ./gradlew test jacocoTestReport
