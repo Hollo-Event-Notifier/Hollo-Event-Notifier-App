@@ -1,7 +1,7 @@
 name: Validation
 
 on: 
-  push:
+  pull_request:
   
 jobs:
   frontend-build:
@@ -39,11 +39,6 @@ jobs:
         run: |
           cd backend
           ./gradlew build
-      - name: Store Build Artifacts for Later Use in Testing
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: backend/build
 
   backend-test:
     needs: backend-build
@@ -58,11 +53,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-
-      - name: Restore Build Artifacts for Testing
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
 
       - name: Test Backend
         run: |
