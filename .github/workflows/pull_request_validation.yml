@@ -56,7 +56,7 @@ jobs:
         run: npm --prefix frontend install
 
       - name: Test Frontend with Coverage
-        run: npm --prefix frontend run test --watch=false --code-coverage=true --browsers=ChromeHeadless
+        run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
         
       - name: Upload coverage results
         uses: actions/upload-artifact@v3
