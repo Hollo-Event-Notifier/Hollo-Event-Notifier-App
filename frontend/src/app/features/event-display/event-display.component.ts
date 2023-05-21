@@ -23,7 +23,7 @@ export class EventDisplayComponent {
     private readonly eventsService: EventsService,
     private readonly matDialog: MatDialog,
   ) {
-    this.events$ = state.events;
+    this.events$ = state.events$;
     // TODO: generic solution
     this.eventsService.getEvents(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-07T23:59:59.000Z'));
   }
