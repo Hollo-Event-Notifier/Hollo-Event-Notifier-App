@@ -19,7 +19,7 @@ describe('ApplicationStateService', () => {
   it('should emit events when accessing the events property', () => {
     // Arrange
     const spy = jasmine.createSpy('map');
-    underTest.events.subscribe(spy);
+    underTest.events$.subscribe(spy);
 
     // Act
     underTest.patchState({events: [{id: '1'}]});
