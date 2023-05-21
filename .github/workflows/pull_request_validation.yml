@@ -41,6 +41,7 @@ jobs:
           ./gradlew build
 
   backend-test:
+    needs: backend-build
     name: Backend Test
     runs-on: ubuntu-latest
     steps: 
@@ -56,4 +57,10 @@ jobs:
       - name: Test
         run: |
           cd backend
-          ./gradlew test
+          ./gradlew test jacocoTestReport
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: backend/build/reports/jacoco/test/html
