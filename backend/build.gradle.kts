@@ -61,7 +61,7 @@ tasks.withType<Test> {
 
 sonarqube {
   properties {
-    property("sonar.projectKey", "Hollo-Event-Notifier_Hollo-Event-Notifier-App/backend")
+    property("sonar.projectKey", "Hollo-Event-Notifier_Hollo-Event-Notifier-App")
     property("sonar.organization", "hollo-event-notifier")
     property("sonar.host.url", "https://sonarcloud.io")
   }
