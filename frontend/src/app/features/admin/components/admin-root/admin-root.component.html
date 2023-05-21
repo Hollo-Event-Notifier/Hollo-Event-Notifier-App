@@ -1,33 +1,24 @@
-<mat-toolbar
-  color="primary"
->
-  <div class="main-menu">
-    <button
-      mat-flat-button
-      color="primary"
-      class="menu-element"
-      [routerLink]="adminRoutes.Settings"
-    >
-      <mat-icon id="settingsIcon">settings</mat-icon>
-      <label for="settingsIcon">Settings</label>
+<mat-toolbar color="primary">
+  <div>
+    <button mat-icon-button [routerLink]="adminRoutes.Settings">
+      <mat-icon>settings</mat-icon>
     </button>
-    <button
-      mat-flat-button
-      color="primary"
-      class="menu-element"
-      [routerLink]="adminRoutes.EventDisplay"
-    >
-      <mat-icon id="eventsIcon">calendar_today</mat-icon>
-      <label for="eventsIcon">Events</label>
+    <button mat-icon-button [routerLink]="adminRoutes.EventDisplay">
+      <mat-icon>calendar_today</mat-icon>
     </button>
   </div>
+  <h1>Holló Event Notifier</h1>
   <button
-    mat-flat-button
-    color="primary"
-    class="menu-element"
+    mat-icon-button
+    [routerLink]="appRoutes.EventDisplay"
   >
-    <mat-icon id="logout-icon">logout</mat-icon>
-    <label for="logout-icon">Logout</label>
+    <mat-icon>profile</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    [routerLink]="appRoutes.EventDisplay"
+  >
+    <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
 <router-outlet></router-outlet>
