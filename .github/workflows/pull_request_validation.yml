@@ -46,6 +46,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0
+        
+      - name: Install dependencies
+        run: npm --prefix frontend install
 
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test --watch=false --code-coverage=true
