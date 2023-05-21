@@ -23,7 +23,7 @@ $color-default-event: #3f51b5;
 $white: #ffff;
 
 $custom-palette: (
-  50:  $color-grey-blue,
+  50: $color-grey-blue,
   100: $color-grey-blue,
   200: $color-grey-blue,
   300: $color-grey-blue,
@@ -34,7 +34,7 @@ $custom-palette: (
   800: $color-grey-blue,
   900: $color-grey-blue,
   contrast: (
-    50:  $white,
+    50: $white,
     100: $white,
     200: $white,
     400: $white,
@@ -60,18 +60,24 @@ $custom-theme: mat.define-light-theme((
 
 @include mat.all-component-themes($custom-theme);
 
-
-.mat-mdc-card{
-  @include mat.elevation(12, #c4c4c4, 0.8);
-}
+// TODO: solve elevation problem
+//.mat-mdc-card{
+//  @include mat.elevation(12, #c4c4c4, 0.8);
+//}
 
 
 html, body {
   height: 100%;
   font-family: custom-font;
-
 }
+
 body {
   margin: 0;
+}
+
+// custom styles for material snackbar
+mat-snack-bar-container {
+  margin: auto;
+  text-align: center;
 }
 
