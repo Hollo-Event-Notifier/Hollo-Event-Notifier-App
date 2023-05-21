@@ -35,20 +35,22 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="formGroup.invalid"
-        (click)="login()"
+      <button class="login-button"
+              mat-raised-button
+              color="primary"
+              [disabled]="formGroup.invalid"
+              (click)="login()"
       >
         {{t("login_button")}}
+        <mat-icon>exit_to_app</mat-icon>
       </button>
       <button class="language-button"
-        mat-raised-button
-        color="primary"
-        (click)="changeLanguage()"
+              mat-raised-button
+              color="primary"
+              (click)="changeLanguage()"
       >
-          <mat-icon>language</mat-icon>
+        <mat-label>{{currentLanguage}}</mat-label>
+        <mat-icon>language</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

@@ -19,6 +19,7 @@ import {TranslationService} from "../../core/services/translation.service";
 export class EventDisplayComponent {
   events$!: Observable<EventInput[]>;
 
+  currentLanguage : string;
   constructor(
     private readonly state: ApplicationStateService,
     private readonly eventsService: EventsService,
@@ -28,9 +29,11 @@ export class EventDisplayComponent {
     this.events$ = state.events;
     // TODO: generic solution
     this.eventsService.getEvents(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-07T23:59:59.000Z'));
+    this.currentLanguage = this.translationService.currentLanguage;
   }
   changeLanguage(): void {
     this.translationService.changeLanguage();
+    this.currentLanguage = this.translationService.currentLanguage;
   }
 
   onEventClick($event: EventDto) {

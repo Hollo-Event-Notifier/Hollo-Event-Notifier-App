@@ -3,10 +3,6 @@
     color="primary"
   >
     <div class="main-menu">
-      <div style="display: flex; flex-direction: column;">
-        <button (click)="switchLanguage('en')">English</button>
-        <button (click)="switchLanguage('hu')">Hungarian</button>
-      </div>
       <button
         mat-flat-button
         color="primary"
@@ -26,6 +22,14 @@
         <label for="eventsIcon">{{t('events')}}</label>
       </button>
     </div>
+    <div class="secondary-menu">
+    <button class="language-button"
+            mat-flat-button
+            color="primary"
+            (click)="changeLanguage()"
+    >
+      <mat-icon>language</mat-icon>
+    </button>
     <button
       mat-flat-button
       color="primary"
@@ -34,6 +38,7 @@
       <mat-icon id="logout-icon">logout</mat-icon>
       <label for="logout-icon">{{t('logout')}}</label>
     </button>
+    </div>
   </mat-toolbar>
 </div>
 <router-outlet></router-outlet>

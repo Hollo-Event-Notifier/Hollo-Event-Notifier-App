@@ -74,7 +74,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       weekends: this.hasWeekends,
       editable: this.isEditable,
       selectable: this.isSelectable,
-      locale: Language.En,
+      locale: Language.Hu,
     }
     this.languageSubscription = this.state.language
       .subscribe(language => {

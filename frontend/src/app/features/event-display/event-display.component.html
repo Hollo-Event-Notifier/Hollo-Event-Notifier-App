@@ -1,8 +1,13 @@
-<div>
-  <button (click)="changeLanguage()">Change</button>
-</div>
 <app-full-calendar-wrapper
   [hasWeekends]="true"
   (eventClick)="onEventClick($event)"
   [events]="(events$ | async)!!"
 ></app-full-calendar-wrapper>
+<button class="language-button"
+        mat-flat-button
+        color="primary"
+        (click)="changeLanguage()"
+>
+  <mat-label>{{currentLanguage}}</mat-label>
+  <mat-icon>language</mat-icon>
+</button>

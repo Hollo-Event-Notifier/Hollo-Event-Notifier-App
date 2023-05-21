@@ -5,14 +5,13 @@ import {TranslocoService} from "@ngneat/transloco";
 
 @Injectable()
 export class TranslationService {
-  get currentLanguage(): string {
-    return this._currentLanguage;
+  get currentLanguage(): Language {
+    if (this.translocoService.getActiveLang() == Language.Hu) return Language.Hu
+    return Language.En;
   }
   constructor(private readonly state: ApplicationStateService,
   private translocoService : TranslocoService) {
   }
-
-  private _currentLanguage : string = this.translocoService.getActiveLang();
 
   changeLanguage() {
     switch (this.translocoService.getActiveLang()) {

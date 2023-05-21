@@ -5,7 +5,6 @@ import {LoginForm} from "./models/login-form";
 import {UserService} from "./services/user.service";
 import {TranslocoModule} from "@ngneat/transloco";
 import {TranslationService} from "../../core/services/translation.service";
-import {Language} from "../../core/models/language";
 import {state} from "@angular/animations";
 
 @Component({
@@ -28,20 +27,20 @@ export class LoginComponent {
       nonNullable: true
     })
   });
-
-  public currentLanguage : string = this.translationService.currentLanguage
-
+  currentLanguage : string;
   constructor(
     private readonly userService: UserService,
     private translationService: TranslationService) {
+    this.currentLanguage = this.translationService.currentLanguage;
   }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
-  changeLanguage() {
+  changeLanguage(): void {
     this.translationService.changeLanguage();
+    this.currentLanguage = this.translationService.currentLanguage;
   }
 
   login(): void {
@@ -50,7 +49,5 @@ export class LoginComponent {
     });
   }
 
-  protected readonly Language = Language;
   protected readonly state = state;
-  protected readonly TranslationService = TranslationService;
 }
