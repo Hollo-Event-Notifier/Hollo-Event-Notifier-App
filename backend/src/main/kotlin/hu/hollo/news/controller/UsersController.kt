@@ -23,14 +23,15 @@ class UsersController(
     @Value("\${auth_cookie_name}") private val cookieName: String
 ) : UsersApi {
 
-    override fun login(userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> =
-        ResponseEntity
+    override fun login(userCredentialsDto: UserCredentialsDto): ResponseEntity<UserDto> {
+        val (currentUser, token) = userService.loginUser(userCredentialsDto)
+        return ResponseEntity
             .ok()
             .headers {
                 it.set(
                     HttpHeaders.SET_COOKIE,
                     ResponseCookie // TODO: add all necessary security restrictions
-                        .from(cookieName, userService.loginUser(userCredentialsDto).tokenValue)
+                        .from(cookieName, token.tokenValue)
                         .httpOnly(false) // TODO: should be addressed later
                         .secure(false) // TODO: add when HTTPS setup
                         .sameSite(SameSite.STRICT.attributeValue())
@@ -39,33 +40,36 @@ class UsersController(
                         .build().toString()
                 )
             }
-            .build()
+            .body(currentUser)
+    }
 
     override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build()
 
-    override fun getAllUsers(): ResponseEntity<List<UserDto>> = ResponseEntity.ok(userService.getAllUsers())
+    override fun getAllUsers(): ResponseEntity<List<UserDto>> = ResponseEntity.ok(
+        userService.getAllUsers(
+            getJwtToken()
+        )
+    )
 
     override fun updateUser(userDto: UserDto): ResponseEntity<UserDto> =
         ResponseEntity.ok(
             userService.updateUser(
-                userDto, SecurityContextHolder.getContext().authentication.principal as Jwt
+                userDto, getJwtToken()
             )
         )
 
     override fun createUser(createUserRequestDto: CreateUserRequestDto): ResponseEntity<UserDto> =
         ResponseEntity.ok(
             userService.createUser(
-                createUserRequestDto,
-                SecurityContextHolder.getContext().authentication.principal as Jwt
+                createUserRequestDto, getJwtToken()
             )
         )
 
     override fun deleteUserById(id: UUID): ResponseEntity<Unit> {
-        userService.deleteUser(
-            id,
-            SecurityContextHolder.getContext().authentication.principal as Jwt
-        )
+        userService.deleteUser(id, getJwtToken())
         return ResponseEntity.noContent().build()
     }
 
+    private fun getJwtToken(): Jwt =
+        SecurityContextHolder.getContext().authentication.principal as Jwt
 }
