@@ -39,6 +39,11 @@ jobs:
         run: |
           cd backend
           ./gradlew build
+      - name: Store Build Artifacts for Later Use in Testing
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: backend/build
 
   backend-test:
     needs: backend-build
