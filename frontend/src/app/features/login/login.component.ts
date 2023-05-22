@@ -3,16 +3,14 @@ import {SharedModule} from "../../shared/shared.module";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginForm} from "./models/login-form";
 import {UserService} from "./services/user.service";
-import {TranslocoModule} from "@ngneat/transloco";
 import {TranslationService} from "../../core/services/translation.service";
-import {state} from "@angular/animations";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [SharedModule, TranslocoModule],
+  imports: [SharedModule],
   providers: [UserService]
 })
 export class LoginComponent {
@@ -30,7 +28,7 @@ export class LoginComponent {
   currentLanguage : string;
   constructor(
     private readonly userService: UserService,
-    private translationService: TranslationService) {
+    private readonly translationService: TranslationService) {
     this.currentLanguage = this.translationService.currentLanguage;
   }
 
@@ -48,6 +46,4 @@ export class LoginComponent {
       ...this.formGroup.getRawValue()
     });
   }
-
-  protected readonly state = state;
 }

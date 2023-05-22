@@ -24,7 +24,7 @@ export class EventDisplayComponent {
     private readonly state: ApplicationStateService,
     private readonly eventsService: EventsService,
     private readonly matDialog: MatDialog,
-    private translationService: TranslationService,
+    private readonly translationService: TranslationService,
   ) {
     this.events$ = state.events;
     // TODO: generic solution

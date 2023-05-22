@@ -8,9 +8,12 @@ import {AuthGuardService} from "./services/auth-guard.service";
 import {EventMapperService} from "./services/event-mapper.service";
 import {EventsService} from "./services/events.service";
 import {TranslationService} from "./services/translation.service";
+import {TranslocoRootModule} from "./transloco-root.module";
 
 const IMPORTS = [
   MatSnackBarModule,
+  HttpClientModule,
+  TranslocoRootModule,
   HttpClientModule,
   ApiModule.forRoot(() => {
     const config = new Configuration()

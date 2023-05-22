@@ -60,7 +60,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     eventRemove: this.handleEventRemove.bind(this),
   };
 
-  private languageSubscription: Subscription | undefined;
+  private languageSubscription!: Subscription;
 
   constructor(
     private readonly state: ApplicationStateService,

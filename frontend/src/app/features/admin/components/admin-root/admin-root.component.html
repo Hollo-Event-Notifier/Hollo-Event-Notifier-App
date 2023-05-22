@@ -1,4 +1,4 @@
-<div *transloco="let t; read:'admin-root'">
+<ng-container *transloco="let t; read:'admin-root'">
   <mat-toolbar
     color="primary"
   >
@@ -10,7 +10,7 @@
         [routerLink]="adminRoutes.Settings"
       >
         <mat-icon id="settingsIcon">settings</mat-icon>
-        <label for="settingsIcon">{{t('settings')}}</label>
+        <mat-label>{{t('settings')}}</mat-label>
       </button>
       <button
         mat-flat-button
@@ -40,5 +40,5 @@
     </button>
     </div>
   </mat-toolbar>
-</div>
+</ng-container>
 <router-outlet></router-outlet>
