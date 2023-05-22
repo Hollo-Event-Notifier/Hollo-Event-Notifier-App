@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <div>
+  <div *ngIf = "(currentUser$ | async)?.role === roles.SystemAdmin">
     <button mat-icon-button [routerLink]="adminRoutes.Settings">
       <mat-icon>settings</mat-icon>
     </button>
