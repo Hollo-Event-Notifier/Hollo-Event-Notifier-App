@@ -41,7 +41,7 @@ interface UsersApi {
             value = ["/users/check-token"],
             produces = ["application/json"]
     )
-    fun checkToken(): ResponseEntity<Unit> {
+    fun checkToken(): ResponseEntity<UserDto> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
