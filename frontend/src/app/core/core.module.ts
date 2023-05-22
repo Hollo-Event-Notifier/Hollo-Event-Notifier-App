@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {EventMapperService} from "./services/event-mapper.service";
 import {EventsService} from "./services/events.service";
+import {UsersService} from "./services/users.service";
 
 const IMPORTS = [
   MatSnackBarModule,
@@ -27,7 +28,8 @@ const PROVIDERS: Provider[] = [
   SnackbarService,
   AuthGuardService,
   EventsService,
-  EventMapperService
+  EventMapperService,
+  UsersService
 ];
 
 const API_SERVICES: Provider[] = [
