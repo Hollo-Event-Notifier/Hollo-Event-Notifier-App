@@ -43,7 +43,9 @@ class UsersController(
             .body(currentUser)
     }
 
-    override fun checkToken(): ResponseEntity<Unit> = ResponseEntity.ok().build()
+    override fun checkToken(): ResponseEntity<UserDto> = ResponseEntity.ok(
+        userService.getCurrentUser(getJwtToken())
+    )
 
     override fun getAllUsers(): ResponseEntity<List<UserDto>> = ResponseEntity.ok(
         userService.getAllUsers(

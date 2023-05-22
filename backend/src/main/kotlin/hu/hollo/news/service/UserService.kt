@@ -52,6 +52,13 @@ class UserService(
         return userRepository.findAll().map { user -> userAdapter.adaptDbToDto(user) }
     }
 
+    fun getCurrentUser(token: Jwt): UserDto {
+        val id = getUserIdFromToken(token)
+        val dbUser = userRepository.findByIdOrNull(id)
+            ?: throw BadRequestException("User does not exist with id=$id")
+        return userAdapter.adaptDbToDto(dbUser)
+    }
+
     fun updateUser(userToUpdate: UserDto, token: Jwt): UserDto {
         val userIdFromDto: UUID = userToUpdate.id ?: throw BadRequestException("User id is required!")
         if (getUserFromToken(token).role != Role.SystemAdmin && getUserIdFromToken(token) != userIdFromDto)
