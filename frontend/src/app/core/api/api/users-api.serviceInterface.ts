@@ -30,7 +30,7 @@ export interface UsersApiServiceInterface {
      * Checks if the user has valid JWT token in cookie
      * 
      */
-    checkToken(extraHttpRequestParams?: any): Observable<{}>;
+    checkToken(extraHttpRequestParams?: any): Observable<UserDto>;
 
     /**
      * Creates new user
