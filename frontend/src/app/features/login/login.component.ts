@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {SharedModule} from "../../shared/shared.module";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginForm} from "./models/login-form";
-import {UserService} from "./services/user.service";
+import {UsersService} from "../../core/services/users.service";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,6 @@ import {UserService} from "./services/user.service";
   styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [SharedModule],
-  providers: [UserService]
 })
 export class LoginComponent {
   showPassword: boolean = false;
@@ -25,7 +24,7 @@ export class LoginComponent {
     })
   });
 
-  constructor(private readonly userService: UserService) {
+  constructor(private readonly usersService: UsersService) {
   }
 
   togglePasswordVisibility(): void {
@@ -33,7 +32,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.userService.loginUser({
+    this.usersService.loginUser({
       ...this.formGroup.getRawValue()
     });
   }
