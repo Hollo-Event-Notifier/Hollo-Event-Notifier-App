@@ -1,49 +1,8 @@
-<ng-container *transloco="let t; read:'admin-root'">
-  <mat-toolbar
-    color="primary"
+<mat-toolbar color="primary" *transloco="let t; read:'admin-root'">
+  <div
+    *ngIf="(currentUser$ | async)?.role === roles.SystemAdmin"
+    class="menu-group"
   >
-    <div class="main-menu">
-      <button
-        mat-flat-button
-        color="primary"
-        class="menu-element"
-        [routerLink]="adminRoutes.Settings"
-      >
-        <mat-icon id="settingsIcon">settings</mat-icon>
-        <mat-label>{{t('settings')}}</mat-label>
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        class="menu-element"
-        [routerLink]="adminRoutes.EventDisplay"
-      >
-        <mat-icon id="eventsIcon">calendar_today</mat-icon>
-        <label for="eventsIcon">{{t('events')}}</label>
-      </button>
-    </div>
-    <div class="secondary-menu">
-    <button class="language-button"
-            mat-flat-button
-            color="primary"
-            (click)="changeLanguage()"
-    >
-      <mat-icon>language</mat-icon>
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      class="menu-element"
-    >
-      <mat-icon id="logout-icon">logout</mat-icon>
-      <label for="logout-icon">{{t('logout')}}</label>
-    </button>
-    </div>
-  </mat-toolbar>
-</ng-container>
-<!--TODO merge manually-->
-<mat-toolbar color="primary">
-  <div *ngIf = "(currentUser$ | async)?.role === roles.SystemAdmin">
     <button mat-icon-button [routerLink]="adminRoutes.Settings">
       <mat-icon>settings</mat-icon>
     </button>
@@ -51,18 +10,24 @@
       <mat-icon>calendar_today</mat-icon>
     </button>
   </div>
-  <h1>Holló Event Notifier</h1>
-  <button
-    mat-icon-button
-    [routerLink]="appRoutes.EventDisplay"
-  >
-    <mat-icon>profile</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    [routerLink]="appRoutes.EventDisplay"
-  >
-    <mat-icon>logout</mat-icon>
-  </button>
+  <h1 class="white">Holló Event Notifier</h1>
+  <div class="menu-group">
+    <button
+      class="language-button"
+      mat-flat-button
+      color="primary"
+      (click)="changeLanguage()"
+    >
+      <mat-icon>language</mat-icon>
+      <mat-label>{{currentLanguage}}</mat-label>
+    </button>
+    <button
+      mat-icon-button
+      [routerLink]="appRoutes.EventDisplay"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+<!--TODO merge manually-->
 <router-outlet></router-outlet>
