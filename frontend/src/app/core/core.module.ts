@@ -7,10 +7,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {EventMapperService} from "./services/event-mapper.service";
 import {EventsService} from "./services/events.service";
+import {TranslationService} from "./services/translation.service";
+import {TranslocoRootModule} from "./transloco-root.module";
 import {UsersService} from "./services/users.service";
 
 const IMPORTS = [
   MatSnackBarModule,
+  TranslocoRootModule,
   HttpClientModule,
   ApiModule.forRoot(() => {
     const config = new Configuration()
@@ -29,7 +32,8 @@ const PROVIDERS: Provider[] = [
   AuthGuardService,
   EventsService,
   EventMapperService,
-  UsersService
+  UsersService,
+  TranslationService,
 ];
 
 const API_SERVICES: Provider[] = [

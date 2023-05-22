@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ApplicationState} from "../models/application-state";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {UserDto, UserDtoRoleEnum} from "../api";
 import {EventInput} from "@fullcalendar/core";
+import {UserDtoRoleEnum} from "../api";
 import {instanceOfCalendarEvent} from "../utils/calendar-event.type-guard";
+import {Language} from "../models/language";
 import {User} from "../models/user";
 import {instanceOfUser} from "../utils/user.type-guard";
 
@@ -11,6 +12,7 @@ import {instanceOfUser} from "../utils/user.type-guard";
 export class ApplicationStateService {
   private state: BehaviorSubject<ApplicationState> = new BehaviorSubject<ApplicationState>({
     events: [],
+    language: Language.Hu,
     users: [],
     currentUser: {
       id: '',
@@ -34,6 +36,14 @@ export class ApplicationStateService {
       .asObservable()
       .pipe(
         map(state => state.events)
+      );
+  }
+
+  get language(): Observable<Language> {
+    return this.state
+      .asObservable()
+      .pipe(
+        map(state => state.language)
       );
   }
 

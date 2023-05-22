@@ -17,9 +17,9 @@ export class EventDisplayDialogComponent {
     @Inject(MAT_DIALOG_DATA) readonly data: EventDto,
   ) {
   }
-
   onClose() {
     this.dialogRef.close();
   }
 }
+
 

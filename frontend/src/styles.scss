@@ -65,6 +65,11 @@ $custom-theme: mat.define-light-theme((
 //  @include mat.elevation(12, #c4c4c4, 0.8);
 //}
 
+.mat-typography h1{
+  font-family: custom-font;
+  color: $color-grey-blue;
+}
+
 
 html, body {
   height: 100%;
