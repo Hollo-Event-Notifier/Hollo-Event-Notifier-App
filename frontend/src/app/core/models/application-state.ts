@@ -1,7 +1,8 @@
 import {EventInput} from "@fullcalendar/core";
-import {UserDto} from "../api";
+import {User} from "./user";
 
 export interface ApplicationState {
   events: EventInput[],
-  users: UserDto[]
+  users: User[],
+  currentUser: User
 }

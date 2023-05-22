@@ -1,20 +1,27 @@
 import {Injectable} from '@angular/core';
 import {ApplicationState} from "../models/application-state";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {UserDto} from "../api";
+import {UserDto, UserDtoRoleEnum} from "../api";
 import {EventInput} from "@fullcalendar/core";
 import {instanceOfCalendarEvent} from "../utils/calendar-event.type-guard";
-import {instanceOfUserDto} from "../utils/user-dto.type-guard";
+import {User} from "../models/user";
+import {instanceOfUser} from "../utils/user.type-guard";
 
 @Injectable()
 export class ApplicationStateService {
-
   private state: BehaviorSubject<ApplicationState> = new BehaviorSubject<ApplicationState>({
     events: [],
-    users: []
+    users: [],
+    currentUser: {
+      id: '',
+      username: '',
+      email: '',
+      role: UserDtoRoleEnum.EventAdmin,
+      userType: 'current'
+    }
   });
 
-  get users$(): Observable<UserDto[]> {
+  get users$(): Observable<User[]> {
     return this.state
       .asObservable()
       .pipe(
@@ -30,9 +37,16 @@ export class ApplicationStateService {
       );
   }
 
-  patchState(newState: Partial<ApplicationState> | EventInput | string) {
-    const oldState = this.state.getValue();
+  get currentUser$(): Observable<User> {
+    return this.state
+      .asObservable()
+      .pipe(
+        map(state => state.currentUser)
+      );
+  }
 
+  patchState(newState: Partial<ApplicationState> | EventInput | User | string) {
+    const oldState = this.state.getValue();
     if (typeof newState === 'string') {
       // deleted event or user by id
       const eventIndex = oldState.events.findIndex(event => event.id === newState);
@@ -48,15 +62,28 @@ export class ApplicationStateService {
       const index = oldState.events.findIndex(event => event.id === newState.id);
       index !== -1 ? oldState.events[index] = newState : oldState.events.push(newState);
       this.state.next({...oldState, events: [...oldState.events]});
-    } else if (instanceOfUserDto(newState)) {
-      // updated or newly created user
-      const index = oldState.users.findIndex(user => user.id === newState.id);
-      index !== -1 ? oldState.users[index] = newState : oldState.users.push(newState);
-      this.state.next({...oldState, users: [...oldState.users]});
+    } else if (instanceOfUser(newState)) {
+      // user is passed to patchstate
+      switch (newState.userType) {
+        case 'current': {
+          // current user
+          this.state.next({
+            ...oldState,
+            currentUser: newState
+          });
+          break;
+        }
+        case 'other': {
+          // updated or newly created user
+          const index = oldState.users.findIndex(user => user.id === newState.id);
+          index !== -1 ? oldState.users[index] = newState : oldState.users.push(newState);
+          this.state.next({...oldState, users: [...oldState.users]});
+        }
+      }
     } else {
       // newState is Partial<ApplicationState>
       this.state.next({
-        ...this.state.getValue(),
+        ...oldState,
         ...newState
       });
     }
