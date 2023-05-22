@@ -164,6 +164,10 @@ paths:
       responses:
         '200':
           description: Valid JWT token was sent in cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
