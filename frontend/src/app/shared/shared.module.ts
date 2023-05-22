@@ -4,6 +4,7 @@ import {AsyncPipe, DatePipe, NgIf, NgStyle} from "@angular/common";
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FullCalendarWrapperComponent} from "./components/full-calendar-wrapper/full-calendar-wrapper.component";
+import {TranslocoModule} from "@ngneat/transloco";
 
 const DIRECTIVES = [
   NgStyle,
@@ -16,10 +17,11 @@ const MODULES = [
   MaterialModule,
   FullCalendarModule,
   ReactiveFormsModule,
+  TranslocoModule
 ]
 
 const DECLARATIONS = [
-  FullCalendarWrapperComponent
+  FullCalendarWrapperComponent,
 ];
 
 @NgModule({

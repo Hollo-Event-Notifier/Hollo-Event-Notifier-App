@@ -1,33 +1,44 @@
-<mat-toolbar
-  color="primary"
->
-  <div class="main-menu">
-    <button
-      mat-flat-button
-      color="primary"
-      class="menu-element"
-      [routerLink]="adminRoutes.Settings"
-    >
-      <mat-icon id="settingsIcon">settings</mat-icon>
-      <label for="settingsIcon">Settings</label>
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      class="menu-element"
-      [routerLink]="adminRoutes.EventDisplay"
-    >
-      <mat-icon id="eventsIcon">calendar_today</mat-icon>
-      <label for="eventsIcon">Events</label>
-    </button>
-  </div>
-  <button
-    mat-flat-button
+<ng-container *transloco="let t; read:'admin-root'">
+  <mat-toolbar
     color="primary"
-    class="menu-element"
   >
-    <mat-icon id="logout-icon">logout</mat-icon>
-    <label for="logout-icon">Logout</label>
-  </button>
-</mat-toolbar>
+    <div class="main-menu">
+      <button
+        mat-flat-button
+        color="primary"
+        class="menu-element"
+        [routerLink]="adminRoutes.Settings"
+      >
+        <mat-icon id="settingsIcon">settings</mat-icon>
+        <mat-label>{{t('settings')}}</mat-label>
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="menu-element"
+        [routerLink]="adminRoutes.EventDisplay"
+      >
+        <mat-icon id="eventsIcon">calendar_today</mat-icon>
+        <label for="eventsIcon">{{t('events')}}</label>
+      </button>
+    </div>
+    <div class="secondary-menu">
+    <button class="language-button"
+            mat-flat-button
+            color="primary"
+            (click)="changeLanguage()"
+    >
+      <mat-icon>language</mat-icon>
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="menu-element"
+    >
+      <mat-icon id="logout-icon">logout</mat-icon>
+      <label for="logout-icon">{{t('logout')}}</label>
+    </button>
+    </div>
+  </mat-toolbar>
+</ng-container>
 <router-outlet></router-outlet>

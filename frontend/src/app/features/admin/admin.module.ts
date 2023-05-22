@@ -15,12 +15,12 @@ const DECLARATIONS = [
 
 const IMPORTS = [
   AdminRoutingModule,
-  SharedModule
+  SharedModule,
 ];
 
 @NgModule({
   declarations: [...DECLARATIONS],
-  imports: [...IMPORTS]
+    imports: [...IMPORTS]
 })
 export class AdminModule {
 }
