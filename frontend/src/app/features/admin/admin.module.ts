@@ -5,10 +5,11 @@ import {SharedModule} from "../../shared/shared.module";
 import {SettingsComponent} from './components/settings/settings.component';
 import {AdminEventDisplayComponent} from './components/admin-event-display/admin-event-display.component';
 import {EventEditorDialogComponent} from "./components/event-editor-dialog/event-editor-dialog.component";
-import {UsersService} from "./services/users.service";
+import {UsersService} from "../../core/services/users.service";
 import {UserDeleteDialogComponent} from './components/user-delete-dialog/user-delete-dialog.component';
 import {UserEditorDialogComponent} from './components/user-editor-dialog/user-editor-dialog.component';
 import {UserCreatorDialogComponent} from './components/user-creator-dialog/user-creator-dialog.component';
+import {SettingsGuardService} from "./services/settings-guard.service";
 
 const DECLARATIONS = [
   AdminRootComponent,
@@ -25,7 +26,9 @@ const IMPORTS = [
   SharedModule
 ];
 
-const PROVIDERS: Provider[] = [UsersService]
+const PROVIDERS: Provider[] = [
+  SettingsGuardService
+]
 
 @NgModule({
   declarations: [...DECLARATIONS],
