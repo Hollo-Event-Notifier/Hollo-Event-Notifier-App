@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {ApplicationState} from "../models/application-state";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {EventDto} from "../api";
-import {EventApi, EventInput} from "@fullcalendar/core";
+import {EventInput} from "@fullcalendar/core";
 import {instanceOfCalendarEvent} from "../utils/calendar-event.type-guard";
+import {Language} from "../models/language";
 
 @Injectable()
 export class ApplicationStateService {
 
   private state: BehaviorSubject<ApplicationState> = new BehaviorSubject<ApplicationState>({
-    events: []
+    events: [],
+    language: Language.Hu
   });
 
   get events(): Observable<EventInput[]> {
@@ -17,6 +18,14 @@ export class ApplicationStateService {
       .asObservable()
       .pipe(
         map(state => state.events)
+      );
+  }
+
+  get language(): Observable<Language> {
+    return this.state
+      .asObservable()
+      .pipe(
+        map(state => state.language)
       );
   }
 

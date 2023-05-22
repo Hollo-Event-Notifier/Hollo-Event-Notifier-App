@@ -1,0 +1,32 @@
+{
+  "event-display-dialog": {
+    "has_points": "Has points",
+    "organizer" : "Organizer",
+    "place" : "Place"
+  },
+  "login-component": {
+    "administrator_title" : "ADMINISTRATOR",
+    "login_title" : "LOGIN",
+    "username": "Username",
+    "password": "Password",
+    "login_button": "Login"
+  },
+  "admin-root": {
+    "settings": "Settings",
+    "events": "Events",
+    "logout": "Logout"
+  },
+  "event-editor-dialog": {
+    "create_event" : "Create event",
+    "update_event" : "Update event",
+    "title" : "Title",
+    "place" : "Place",
+    "organizer": "Organizer",
+    "start_date" : "Start Date",
+    "end_date" : "End Date",
+    "has_points" : "Has Points",
+    "required_field": "This field is required!",
+    "invalid_url" : "Not a valid URL"
+  }
+}
+

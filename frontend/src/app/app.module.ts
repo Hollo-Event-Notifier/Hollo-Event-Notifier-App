@@ -17,7 +17,7 @@ const IMPORTS = [
   BrowserAnimationsModule,
   CoreModule,
   LoginComponent,
-  EventDisplayComponent
+  EventDisplayComponent,
 ];
 
 const PROVIDERS: Provider[] = [];

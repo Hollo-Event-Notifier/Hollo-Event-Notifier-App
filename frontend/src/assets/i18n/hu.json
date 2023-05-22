@@ -1,0 +1,31 @@
+{
+  "event-display-dialog": {
+    "has_points": "Pontot ér",
+    "organizer": "Szervező",
+    "place": "Hely"
+  },
+  "login-component": {
+    "administrator_title" : "ADMINISZTRÁTOR",
+    "login_title" : "BEJELENTKEZÉS",
+    "username": "Felhasználónév",
+    "password": "Jelszó",
+    "login_button": "Bejelentkezés"
+  },
+  "admin-root": {
+    "settings": "Beállitások",
+    "events": "Események",
+    "logout": "Kijelentkezés"
+  },
+  "event-editor-dialog": {
+    "create_event" : "Esemény létrehozása",
+    "update_event" : "Esemény szerkesztése",
+    "title" : "Cím",
+    "place" : "Hely",
+    "organizer": "Szervező",
+    "start_date" : "Kezdési időpont",
+    "end_date" : "Befejezés időpont",
+    "has_points" : "Pontot ér",
+    "required_field": "A mező kitöltése kötelező",
+    "invalid_url" : "Nem érvényes URL"
+  }
+}

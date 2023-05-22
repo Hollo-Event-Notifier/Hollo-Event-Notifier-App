@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.jpa") version "1.7.22"
     kotlin("plugin.allopen") version "1.7.22"
     kotlin("kapt") version "1.7.22"
-
+    id("jacoco")
 }
 
 group = "hu.hollo"
