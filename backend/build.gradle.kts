@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.0.5"
     id("io.spring.dependency-management") version "1.1.0"
-    id("org.sonarqube") version "3.5.0.2730"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
@@ -59,10 +58,3 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-sonarqube {
-  properties {
-    property("sonar.projectKey", "Hollo-Event-Notifier_Hollo-Event-Notifier-App")
-    property("sonar.organization", "hollo-event-notifier")
-    property("sonar.host.url", "https://sonarcloud.io")
-  }
-}
