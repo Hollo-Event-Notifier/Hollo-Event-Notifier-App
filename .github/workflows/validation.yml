@@ -22,7 +22,7 @@ jobs:
       - name: Build Angular Application
         run: npm --prefix frontend run build
   sonarcloud:
-    name: Anylize frontend
+    name: Analize project with SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
