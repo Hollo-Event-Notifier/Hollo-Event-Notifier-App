@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {
+  Calendar,
   CalendarOptions,
   DateSelectArg,
   EventAddArg,
@@ -17,6 +18,8 @@ import {EventMapperService} from "../../../core/services/event-mapper.service";
 import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
 import { Subscription } from 'rxjs';
+import {EventsService} from "../../../core/services/events.service";
+
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -35,6 +38,9 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   @Input() isEditable: boolean = false;
   @Input() hasWeekends: boolean = false;
   @Input() isSelectable: boolean = false;
+
+  @ViewChild('fullCalendar') fullCalendar: Calendar | undefined;
+
 
 
   calendarOptions: CalendarOptions = {
@@ -64,7 +70,8 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly state: ApplicationStateService,
-    private readonly eventMapperService: EventMapperService
+    private readonly eventMapperService: EventMapperService,
+    private readonly eventsService : EventsService
   ) {
   }
 
@@ -75,12 +82,17 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       editable: this.isEditable,
       selectable: this.isSelectable,
       locale: Language.Hu,
+      events: this.events
     }
     this.languageSubscription = this.state.language
       .subscribe(language => {
         this.changeLanguage(language);
       });
+    if (this.fullCalendar!= null) {
+      this.eventsService.getEventsForCurrentView(this.fullCalendar);
+    }
   }
+
 
   ngOnDestroy(): void {
     if (this.languageSubscription) {
