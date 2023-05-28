@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, Vi
 import {
   Calendar,
   CalendarOptions,
-  DateSelectArg,
+  DateSelectArg, DatesSetArg,
   EventAddArg,
   EventChangeArg,
   EventClickArg,
@@ -41,8 +41,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
 
   @ViewChild('fullCalendar') fullCalendar: Calendar | undefined;
 
-
-
   calendarOptions: CalendarOptions = {
     plugins: [
       interactionPlugin,
@@ -64,10 +62,22 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     eventChange: this.handleEventChange.bind(this),
     eventAdd: this.handleEventAdd.bind(this),
     eventRemove: this.handleEventRemove.bind(this),
+    datesSet: this.handleDateSet.bind(this)
   };
 
   private languageSubscription!: Subscription;
 
+  private realLifeDate: Date = new Date();
+
+  private realLifeMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth(), 0);
+  private realLifePreviousMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() - 1, 0);
+  private realLifeMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 1, 0);
+  private realLifeNextMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 2, 0);
+
+  private currentMonthStart: Date = this.realLifeMonthStart;
+  private currentMonthEnd: Date = this.realLifeMonthEnd;
+  private nextMonthEnd: Date = this.realLifeNextMonthEnd;
+  private previousMonthStart: Date = this.realLifePreviousMonthStart;
   constructor(
     private readonly state: ApplicationStateService,
     private readonly eventMapperService: EventMapperService,
@@ -82,17 +92,48 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       editable: this.isEditable,
       selectable: this.isSelectable,
       locale: Language.Hu,
-      events: this.events
     }
     this.languageSubscription = this.state.language
       .subscribe(language => {
         this.changeLanguage(language);
       });
-    if (this.fullCalendar!= null) {
-      this.eventsService.getEventsForCurrentView(this.fullCalendar);
-    }
   }
 
+  handleDateSet(datesSetArgs : DatesSetArg) {
+    this.getEventsForCurrentView(datesSetArgs)
+  }
+
+  private getEventsForCurrentView(datesSetArgs : DatesSetArg): void {
+    let viewStartDate: Date = datesSetArgs.start;
+    let viewEndDate: Date = datesSetArgs.end;
+
+    let queryStart: Date = this.previousMonthStart;
+    let queryEnd: Date = this.nextMonthEnd;
+
+    if (viewStartDate <= this.currentMonthStart) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 0)
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() - 1, 0)
+
+      this.previousMonthStart = new Date(this.previousMonthStart.getFullYear(), this.previousMonthStart.getMonth() - 1, 0)
+      this.nextMonthEnd = new Date(this.nextMonthEnd.getFullYear(), this.nextMonthEnd.getMonth() - 1, 0)
+      queryStart = this.previousMonthStart;
+      queryEnd = this.nextMonthEnd;
+      console.log("fetching previous months...")
+      }
+
+    else if (viewEndDate >= this.currentMonthEnd) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() + 1, 0)
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 1, 0)
+
+      this.previousMonthStart = new Date(this.previousMonthStart.getFullYear(), this.previousMonthStart.getMonth() + 1, 0)
+      this.nextMonthEnd = new Date(this.nextMonthEnd.getFullYear(), this.nextMonthEnd.getMonth() + 1, 0)
+      queryStart = this.previousMonthStart;
+      queryEnd = this.nextMonthEnd;
+      console.log("fetching next months...")
+    }
+    console.log("fetching...")
+    this.eventsService.getEvents(queryStart, queryEnd);
+  }
 
   ngOnDestroy(): void {
     if (this.languageSubscription) {

@@ -27,8 +27,6 @@ export class AdminEventDisplayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: generic solution
-    this.eventsService.getEvents(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-13T23:59:59.000Z'));
   }
 
   onDateSelect(emptyEventWithDates: EventDto) {
