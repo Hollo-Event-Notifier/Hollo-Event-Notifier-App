@@ -95,8 +95,6 @@ jobs:
     needs: [backend-test, frontend-test]
     runs-on: ubuntu-latest
     steps:
-      - name: un SonarCloud analysis
-        run: sonar-scanner -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
