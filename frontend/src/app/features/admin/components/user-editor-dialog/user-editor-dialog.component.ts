@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserDto, UserDtoRoleEnum} from "../../../../core/api";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserEditorForm} from "../../models/user-editor-form";
+import {User} from "../../../../core/models/user";
 
 @Component({
   selector: 'app-user-editor-dialog',
@@ -10,6 +11,7 @@ import {UserEditorForm} from "../../models/user-editor-form";
   styleUrls: ['./user-editor-dialog.component.scss']
 })
 export class UserEditorDialogComponent {
+  readonly roles: string[] = Object.values(UserDtoRoleEnum);
   formGroup: FormGroup<UserEditorForm> = new FormGroup<UserEditorForm>({
     username: new FormControl<string>('', {
       validators: Validators.required,
@@ -24,11 +26,10 @@ export class UserEditorDialogComponent {
       nonNullable: true
     }),
   });
-  readonly roles: string[] = Object.values(UserDtoRoleEnum);
 
   constructor(
     private readonly dialogRef: MatDialogRef<UserEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) readonly data: UserDto,
+    @Inject(MAT_DIALOG_DATA) readonly data: User,
   ) {
     this.formGroup.setValue({
       email: data.email,
@@ -39,8 +40,9 @@ export class UserEditorDialogComponent {
   onSave() {
     this.dialogRef.close({
       ...this.formGroup.value,
+      userType: this.data.userType,
       id: this.data.id
-    } as UserDto);
+    } as User);
   }
 
   onCancel() {

@@ -14,7 +14,8 @@
   "admin-root": {
     "settings": "Settings",
     "events": "Events",
-    "logout": "Logout"
+    "logout": "Logout",
+    "title": "Holló Event Notifier Admin"
   },
   "event-editor-dialog": {
     "create_event" : "Create event",
@@ -27,6 +28,18 @@
     "has_points" : "Has Points",
     "required_field": "This field is required!",
     "invalid_url" : "Not a valid URL"
+  },
+  "user-editor-dialog": {
+    "title": "Edit User",
+    "username": "Username",
+    "required_error": "This field is required!",
+    "email_format_error": "Invalid format!",
+    "role": "Role"
+  },
+  "settings": {
+    "user_settings_title": "User settings",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }
 

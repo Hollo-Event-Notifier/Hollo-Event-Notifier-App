@@ -14,7 +14,8 @@
   "admin-root": {
     "settings": "Beállitások",
     "events": "Események",
-    "logout": "Kijelentkezés"
+    "logout": "Kijelentkezés",
+    "title": "Hollóhír Admin"
   },
   "event-editor-dialog": {
     "create_event" : "Esemény létrehozása",
@@ -27,5 +28,17 @@
     "has_points" : "Pontot ér",
     "required_field": "A mező kitöltése kötelező",
     "invalid_url" : "Nem érvényes URL"
+  },
+  "user-editor-dialog": {
+    "title": "Felhasználó szerkesztése",
+    "username": "Felhasználónév",
+    "required_error": "Ez egy kötelező mező!",
+    "email_format_error": "Érvénytelen formátum!",
+    "role": "Szerep"
+  },
+  "settings": {
+    "user_settings_title": "Felhasználók kezelése",
+    "edit": "Szerkesztés",
+    "delete": "Törlés"
   }
 }

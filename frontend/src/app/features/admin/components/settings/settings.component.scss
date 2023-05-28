@@ -1,29 +1,40 @@
-.grid-container {
-  display: grid;
-  align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 50px;
-  padding: 30px;
+.container {
+  padding: 20px;
 
-  mat-card {
-    mat-card-content {
-      display: flex;
-      flex-direction: column;
+  .grid-container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 50px;
+    margin-top: 16px;
 
-      p {
-        font-weight: bold;
+    mat-card {
+      min-width: fit-content;
+      max-width: 15%;
+      mat-card-header {
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0 0 16px;
+      }
+      mat-card-content {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          font-weight: bold;
+        }
       }
     }
+    .fab {
+      position: fixed;
+      right: 30px;
+      bottom: 20px;
+      z-index: 2;
+    }
   }
-  .fab {
-    position: fixed;
-    right: 30px;
-    bottom: 20px;
-    z-index: 2;
-  }
+
 }
 
 .red {
   color: red;
 }
-

@@ -86,3 +86,9 @@ mat-snack-bar-container {
   text-align: center;
 }
 
+// custom styles for material divider
+mat-divider {
+  background-color: $color-grey-blue;
+  height: 2px;
+  border-radius: 10px;
+}

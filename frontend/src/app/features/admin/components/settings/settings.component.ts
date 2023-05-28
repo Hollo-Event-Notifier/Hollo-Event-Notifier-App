@@ -14,10 +14,8 @@ import {User} from "../../../../core/models/user";
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
   readonly users$: Observable<User[]>;
-  currentUser!: User;
-  private readonly unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private readonly state: ApplicationStateService,
@@ -29,15 +27,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.usersService.getAllUsers();
-
-    this.state.currentUser$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(user => this.currentUser = user);
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   openDeleteDialog(userId: string): void {
@@ -48,7 +37,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   openEditDialog(user: UserDto): void {
     this.matDialog.open(UserEditorDialogComponent, {data: user}).afterClosed().subscribe(
-      (result: UserDto | undefined) => {
+      (result: User | undefined) => {
         if (result !== undefined) {
           this.usersService.updateUser(result);
         }

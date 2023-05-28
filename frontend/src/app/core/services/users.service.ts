@@ -56,11 +56,12 @@ export class UsersService {
     });
   }
 
-  updateUser(userToUpdate: UserDto): void {
+  updateUser(userToUpdate: User): void {
+    console.log(userToUpdate);
     this.usersApiService.updateUser(userToUpdate).subscribe({
       next: (updatedUser: UserDto) => {
         // TODO update for current update
-        this.state.patchState({...updatedUser, userType: 'other'});
+        this.state.patchState({...updatedUser, userType: userToUpdate.userType});
         this.snackbar.open('User updated successfully!')
       }
     })
