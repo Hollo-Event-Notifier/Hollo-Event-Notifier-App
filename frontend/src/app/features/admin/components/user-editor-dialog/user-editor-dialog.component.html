@@ -43,7 +43,7 @@
         <mat-error *ngIf="formGroup.controls.email.hasError('required')">{{t("required_error")}}</mat-error>
         <mat-error *ngIf="formGroup.controls.email.hasError('email')">{{t("email_format_error")}}</mat-error>
       </mat-form-field>
-      <mat-form-field hideRequiredMarker>
+      <mat-form-field hideRequiredMarker *ngIf="data.mode === 'other'">
         <mat-label>{{t('role')}}</mat-label>
         <mat-select [formControl]="formGroup.controls.role">
           <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>

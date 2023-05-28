@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApplicationStateService} from "../../../../core/services/application-state.service";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {Observable} from "rxjs";
 import {CreateUserRequestDto, UserDto} from "../../../../core/api";
 import {UsersService} from "../../../../core/services/users.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -8,6 +8,7 @@ import {UserDeleteDialogComponent} from "../user-delete-dialog/user-delete-dialo
 import {UserEditorDialogComponent} from "../user-editor-dialog/user-editor-dialog.component";
 import {UserCreatorDialogComponent} from "../user-creator-dialog/user-creator-dialog.component";
 import {User} from "../../../../core/models/user";
+import {UserEditorData} from "../../models/user-editor-data";
 
 @Component({
   selector: 'app-settings',
@@ -36,7 +37,12 @@ export class SettingsComponent implements OnInit {
   }
 
   openEditDialog(user: UserDto): void {
-    this.matDialog.open(UserEditorDialogComponent, {data: user}).afterClosed().subscribe(
+    this.matDialog.open(UserEditorDialogComponent, {
+      data: {
+        user: user,
+        mode: 'other'
+      } as UserEditorData
+    }).afterClosed().subscribe(
       (result: User | undefined) => {
         if (result !== undefined) {
           this.usersService.updateUser(result);

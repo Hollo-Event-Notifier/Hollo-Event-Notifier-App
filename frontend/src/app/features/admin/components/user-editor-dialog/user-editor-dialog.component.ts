@@ -4,6 +4,7 @@ import {UserDto, UserDtoRoleEnum} from "../../../../core/api";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserEditorForm} from "../../models/user-editor-form";
 import {User} from "../../../../core/models/user";
+import {UserEditorData} from "../../models/user-editor-data";
 
 @Component({
   selector: 'app-user-editor-dialog',
@@ -29,19 +30,19 @@ export class UserEditorDialogComponent {
 
   constructor(
     private readonly dialogRef: MatDialogRef<UserEditorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) readonly data: User,
+    @Inject(MAT_DIALOG_DATA) readonly data: UserEditorData,
   ) {
     this.formGroup.setValue({
-      email: data.email,
-      role: data.role,
-      username: data.username
+      email: data.user.email,
+      role: data.user.role,
+      username: data.user.username
     });
   }
   onSave() {
     this.dialogRef.close({
       ...this.formGroup.value,
-      userType: this.data.userType,
-      id: this.data.id
+      userType: this.data.user.userType,
+      id: this.data.user.id
     } as User);
   }
 
