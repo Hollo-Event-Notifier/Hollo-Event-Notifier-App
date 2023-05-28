@@ -24,7 +24,12 @@ export class UserCreatorDialogComponent {
       nonNullable: true
     }),
     password: new FormControl<string>('', {
-      validators: Validators.required, // TODO add complexity validator for password
+      // the pattern ensures the followings in the password string
+      // - the string contains at least one lowercase letter
+      // - the string contains at least one uppercase letter
+      // - the string contains at least one digit
+      // - the string is at least 8 letter long
+      validators: [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)], // TODO add complexity validator for password
       nonNullable: true
     }),
   })

@@ -33,12 +33,21 @@
     "title": "Felhasználó szerkesztése",
     "username": "Felhasználónév",
     "required_error": "Ez egy kötelező mező!",
-    "email_format_error": "Érvénytelen formátum!",
+    "email_format_error": "Érvénytelen e-mail formátum!",
     "role": "Szerep"
   },
   "settings": {
     "user_settings_title": "Felhasználók kezelése",
     "edit": "Szerkesztés",
     "delete": "Törlés"
+  },
+  "user-creator-dialog": {
+    "title": "Felhasználó létrehozása",
+    "username": "Felhasnzálónév",
+    "required_error": "Ez egy kötelező mező!",
+    "email_format_error": "Érvénytelen e-mail formátum!",
+    "role": "Szerep",
+    "password": "Jelszó",
+    "password_format_error": "A jelszó nem elég bonyolult! Kérlek használj kis- és nagybetűket és számokat."
   }
 }
