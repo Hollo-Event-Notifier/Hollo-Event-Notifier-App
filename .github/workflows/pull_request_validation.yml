@@ -99,9 +99,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: yarn
+        run: npm --prefix frontend install
       - name: Test and coverage
-        run: yarn jest --coverage
+        run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
