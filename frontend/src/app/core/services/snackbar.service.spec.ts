@@ -29,7 +29,7 @@ describe('SnackbarService', () => {
     const config: MatSnackBarConfig = {
       duration: 1000,
       verticalPosition: 'bottom',
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       panelClass: '',
       politeness: 'polite'
     };

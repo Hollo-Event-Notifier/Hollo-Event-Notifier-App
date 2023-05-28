@@ -29,7 +29,7 @@ export class UserCreatorDialogComponent {
       // - the string contains at least one uppercase letter
       // - the string contains at least one digit
       // - the string is at least 8 letter long
-      validators: [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)], // TODO add complexity validator for password
+      validators: [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)],
       nonNullable: true
     }),
   })

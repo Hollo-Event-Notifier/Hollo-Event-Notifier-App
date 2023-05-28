@@ -29,7 +29,6 @@ export class EventsService {
   }
 
   updateEvent(eventToUpdate: EventDto): void {
-    // TODO: add ID as required or get more types
     this.eventsApiService.updateEventById(eventToUpdate.id!!, eventToUpdate).subscribe({
       next: (updatedEvent: EventDto) => {
         this.state.patchState(this.mapper.mapEventDtoToCalendarEvent(updatedEvent));
