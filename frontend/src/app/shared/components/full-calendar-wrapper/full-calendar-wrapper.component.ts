@@ -56,8 +56,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
-    eventAdd: this.handleEventAdd.bind(this),
-    eventRemove: this.handleEventRemove.bind(this),
   };
 
   private languageSubscription!: Subscription;
@@ -112,12 +110,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     this.eventChangeEmitter.emit(
       this.eventMapperService.mapCalendarEventToEventDto(changeInfo.event)
     );
-  }
-
-  private handleEventAdd(addInfo: EventAddArg): void {
-  }
-
-  private handleEventRemove(removeInfo: EventRemoveArg): void {
   }
 
   private changeLanguage(language: Language): void {
