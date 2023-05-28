@@ -5,7 +5,6 @@ import hu.hollo.news.model.db.Role
 import hu.hollo.news.model.db.User
 import hu.hollo.news.repository.EventsRepository
 import hu.hollo.news.repository.UserRepository
-import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -28,7 +27,61 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             password = passwordEncoder.encode("pwd"),
             role = Role.EventAdmin,
             email = "aferenczy.business@gmail.com"
-        )
+        ),
+        User(
+            username = "ferenczyandras2",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy2.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras3",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy3.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras4",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy4.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras5",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy5.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras6",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy6.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras7",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy7.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras8",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy8.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras9",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy9.business@gmail.com"
+        ),
+        User(
+            username = "ferenczyandras10",
+            password = passwordEncoder.encode("pwd"),
+            role = Role.EventAdmin,
+            email = "aferenczy10.business@gmail.com"
+        ),
     )
 
     private val events = listOf(
