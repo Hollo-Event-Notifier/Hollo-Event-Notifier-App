@@ -17,5 +17,14 @@ router-outlet {
 .menu-group {
   display: flex;
   align-items: center;
+  z-index: 2;
 }
 
+.title {
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
