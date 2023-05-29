@@ -1,80 +1,180 @@
-import {ApplicationStateService} from './application-state.service';
+import {TestBed} from '@angular/core/testing';
 import {BehaviorSubject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {ApplicationStateService} from './application-state.service';
+import {Language} from '../models/language';
+import {User} from '../models/user';
+import {UserDtoRoleEnum} from '../api';
 import {ApplicationState} from "../models/application-state";
-import {EventDto} from "../api";
-import {EventInput} from "@fullcalendar/core";
 
 describe('ApplicationStateService', () => {
-  let underTest: ApplicationStateService;
-  let initialState: ApplicationState;
+  let applicationStateService: ApplicationStateService;
+  let state: BehaviorSubject<ApplicationState>;
 
   beforeEach(() => {
-    initialState = {
-      events: []
-    };
-    underTest = new ApplicationStateService();
-    underTest['state'] = new BehaviorSubject(initialState);
-  });
-
-  it('should emit events when accessing the events property', () => {
-    // Arrange
-    const spy = jasmine.createSpy('map');
-    underTest.events$.subscribe(spy);
-
-    // Act
-    underTest.patchState({events: [{id: '1'}]});
-
-    // Assert
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should update events in the state with a calendar event', () => {
-    // Arrange
-    const eventToUpdate: EventInput = {
-      id: '1',
-      end: new Date().toISOString(),
-      start: new Date().toISOString(),
-      title: 'Test title',
-      extendedProps: {
-        hasPoints: false,
-        organizer: 'Test organizer',
-        place: 'Test place',
-        link: ''
+    state = new BehaviorSubject<ApplicationState>({
+      events: [],
+      language: Language.Hu,
+      users: [],
+      currentUser: {
+        id: '',
+        username: '',
+        email: '',
+        role: UserDtoRoleEnum.EventAdmin,
+        userType: 'current'
       }
-    };
-    underTest.patchState({events: [eventToUpdate]});
-    const updatedEvent: EventInput = {
-      ...eventToUpdate,
-      title: 'Updated Title'
-    };
+    });
 
-    // Act
-    underTest.patchState(updatedEvent);
+    TestBed.configureTestingModule({
+      providers: [ApplicationStateService]
+    });
 
-    // Assert
-    expect(underTest['state'].getValue().events).toEqual([updatedEvent]);
+    applicationStateService = TestBed.inject(ApplicationStateService);
+    applicationStateService['state'] = state;
   });
 
-  it('should remove events from the state by id', () => {
+  it('should be created', () => {
     // Arrange
-    const eventToRemove = {id: '1'};
-    underTest.patchState({events: [eventToRemove]});
 
     // Act
-    underTest.patchState(eventToRemove.id);
 
     // Assert
-    expect(underTest['state'].getValue().events).not.toContain(eventToRemove);
+    expect(applicationStateService).toBeTruthy();
   });
 
-  it('should update state with new values when patchState is called with an object', () => {
+  it('should return an observable of users', () => {
     // Arrange
-    const newState = {isLoading: true};
+    const users: User[] = [
+      {id: '1', username: 'user1'} as User,
+      {id: '2', username: 'user2'} as User
+    ];
+    state.next({...state.getValue(), users});
 
     // Act
-    underTest.patchState(newState);
+    const users$ = applicationStateService.users$;
 
     // Assert
-    expect(underTest['state'].getValue()).toEqual({...initialState, ...newState});
+    users$.subscribe((result) => {
+      expect(result).toEqual(users);
+    });
+  });
+
+  it('should return an observable of events', () => {
+    // Arrange
+    const events = [{id: '1', title: 'event1'}, {id: '2', title: 'event2'}];
+    state.next({...state.getValue(), events});
+
+    // Act
+    const events$ = applicationStateService.events$;
+
+    // Assert
+    events$.subscribe((result) => {
+      expect(result).toEqual(events);
+    });
+  });
+
+  it('should return an observable of the current language', () => {
+    // Arrange
+    const language = Language.En;
+    state.next({...state.getValue(), language});
+
+    // Act
+    const language$ = applicationStateService.language;
+
+    // Assert
+    language$.subscribe((result) => {
+      expect(result).toEqual(language);
+    });
+  });
+
+  it('should return an observable of the current user', () => {
+    // Arrange
+    const currentUser: User = {
+      id: '1',
+      username: 'user1',
+      email: 'user1@example.com',
+      role: UserDtoRoleEnum.EventAdmin,
+      userType: 'current'
+    };
+    state.next({...state.getValue(), currentUser});
+
+    // Act
+    const currentUser$ = applicationStateService.currentUser$;
+
+    // Assert
+    currentUser$.subscribe((result) => {
+      expect(result).toEqual(currentUser);
+    });
+  });
+
+  it('should update the state with a partial application state', () => {
+    // Arrange
+    const partialState = {language: Language.En};
+
+    // Act
+    applicationStateService.patchState(partialState);
+
+    // Assert
+    state.pipe(map((result) => result.language)).subscribe((result) => {
+      expect(result).toEqual(Language.En);
+    });
+  });
+
+  it('should delete an event or user by ID when string is passed', () => {
+    // Arrange
+    const event = {id: '1', title: 'event1'};
+    const user = {id: '2', username: 'user1'} as User;
+    state.next({...state.getValue(), events: [event], users: [user]});
+
+    // Act
+    applicationStateService.patchState('1');
+    applicationStateService.patchState('2');
+
+    // Assert
+    state.pipe(map((result) => ({events: result.events, users: result.users}))).subscribe((result) => {
+      expect(result.events.length).toBe(0);
+      expect(result.users.length).toBe(0);
+    });
+  });
+
+  it('should update or create an event when EventInput is passed', () => {
+    // Arrange
+    const event: any = {id: '1', title: 'event1'};
+    state.next({...state.getValue(), events: [event]});
+
+    // Act
+    applicationStateService.patchState(event);
+
+    // Assert
+    state.pipe(map((result) => result.events)).subscribe((result) => {
+      expect(result).toEqual([event]);
+    });
+  });
+
+  it('should update the current user', () => {
+    // Arrange
+    const currentUser: User = {
+      id: '1',
+      username: 'user1',
+      email: 'user1@example.com',
+      role: UserDtoRoleEnum.EventAdmin,
+      userType: 'current'
+    };
+    const newUser: User = {
+      id: '2',
+      username: 'user2',
+      email: 'user2@example.com',
+      role: UserDtoRoleEnum.SystemAdmin,
+      userType: 'current'
+    };
+    state.next({...state.getValue(), currentUser, users: []});
+
+    // Act
+    applicationStateService.patchState(newUser);
+
+    // Assert
+    state.pipe(map((result) => ({currentUser: result.currentUser, users: result.users}))).subscribe((result) => {
+      expect(result.currentUser).toEqual(newUser);
+    });
   });
 });

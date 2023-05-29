@@ -10,7 +10,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {TranslocoModule, TranslocoTestingModule} from "@ngneat/transloco";
 import {getTranslocoModule} from "../../../../core/utils/transloco-testing.factory";
 
 describe('EventEditorDialogComponent', () => {

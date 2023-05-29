@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {UserDto, UserDtoRoleEnum} from "../../../../core/api";
+import {UserDtoRoleEnum} from "../../../../core/api";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserEditorForm} from "../../models/user-editor-form";
 import {User} from "../../../../core/models/user";

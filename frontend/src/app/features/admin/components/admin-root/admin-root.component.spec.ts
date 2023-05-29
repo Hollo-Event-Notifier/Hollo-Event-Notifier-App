@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {of, Subject} from 'rxjs';
+import {of} from 'rxjs';
 import {AdminRootComponent} from './admin-root.component';
 import {ApplicationStateService} from '../../../../core/services/application-state.service';
 import {TranslationService} from '../../../../core/services/translation.service';

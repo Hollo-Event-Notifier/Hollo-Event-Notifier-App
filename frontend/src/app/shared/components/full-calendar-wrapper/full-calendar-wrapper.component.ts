@@ -1,13 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {
-  CalendarOptions,
-  DateSelectArg,
-  EventAddArg,
-  EventChangeArg,
-  EventClickArg,
-  EventInput,
-  EventRemoveArg
-} from "@fullcalendar/core";
+import {CalendarOptions, DateSelectArg, EventChangeArg, EventClickArg, EventInput} from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -16,7 +8,7 @@ import {EventDto} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
 import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-full-calendar-wrapper',

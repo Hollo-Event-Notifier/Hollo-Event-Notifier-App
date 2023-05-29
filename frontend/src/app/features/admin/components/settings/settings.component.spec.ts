@@ -9,7 +9,6 @@ import { UserCreatorDialogComponent } from '../user-creator-dialog/user-creator-
 import { UserEditorData } from '../../models/user-editor-data';
 import {CreateUserRequestDto, UserDto} from '../../../../core/api';
 import {getTranslocoModule} from "../../../../core/utils/transloco-testing.factory";
-import {EventEditorDialogComponent} from "../event-editor-dialog/event-editor-dialog.component";
 import {of} from "rxjs";
 
 describe('SettingsComponent', () => {

@@ -1,9 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {UserEditorDialogComponent} from './user-editor-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {UserDto, UserDtoRoleEnum} from '../../../../core/api';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserEditorForm} from '../../models/user-editor-form';
+import {UserDtoRoleEnum} from '../../../../core/api';
 import {User} from '../../../../core/models/user';
 import {UserEditorData} from '../../models/user-editor-data';
 import {getTranslocoModule} from "../../../../core/utils/transloco-testing.factory";
