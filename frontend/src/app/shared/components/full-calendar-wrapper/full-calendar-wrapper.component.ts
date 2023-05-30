@@ -67,12 +67,13 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
 
   private languageSubscription!: Subscription;
 
-  private realLifeDate: Date = new Date();
+  private loaded : boolean = false;
 
-  private realLifeMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth(), 0);
-  private realLifePreviousMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() - 1, 0);
-  private realLifeMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 1, 0);
-  private realLifeNextMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 2, 0);
+  private realLifeDate: Date = new Date();
+  private realLifeMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 1, 1);
+  private realLifePreviousMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth(), 1);
+  private realLifeMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 2, 0);
+  private realLifeNextMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 3, 0);
 
   private currentMonthStart: Date = this.realLifeMonthStart;
   private currentMonthEnd: Date = this.realLifeMonthEnd;
@@ -103,37 +104,33 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     this.getEventsForCurrentView(datesSetArgs)
   }
 
-  private getEventsForCurrentView(datesSetArgs : DatesSetArg): void {
+  private getEventsForCurrentView(datesSetArgs: DatesSetArg): void {
     let viewStartDate: Date = datesSetArgs.start;
     let viewEndDate: Date = datesSetArgs.end;
 
-    let queryStart: Date = this.previousMonthStart;
-    let queryEnd: Date = this.nextMonthEnd;
-
-    if (viewStartDate <= this.currentMonthStart) {
-      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 0)
-      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() - 1, 0)
-
-      this.previousMonthStart = new Date(this.previousMonthStart.getFullYear(), this.previousMonthStart.getMonth() - 1, 0)
-      this.nextMonthEnd = new Date(this.nextMonthEnd.getFullYear(), this.nextMonthEnd.getMonth() - 1, 0)
-      queryStart = this.previousMonthStart;
-      queryEnd = this.nextMonthEnd;
-      console.log("fetching previous months...")
-      }
-
-    else if (viewEndDate >= this.currentMonthEnd) {
-      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() + 1, 0)
-      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 1, 0)
-
-      this.previousMonthStart = new Date(this.previousMonthStart.getFullYear(), this.previousMonthStart.getMonth() + 1, 0)
-      this.nextMonthEnd = new Date(this.nextMonthEnd.getFullYear(), this.nextMonthEnd.getMonth() + 1, 0)
-      queryStart = this.previousMonthStart;
-      queryEnd = this.nextMonthEnd;
-      console.log("fetching next months...")
+    if (!this.loaded) {
+      this.loaded = true;
     }
-    console.log("fetching...")
-    this.eventsService.getEvents(queryStart, queryEnd);
+
+    else if (viewStartDate < this.currentMonthStart) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth(), 0);
+
+      this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+    }
+
+    else if (viewEndDate > this.currentMonthEnd) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() + 1, 1);
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+
+      this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+    }
+
+    this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
   }
+
 
   ngOnDestroy(): void {
     if (this.languageSubscription) {
