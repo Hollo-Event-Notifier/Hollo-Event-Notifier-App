@@ -108,8 +108,13 @@ jobs:
           name: backend-coverage-report
           path: .github/workflows
 
+      - name: Configure SonarCloud properties
+        run: |
+          echo "sonar.projectKey=Hollo-Event-Notifier_Hollo-Event-Notifier-App" >> $GITHUB_ENV
+          echo "sonar.organization=hollo-event-notifier" >> $GITHUB_ENV
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        run: sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
