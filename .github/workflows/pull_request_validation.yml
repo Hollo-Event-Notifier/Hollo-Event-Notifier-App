@@ -107,14 +107,20 @@ jobs:
         with:
           name: backend-coverage-report
           path: .github/workflows
-
-      - name: Configure SonarCloud properties
-        run: |
-          echo "sonar.projectKey=Hollo-Event-Notifier_Hollo-Event-Notifier-App" >> $GITHUB_ENV
-          echo "sonar.organization=hollo-event-notifier" >> $GITHUB_ENV
+          
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: SonarCloud Scan
-        run: sonar-scanner
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          sonar.projectKey: Hollo-Event-Notifier_Hollo-Event-Notifier-App
+          sonar.organization: hollo-event-notifier
+          extraProperties: |
+            sonar.coverageReportPaths=.github/workflows/lcov.info,.github/workflows/jacoco.xml
