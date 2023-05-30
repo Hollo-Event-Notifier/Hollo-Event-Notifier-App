@@ -113,6 +113,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+          
+      - name: Install SonarScanner
+        run: |
+          curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner.zip
+          rm sonar-scanner.zip
+          export PATH=$PWD/sonar-scanner-4.6.2.2472-linux/bin:$PATH
+
 
       - name: SonarCloud Scan
         run: sonar-scanner -Dproject.settings=./sonar-project.properties
