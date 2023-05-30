@@ -119,11 +119,11 @@ jobs:
           curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
           unzip sonar-scanner.zip
           rm sonar-scanner.zip
-          export PATH=$PWD/sonar-scanner-4.6.2.2472-linux/bin:$PATH
-
+          export SONAR_SCANNER_HOME=$PWD/sonar-scanner-4.6.2.2472-linux
+          export PATH=$SONAR_SCANNER_HOME/bin:$PATH
 
       - name: SonarCloud Scan
-        run: sonar-scanner -Dproject.settings=./sonar-project.properties
+        run: $SONAR_SCANNER_HOME/bin/sonar-scanner -Dproject.settings=./sonar-project.properties
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
