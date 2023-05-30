@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: frontend-coverage-report
-          path: .github/artifacts/frontend
+          path: .github/artifacts
 
 
   backend-test:
@@ -88,5 +88,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: backend-coverage-report
-          path: .github/artifacts/frontend
+          path: .github/artifacts
 
