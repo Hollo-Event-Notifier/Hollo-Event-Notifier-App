@@ -83,9 +83,29 @@ class UserService(
     }
 
     fun createUser(userToCreate: CreateUserRequestDto, token: Jwt): UserDto {
-        // TODO add error handling for unique fields
         if (userRepository.findByIdOrNull(getUserIdFromToken(token))?.role != Role.SystemAdmin)
             throw ForbiddenException("User has no right to create a new entity!")
+
+        // validating new users fields
+        if (userToCreate.id != null) {
+            throw BadRequestException("User id can't be provided!")
+        }
+
+        if (!userToCreate.email.matches("""^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$""".toRegex())) {
+            throw BadRequestException("Email format isn't valid!")
+        }
+
+        if (!userToCreate.password.matches("""^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}${'$'}""".toRegex())) {
+            throw BadRequestException("Users password isn't complex enough!")
+        }
+
+        if(userRepository.existsByUsername(userToCreate.username)) {
+            throw BadRequestException("Users with username '${userToCreate.username}' already exists!")
+        }
+
+        if(userRepository.existsByEmail(userToCreate.email)) {
+            throw BadRequestException("Users with email '${userToCreate.email}' already exists!")
+        }
 
         return userAdapter.adaptDbToDto(
             userRepository.save(
