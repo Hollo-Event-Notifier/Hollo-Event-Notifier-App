@@ -115,9 +115,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           # Provide the required properties
-          sonar.projectKey: Hollo-Event-Notifier_Hollo-Event-Notifier-App
-          sonar.organization: hollo-event-notifier
-          # Pass the coverage report paths to SonarCloud
+          sonar.projectKey: "Hollo-Event-Notifier_Hollo-Event-Notifier-App"
+          sonar.organization: "hollo-event-notifier"
           extraProperties: |
-            sonar.coverageReportPaths=.github/artifacts/frontend/lcov.info,.github/artifacts/backend/jacoco.xml
+            sonar.coverageReportPaths=.github/workflows/lcov.info,.github/workflows/jacoco.xml
 
