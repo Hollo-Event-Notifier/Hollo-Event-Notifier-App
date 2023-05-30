@@ -58,11 +58,11 @@ jobs:
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
 
-      - name: Upload Coverage Report artifact
+      - name: Upload Coverage Report Artifact
         uses: actions/upload-artifact@v3
         with:
           name: frontend-coverage-report
-          path: .github/artifacts
+          path: .github/workflows
 
 
   backend-test:
@@ -84,9 +84,40 @@ jobs:
           cd backend
           ./gradlew test jacocoTestReport
 
-      - name: Upload Coverage Report artifact
+      - name: Upload Coverage Report Artifact
         uses: actions/upload-artifact@v3
         with:
           name: backend-coverage-report
-          path: .github/artifacts
+          path: .github/workflows
+          
+  sonarcloud:
+    name: Analyze project with SonarCloud
+    if: ${{ always() }}
+    needs: [backend-test, frontend-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Frontend Coverage Report
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-coverage-report
+          path: .github/workflows
+
+      - name: Download Backend Coverage Report
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-coverage-report
+          path: .github/workflows
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # Provide the required properties
+          sonar.projectKey: Hollo-Event-Notifier_Hollo-Event-Notifier-App
+          sonar.organization: hollo-event-notifier
+          # Pass the coverage report paths to SonarCloud
+          extraProperties: |
+            sonar.coverageReportPaths=.github/artifacts/frontend/lcov.info,.github/artifacts/backend/jacoco.xml
 
