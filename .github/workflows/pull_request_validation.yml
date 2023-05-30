@@ -58,11 +58,11 @@ jobs:
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
 
-      - name: Upload coverage results
+      - name: Upload Coverage Report artifact
         uses: actions/upload-artifact@v3
         with:
-          name: coverage
-          path: frontend/coverage
+          name: frontend-coverage-report
+          path: coverage-reports/frontend
 
 
   backend-test:
@@ -84,20 +84,9 @@ jobs:
           cd backend
           ./gradlew test jacocoTestReport
 
-      - name: Upload Coverage Report
+      - name: Upload Coverage Report artifact
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-report
-          path: backend/build/reports/jacoco/test/html
-  sonarcloud:
-    name: Analize project with SonarCloud
-    if: ${{ always() }}
-    needs: [backend-test, frontend-test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          name: backend-coverage-report
+          path: coverage-reports/backend
 
