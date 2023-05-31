@@ -7,6 +7,9 @@ jobs:
   frontend-build:
     name: Frontend Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,14 +20,17 @@ jobs:
           node-version: 18.0
 
       - name: Install dependencies
-        run: npm --prefix frontend install
+        run: npm install
 
       - name: Build Angular Application
-        run: npm --prefix frontend run build
+        run: npm run build
 
   backend-build:
     name: Backend Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,9 +42,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build
-        run: |
-          cd backend
-          ./gradlew build
+        run: ./gradlew build
         
   frontend-test:
     runs-on: ubuntu-latest
@@ -73,6 +77,9 @@ jobs:
   backend-test_and_sonarcloud_analysis:
     needs: backend-build
     name: Backend Test & Sonarcloud Analysis
+    defaults:
+      run:
+        working-directory: ./backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -85,9 +92,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Test Backend with Coverage
-        run: |
-          cd backend
-          ./gradlew test jacocoTestReport
+        run: ./gradlew test jacocoTestReport
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -106,6 +111,4 @@ jobs:
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          cd backend
-          ./gradlew build sonarqube
+        run: ./gradlew build sonarqube
