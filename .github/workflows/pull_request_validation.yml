@@ -22,7 +22,7 @@ jobs:
         run: npm --prefix frontend install
 
       - name: Test Frontend with Coverage
-        run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
+        run: istanbul cover frontend/node_modules/@angular/cli/bin/ng test -- --code-coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
