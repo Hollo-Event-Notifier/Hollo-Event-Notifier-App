@@ -94,6 +94,7 @@ jobs:
           
   sonarcloud:
       name: Sonarcloud
+      needs: [backend-test, frontend-test]
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
@@ -116,11 +117,16 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Download Backend Coverage Report
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-coverage-report
+          path: .github/workflows
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd backend
-          ./gradlew build sonarqube --info
+          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=.github/workflows/jacoco.xml
           
