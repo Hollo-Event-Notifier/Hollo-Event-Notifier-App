@@ -8,11 +8,6 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-    client: {
-      jasmine: {
-        // Add any additional configuration for Jasmine here
-      }
-    },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, 'coverage'),
       reports: ['lcovonly'],
