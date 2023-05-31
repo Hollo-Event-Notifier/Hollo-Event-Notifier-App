@@ -89,7 +89,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: backend-coverage-report
-          path: .github/workflows
+          path: .github/workflows/coverage.xml
           
           
   sonarcloud:
@@ -121,12 +121,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: backend-coverage-report
-          path: .github/workflows
+          path: .github/workflows/coverage.xml
       - name: Build and analyze
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd backend
-          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=.github/workflows/jacoco.xml
+          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=.github/workflows/coverage.xml
           
