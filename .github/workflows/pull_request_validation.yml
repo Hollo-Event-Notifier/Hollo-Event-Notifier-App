@@ -4,9 +4,9 @@ on:
   push:
 
 jobs:
-  frontend-test:
+  unit-test-and-sonarcloud:
     runs-on: ubuntu-latest
-    name: Frontend Test
+    name: Unit tests & Sonarcloud
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,77 +17,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.0
+          
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: Install dependencies
         run: npm --prefix frontend install
 
-      - name: Test Frontend with Coverage
+      - name: Test Frontend & Coverage
         run: npm --prefix frontend run test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend_code_coverage
-          path: ./frontend/coverage/lcov.info
+      - name: Test Backend & Coverage
+        run: |
+          cd backend
+          ./gradlew test jacocoTestReport
           
-  backend-test:
-    runs-on: ubuntu-latest
-    name: Backend Test
-    steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
-    
-        - name: Set up JDK
-          uses: actions/setup-java@v3
-          with:
-            java-version: '17'
-            distribution: 'adopt'
-
-        - name: Test Backend with Coverage
-          run: |
-            cd backend
-            ./gradlew test jacocoTestReport
-          
-        - name: Upload Artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: backend_code_coverage
-            path: ./backend/build/reports/jacoco/test/jacocoTestReport.xml
-            
-  sonarcloud-upload:
-    runs-on: ubuntu-latest
-    needs: [backend-test, frontend-test]
-    name: Upload to Sonarcloud
-    steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
-    
-        - name: Download Frontend Artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: frontend_code_coverage
-            path: ./frontend/coverage/lcov.info
-            
-        - name: Display structure of downloaded files
-          run: ls -R
-          working-directory: ./frontend/coverage/lcov.info
-            
-        - name: Download Backend Artifact
-          uses: actions/download-artifact@v3
-          with:
-            name: backend_code_coverage
-            path: ./backend/build/reports/jacoco/test/jacocoTestReport.xml
-            
-        - name: Display structure of downloaded files
-          run: ls -R
-          working-directory: ./backend/build/reports/jacoco/test/jacocoTestReport.xml
-    
-        - name: SonarCloud Scan
-          uses: SonarSource/sonarcloud-github-action@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Upload to SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
