@@ -59,14 +59,6 @@ jobs:
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
 
-      - run: mkdir -p ./github/coverage_reports
-      - run: echo hello > ./github/coverage_reports/backend_coverage_report.xml
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Backend Coverage Report
-          path: ./github/coverage_reports/backend_coverage_report.xml
-
 
   backend-test:
     needs: backend-build
@@ -87,11 +79,13 @@ jobs:
           cd backend
           ./gradlew test jacocoTestReport
 
-      - name: Upload Coverage Report Artifact
-        uses: actions/upload-artifact@v3
+      - run: mkdir -p ./github/coverage_reports
+      - run: echo hello > ./github/coverage_reports/backend_coverage_report.xml
+
+      - uses: actions/upload-artifact@v3
         with:
-          name: backend-coverage-report
-          path: .github/workflows/coverage.xml
+          name: Backend Coverage Report
+          path: ./github/coverage_reports/backend_coverage_report.xml
           
           
   sonarcloud:
