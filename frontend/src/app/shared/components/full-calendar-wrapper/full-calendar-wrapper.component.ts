@@ -1,5 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {CalendarOptions, DateSelectArg, EventChangeArg, EventClickArg, EventInput} from "@fullcalendar/core";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  Calendar,
+  CalendarOptions,
+  DateSelectArg, DatesSetArg,
+  EventAddArg,
+  EventChangeArg,
+  EventClickArg,
+  EventInput,
+  EventRemoveArg
+} from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -8,7 +17,8 @@ import {EventDto} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
 import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
+import {EventsService} from "../../../core/services/events.service";
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -28,6 +38,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   @Input() hasWeekends: boolean = false;
   @Input() isSelectable: boolean = false;
 
+  @ViewChild('fullCalendar') fullCalendar: Calendar | undefined;
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -48,13 +59,29 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
+    eventAdd: this.handleEventAdd.bind(this),
+    eventRemove: this.handleEventRemove.bind(this),
+    datesSet: this.handleDateSet.bind(this)
   };
 
   private languageSubscription!: Subscription;
 
+  private loaded : boolean = false;
+
+  private realLifeDate: Date = new Date();
+  private realLifeMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 1, 1);
+  private realLifePreviousMonthStart: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth(), 1);
+  private realLifeMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 2, 0);
+  private realLifeNextMonthEnd: Date = new Date(this.realLifeDate.getFullYear(), this.realLifeDate.getMonth() + 3, 0);
+
+  private currentMonthStart: Date = this.realLifeMonthStart;
+  private currentMonthEnd: Date = this.realLifeMonthEnd;
+  private nextMonthEnd: Date = this.realLifeNextMonthEnd;
+  private previousMonthStart: Date = this.realLifePreviousMonthStart;
   constructor(
     private readonly state: ApplicationStateService,
-    private readonly eventMapperService: EventMapperService
+    private readonly eventMapperService: EventMapperService,
+    private readonly eventsService : EventsService
   ) {
   }
 
@@ -71,6 +98,34 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
         this.changeLanguage(language);
       });
   }
+
+  handleDateSet(datesSetArgs : DatesSetArg) {
+    let viewStartDate: Date = datesSetArgs.start;
+    let viewEndDate: Date = datesSetArgs.end;
+
+    if (!this.loaded) {
+      this.loaded = true;
+    }
+
+    else if (viewStartDate < this.currentMonthStart) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth(), 0);
+
+      this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+    }
+
+    else if (viewEndDate > this.currentMonthEnd) {
+      this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() + 1, 1);
+      this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+
+      this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
+      this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+    }
+
+    this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
+  }
+
 
   ngOnDestroy(): void {
     if (this.languageSubscription) {

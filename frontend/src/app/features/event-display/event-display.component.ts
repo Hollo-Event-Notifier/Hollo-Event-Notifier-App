@@ -26,8 +26,7 @@ export class EventDisplayComponent {
     private readonly matDialog: MatDialog,
     private readonly translationService: TranslationService,
   ) {
-    this.events$ = state.events$;
-    this.eventsService.getEvents(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-07T23:59:59.000Z'));
+    this.events$ = state.events;
     this.currentLanguage = this.translationService.currentLanguage;
   }
   changeLanguage(): void {

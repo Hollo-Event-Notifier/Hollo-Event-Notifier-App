@@ -39,3 +39,66 @@ jobs:
         run: |
           cd backend
           ./gradlew build
+  frontend-test:
+    runs-on: ubuntu-latest
+    needs: frontend-build
+    name: Frontend Test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0
+        
+      - name: Install dependencies
+        run: npm --prefix frontend install
+
+      - name: Test Frontend with Coverage
+        run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
+        
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: frontend/coverage
+
+
+  backend-test:
+    needs: backend-build
+    name: Backend Test
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Test Backend
+        run: |
+          cd backend
+          ./gradlew test jacocoTestReport
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: backend/build/reports/jacoco/test/html
+  sonarcloud:
+    name: Analize project with SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
