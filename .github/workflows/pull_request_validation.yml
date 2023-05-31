@@ -59,11 +59,13 @@ jobs:
       - name: Test Frontend with Coverage
         run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
 
-      - name: Upload Coverage Report Artifact
-        uses: actions/upload-artifact@v3
+      - run: mkdir -p ./github/coverage_reports
+      - run: echo hello > ./github/coverage_reports/backend_coverage_report.xml
+
+      - uses: actions/upload-artifact@v3
         with:
-          name: frontend-coverage-report
-          path: .github/workflows
+          name: Backend Coverage Report
+          path: ./github/coverage_reports/backend_coverage_report.xml
 
 
   backend-test:
@@ -120,13 +122,13 @@ jobs:
       - name: Download Backend Coverage Report
         uses: actions/download-artifact@v3
         with:
-          name: backend-coverage-report
-          path: .github/workflows/coverage.xml
+          name: Backend Coverage Report
+          path: ./github/coverage_reports/backend_coverage_report.xml
       - name: Build and analyze
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd backend
-          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=.github/workflows/coverage.xml
+          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=./github/coverage_reports/backend_coverage_report.xml
           
