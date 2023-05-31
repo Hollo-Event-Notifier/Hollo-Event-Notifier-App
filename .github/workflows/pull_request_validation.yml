@@ -60,9 +60,9 @@ jobs:
         run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
 
 
-  backend-test:
+  backend-test_and_sonarcloud_analysis:
     needs: backend-build
-    name: Backend Test
+    name: Backend Test & Sonarcloud Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -74,7 +74,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Test Backend
+      - name: Test Backend with Coverage
         run: |
           cd backend
           ./gradlew test jacocoTestReport
@@ -85,16 +85,18 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+          
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Build and analyze
+          
+      - name: Build and analyze with Sonarcloud
         env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd backend
-          ./gradlew build sonarqube --info -Dsonar.coverage.jacoco.xmlReportPaths=backend/build/reports/jacoco/test/jacocoTestReport.xml
+          ./gradlew build sonarqube
