@@ -4,9 +4,46 @@ on:
   push:
 
 jobs:
-  frontend-test:
+  frontend-build:
+    name: Frontend Build
     runs-on: ubuntu-latest
-    name: Frontend Test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0
+
+      - name: Install dependencies
+        run: npm --prefix frontend install
+
+      - name: Build Angular Application
+        run: npm --prefix frontend run build
+
+  backend-build:
+    name: Backend Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build
+        run: |
+          cd backend
+          ./gradlew build
+          
+  unit-test-and-sonarcloud:
+    runs-on: ubuntu-latest
+    name: Unit tests & Sonarcloud
+    needs: [backend-build, frontend-build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,16 +54,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.0
+          
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: Install dependencies
         run: npm --prefix frontend install
 
-      - name: Test Frontend with Coverage
-        run: npm --prefix frontend run test -- --watch=false --code-coverage=true --browsers=ChromeHeadless
+      - name: Test Frontend & Coverage
+        run: npm --prefix frontend run test -- --watch=false --browsers=ChromeHeadless
 
-      - name: SonarCloud Scan
+      - name: Test Backend & Coverage
+        run: |
+          cd backend
+          ./gradlew test jacocoTestReport
+          
+      - name: Upload to SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
