@@ -72,11 +72,19 @@ jobs:
             name: frontend_code_coverage
             path: ./frontend/coverage/lcov.info
             
+        - name: Display structure of downloaded files
+          run: ls -R
+          working-directory: ./frontend/coverage/lcov.info
+            
         - name: Download Backend Artifact
           uses: actions/download-artifact@v3
           with:
             name: backend_code_coverage
             path: ./backend/build/reports/jacoco/test/jacocoTestReport.xml
+            
+        - name: Display structure of downloaded files
+          run: ls -R
+          working-directory: ./backend/build/reports/jacoco/test/jacocoTestReport.xml
     
         - name: SonarCloud Scan
           uses: SonarSource/sonarcloud-github-action@master
