@@ -10,7 +10,7 @@ import {EventEditorMode} from "../../enums/event-editor-mode";
 import {EventEditorData} from "../../models/event-editor-data";
 import {of} from "rxjs";
 
-fdescribe('AdminEventDisplayComponent', () => {
+describe('AdminEventDisplayComponent', () => {
   let component: AdminEventDisplayComponent;
   let fixture: ComponentFixture<AdminEventDisplayComponent>;
 
