@@ -31,7 +31,9 @@ jobs:
           distribution: 'adopt'
 
       - name: Test Backend with Coverage
-        run: ./gradlew test jacocoTestReport
+        run: |
+          cd backend
+          ./gradlew test jacocoTestReport
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
