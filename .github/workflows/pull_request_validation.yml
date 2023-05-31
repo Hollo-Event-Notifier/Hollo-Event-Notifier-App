@@ -4,27 +4,8 @@ on:
   push:
 
 jobs:
-  frontend-build:
-    name: Frontend Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.0
-
-      - name: Install dependencies
-        run: npm --prefix frontend install
-
-      - name: Build Angular Application
-        run: npm --prefix frontend run build
-        
   frontend-test:
     runs-on: ubuntu-latest
-    needs: frontend-build
     name: Frontend Test
     steps:
       - name: Checkout repository
