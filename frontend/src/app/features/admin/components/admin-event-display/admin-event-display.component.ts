@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {EventInput} from "@fullcalendar/core";
 import {ApplicationStateService} from "../../../../core/services/application-state.service";
@@ -15,7 +15,7 @@ import {instanceOfEventDto} from "../../../../core/utils/event-dto.type-guard";
   templateUrl: './admin-event-display.component.html',
   styleUrls: ['./admin-event-display.component.scss']
 })
-export class AdminEventDisplayComponent implements OnInit {
+export class AdminEventDisplayComponent{
   events$!: Observable<EventInput[]>;
 
   constructor(
@@ -24,9 +24,6 @@ export class AdminEventDisplayComponent implements OnInit {
     private readonly matDialog: MatDialog,
   ) {
     this.events$ = this.state.events;
-  }
-
-  ngOnInit(): void {
   }
 
   onDateSelect(emptyEventWithDates: EventDto) {

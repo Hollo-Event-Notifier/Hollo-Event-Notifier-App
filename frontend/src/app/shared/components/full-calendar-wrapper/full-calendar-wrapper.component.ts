@@ -101,10 +101,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   }
 
   handleDateSet(datesSetArgs : DatesSetArg) {
-    this.getEventsForCurrentView(datesSetArgs)
-  }
-
-  private getEventsForCurrentView(datesSetArgs: DatesSetArg): void {
     let viewStartDate: Date = datesSetArgs.start;
     let viewEndDate: Date = datesSetArgs.end;
 
