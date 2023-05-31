@@ -61,7 +61,8 @@ class UserService(
 
     fun updateUser(userToUpdate: UserDto, token: Jwt): UserDto {
         val userIdFromDto: UUID = userToUpdate.id ?: throw BadRequestException("User id is required!")
-        if (getUserFromToken(token).role != Role.SystemAdmin && getUserIdFromToken(token) != userIdFromDto)
+        val userFromToken = getUserFromToken(token)
+        if (userFromToken.role != Role.SystemAdmin && userFromToken.id != userIdFromDto)
             throw ForbiddenException("User has no right to update this entity!")
 
         val dbUserToUpdate: User = userAdapter.adaptDtoToDb(userToUpdate)
@@ -83,7 +84,7 @@ class UserService(
     }
 
     fun createUser(userToCreate: CreateUserRequestDto, token: Jwt): UserDto {
-        if (userRepository.findByIdOrNull(getUserIdFromToken(token))?.role != Role.SystemAdmin)
+        if (getUserFromToken(token).role != Role.SystemAdmin)
             throw ForbiddenException("User has no right to create a new entity!")
 
         // validating new users fields
@@ -96,7 +97,7 @@ class UserService(
         }
 
         if (!userToCreate.password.matches("""^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}${'$'}""".toRegex())) {
-            throw BadRequestException("Users password isn't complex enough!")
+            throw BadRequestException("User's password isn't complex enough!")
         }
 
         if(userRepository.existsByUsername(userToCreate.username)) {
