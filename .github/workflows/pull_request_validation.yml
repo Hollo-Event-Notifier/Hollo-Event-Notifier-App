@@ -77,7 +77,7 @@ jobs:
       - name: Test Backend
         run: |
           cd backend
-          ./gradlew test jacocoTestReport
+          ./gradlew test jacocoTestReport sonarqube
 
       - run: mkdir -p ./github/coverage_reports
       - run: echo hello > ./github/coverage_reports/backend_coverage_report.xml
