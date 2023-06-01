@@ -88,7 +88,9 @@ jobs:
         run: npm install @cucumber/cucumber cucumber-html-reporter chai puppeteer
 
       - name: Run application
-        run: ng serve
+        run: |
+          cd frontend
+          ng serve
 
       - name: Run Cucumber tests and generate HTML report
         run: |
