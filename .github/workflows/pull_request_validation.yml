@@ -93,7 +93,7 @@ jobs:
         run: npm install @cucumber/cucumber cucumber-html-reporter chai puppeteer
 
       - name: Run application
-        run: npm --prefix frontend start
+        run: npm --prefix frontend run start
 
       - name: Run Cucumber tests and generate HTML report
         run: |
