@@ -1,6 +1,6 @@
 name: Validation
 
-on:
+on: 
   pull_request:
 
 jobs:
