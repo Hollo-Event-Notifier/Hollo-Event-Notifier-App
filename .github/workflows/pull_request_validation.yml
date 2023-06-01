@@ -1,7 +1,7 @@
 name: Validation
 
 on: 
-  pull_request:
+  push:
 
 jobs:
   frontend-build:
@@ -77,3 +77,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  bdd-test:
+    name: BDD tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cucumber tests and generate HTML report
+        run: |
+          cd frontend
+          npx cucumber-js --format=json:./reports/results.json
+          node generate-report.js
+
+      - name: Upload HTML report artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-report
+          path: ./reports/results.html
