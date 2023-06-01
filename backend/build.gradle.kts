@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version "1.7.22"
     kotlin("kapt") version "1.7.22"
     id("jacoco")
+    id("org.sonarqube") version "3.5.0.2730"
 }
 
 group = "hu.hollo"
@@ -51,6 +52,22 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "17"
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "Hollo-Event-Notifier_Hollo-Event-Notifier-App")
+        property("sonar.organization", "hollo-event-notifier")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(false)
     }
 }
 
