@@ -90,7 +90,7 @@ jobs:
           node-version: 18.0
 
       - name: Install dependencies
-        run: npm install @cucumber/cucumber cucumber-html-reporter chai puppeteer
+        run: npm --prefix frontend install @cucumber/cucumber cucumber-html-reporter chai puppeteer
 
       - name: Run application
         run: npm --prefix frontend run start
