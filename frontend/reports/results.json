@@ -1,0 +1,448 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "event-display-feature;the-website-loads-properly",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "The website loads properly",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 296129899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "the website is operational",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 77161500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "the user connects to the website",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:53"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 545238700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "the user sees by default a calendar for the actual week, with days from monday to sunday",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18258100
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 59113999
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "event-display-feature;user-changes-display-language-from-hungarian-to-english",
+        "keyword": "Scenario",
+        "line": 8,
+        "name": "User changes display language from Hungarian to English",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 252525799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "the User is on the Homepage",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 512738099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "the User clicks on the \"hu\" Button on the hungarian page",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 59225999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the text on the button should change to \"en\" indicating, that the webpage is in English",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11455399
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 43559100
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "event-display-feature;user-changes-display-language-from-english-to-hungarian",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "User changes display language from English to Hungarian",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 244817000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 14,
+            "name": "the User is on the Homepage that is set on English language so, that someone clicked on \"hu\" button before",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 570547000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 15,
+            "name": "the User clicks on the \"en\" Button on the english page",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:37"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 38447299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 16,
+            "name": "the text on the button should change to \"hu\" indicating, that the webpage is in Hungarian",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10490399
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 44827899
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "event-display-feature;the-user-changes-from-month-view-to-day-view",
+        "keyword": "Scenario",
+        "line": 18,
+        "name": "The user changes from month view to day view",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 262812299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 19,
+            "name": "the User is on the Homepage",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 509424600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "does not see the day view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13057499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 21,
+            "name": "the User clicks on the \"Nap\" Button on the page to see the day view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 39422899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 22,
+            "name": "the calendar should change to day view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:73"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2291700
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 46825800
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "event-display-feature;the-user-changes-from-month-view-to-month-view",
+        "keyword": "Scenario",
+        "line": 24,
+        "name": "The user changes from month view to month view",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 246083200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 25,
+            "name": "the User is on the Homepage",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 542314500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "does not see the month view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:79"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10688400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 27,
+            "name": "the User clicks on the \"Hónap\" Button on the page to see the month view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:84"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 64203799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 28,
+            "name": "the calendar should change to month view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:90"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3655400
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 46956200
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "event-display-feature;the-user-changes-from-month-view-to-list-view",
+        "keyword": "Scenario",
+        "line": 30,
+        "name": "The user changes from month view to list view",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 252388199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 31,
+            "name": "the User is on the Homepage",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 511001800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 32,
+            "name": "does not see the list view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11462000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 33,
+            "name": "the User clicks on the \"Lista\" Button on the page to see the list view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:100"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24272100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 34,
+            "name": "the calendar should change to list view",
+            "match": {
+              "location": "features\\step_definitions\\event_display.steps.js:106"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4533400
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 46608399
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "event-display-feature",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Event display feature",
+    "tags": [],
+    "uri": "features\\event_display.feature"
+  }
+]

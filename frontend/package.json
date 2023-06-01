@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate-report": "node generate-report.js"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +30,7 @@
     "@ngneat/transloco": "^4.2.2",
     "chai": "^4.3.7",
     "cucumber": "^6.0.7",
+    "cucumber-html-reporter": "^7.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typeface-oswald": "^1.1.13",
