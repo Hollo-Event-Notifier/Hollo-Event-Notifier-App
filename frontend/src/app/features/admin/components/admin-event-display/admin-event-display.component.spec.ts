@@ -43,11 +43,6 @@ describe('AdminEventDisplayComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get events', () => {
-    // Assert
-    expect(eventsServiceSpy.getEvents).toHaveBeenCalledOnceWith(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-13T23:59:59.000Z'));
-  });
-
   it('should open create dialog correctly and create event', () => {
     // Arrange
     const emptyEventWithDates: EventDto = {

@@ -9,21 +9,25 @@ import {Provider} from "@angular/core";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
 import {Language} from "../../../core/models/language";
 import {of} from "rxjs";
+import {EventsService} from "../../../core/services/events.service";
 
 describe('FullCalendarWrapperComponent', () => {
   let component: FullCalendarWrapperComponent;
   let fixture: ComponentFixture<FullCalendarWrapperComponent>;
   let eventMapperServiceSpy: jasmine.SpyObj<EventMapperService>;
   let applicationStateServiceSpy: jasmine.SpyObj<ApplicationStateService>;
+  let eventsServiceSpy: jasmine.SpyObj<EventsService>;
 
   beforeEach(waitForAsync(() => {
     eventMapperServiceSpy = jasmine.createSpyObj<EventMapperService>(['mapCalendarEventToEventDto']);
     applicationStateServiceSpy = jasmine.createSpyObj<ApplicationStateService>(['patchState'],
       {language: of(Language.Hu)});
+    eventsServiceSpy = jasmine.createSpyObj<EventsService>(['getEvents'])
     TestBed.configureTestingModule({
       declarations: [FullCalendarWrapperComponent],
       providers: [
         {provide: EventMapperService, useValue: eventMapperServiceSpy},
+        {provide: EventsService, useValue: eventsServiceSpy},
         {provide: ApplicationStateService, useValue: applicationStateServiceSpy},
       ] as Provider[],
       imports: [SharedModule]
