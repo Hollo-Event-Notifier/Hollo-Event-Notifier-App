@@ -6,7 +6,7 @@ We introduced GitHub Actions in our GitHub repository in order to have a continu
 - passes a quality gate defined in Sonarcloud.
 
 ### GitHub Actions specifications
-- The CI runs each time a new *pull request* from a *feature branch* to the *development branch* is created. 
+- The CI runs each time a new *pull request* is issued.
 - Jobs are defined in the [./github/workflows/pull_request_validation.yml](https://github.com/Hollo-Event-Notifier/Hollo-Event-Notifier-App/tree/development/.github/workflows) file, and are the following:
 	- Frontend Build
 	- Backend Build
