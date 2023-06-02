@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {SharedModule} from "../../shared/shared.module";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginForm} from "./models/login-form";
-import {UserService} from "./services/user.service";
 import {TranslationService} from "../../core/services/translation.service";
+import {UsersService} from "../../core/services/users.service";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,6 @@ import {TranslationService} from "../../core/services/translation.service";
   styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [SharedModule],
-  providers: [UserService]
 })
 export class LoginComponent {
   showPassword: boolean = false;
@@ -26,9 +25,11 @@ export class LoginComponent {
     })
   });
   currentLanguage : string;
+
   constructor(
-    private readonly userService: UserService,
-    private readonly translationService: TranslationService) {
+    private readonly usersService: UsersService,
+    private readonly translationService: TranslationService
+  ) {
     this.currentLanguage = this.translationService.currentLanguage;
   }
 
@@ -42,7 +43,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.userService.loginUser({
+    this.usersService.loginUser({
       ...this.formGroup.getRawValue()
     });
   }

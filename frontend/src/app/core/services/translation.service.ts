@@ -9,9 +9,10 @@ export class TranslationService {
     if (this.translocoService.getActiveLang() == Language.Hu) return Language.Hu
     return Language.En;
   }
+
   constructor(
     private readonly state: ApplicationStateService,
-    private readonly translocoService : TranslocoService) {
+    private readonly translocoService: TranslocoService) {
   }
 
   changeLanguage() {
@@ -21,11 +22,11 @@ export class TranslationService {
         this.state.patchState({language: Language.En});
         break;
       }
-      case Language.En: {
+      default: {
         this.translocoService.setActiveLang(Language.Hu);
         this.state.patchState({language: Language.Hu});
         break;
       }
-  }
+    }
   }
 }

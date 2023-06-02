@@ -4,6 +4,7 @@ import {AdminRootComponent} from "./components/admin-root/admin-root.component";
 import {AdminRoutes} from "./enums/admin-routes";
 import {SettingsComponent} from "./components/settings/settings.component";
 import {AdminEventDisplayComponent} from "./components/admin-event-display/admin-event-display.component";
+import {SettingsGuardService} from "./services/settings-guard.service";
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
       {
         path: AdminRoutes.Settings,
         component: SettingsComponent,
+        canActivate: [SettingsGuardService]
       },
       {
         path: AdminRoutes.EventDisplay,

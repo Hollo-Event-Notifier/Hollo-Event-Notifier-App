@@ -3,32 +3,28 @@ mat-toolbar {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
 
-  .main-menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+router-outlet {
+  width: 100%;
+  height: 100%;
+}
 
-    .menu-element {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 75%;
-      min-width: 120px;
-    }
-  }
-  .secondary-menu{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  button {
-    border: 2px solid white;
-    border-radius: 15px;
-    margin: 5px;
-  }
-  .language-button {
-    padding-right: 5px;
-  }
+.white {
+  color: #ffffff;
+}
+
+.menu-group {
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.title {
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
 }

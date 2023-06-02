@@ -32,9 +32,9 @@ export interface EventsApiServiceInterface {
     createEvent(eventDto: EventDto, extraHttpRequestParams?: any): Observable<EventDto>;
 
     /**
-     * Deltes event with given ID
+     * Deletes event with given ID
      * 
-     * @param id UUID of event to update
+     * @param id UUID of event to delete
      */
     deleteEventById(id: string, extraHttpRequestParams?: any): Observable<{}>;
 

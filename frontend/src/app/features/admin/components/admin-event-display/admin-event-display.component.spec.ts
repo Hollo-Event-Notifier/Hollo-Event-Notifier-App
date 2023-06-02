@@ -5,8 +5,8 @@ import {EventsService} from "../../../../core/services/events.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NO_ERRORS_SCHEMA, Provider} from "@angular/core";
 import {EventDto} from "../../../../core/api";
-import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
-import {EventEditorMode} from "../../enums/event-editor-mode";
+import {EventEditorDialogComponent} from "../event-editor-dialog/event-editor-dialog.component";
+import {EditorMode} from "../../enums/editor-mode";
 import {EventEditorData} from "../../models/event-editor-data";
 import {of} from "rxjs";
 
@@ -19,7 +19,7 @@ describe('AdminEventDisplayComponent', () => {
   let matDialogSpy: jasmine.SpyObj<MatDialog>;
 
   beforeEach(waitForAsync(() => {
-    stateSpy = jasmine.createSpyObj<ApplicationStateService>([], ['events'])
+    stateSpy = jasmine.createSpyObj<ApplicationStateService>([], ['events$'])
     eventsServiceSpy = jasmine.createSpyObj<EventsService>(['getEvents', 'createEvent', 'updateEvent', 'deleteEvent'])
     matDialogSpy = jasmine.createSpyObj<MatDialog>(['open'])
 
@@ -41,11 +41,6 @@ describe('AdminEventDisplayComponent', () => {
   it('should create', () => {
     // Assert
     expect(component).toBeTruthy();
-  });
-
-  it('should get events', () => {
-    // Assert
-    expect(eventsServiceSpy.getEvents).toHaveBeenCalledOnceWith(new Date('2023-04-23T00:00:00.000Z'), new Date('2023-05-13T23:59:59.000Z'));
   });
 
   it('should open create dialog correctly and create event', () => {
@@ -76,7 +71,7 @@ describe('AdminEventDisplayComponent', () => {
     expect(matDialogSpy.open).toHaveBeenCalledOnceWith(EventEditorDialogComponent, {
       data: {
         event: emptyEventWithDates,
-        mode: EventEditorMode.Create
+        mode: EditorMode.Create
       } as EventEditorData
     });
     expect(eventsServiceSpy.createEvent).toHaveBeenCalledOnceWith(createdEvent);
@@ -124,7 +119,7 @@ describe('AdminEventDisplayComponent', () => {
     expect(matDialogSpy.open).toHaveBeenCalledWith(EventEditorDialogComponent, {
       data: {
         event: eventToUpdate,
-        mode: EventEditorMode.Update
+        mode: EditorMode.Update
       } as EventEditorData
     });
     expect(eventsServiceSpy.updateEvent).toHaveBeenCalledWith(updatedEvent);
@@ -155,7 +150,7 @@ describe('AdminEventDisplayComponent', () => {
     expect(matDialogSpy.open).toHaveBeenCalledWith(EventEditorDialogComponent, {
       data: {
         event: eventToUpdate,
-        mode: EventEditorMode.Update
+        mode: EditorMode.Update
       } as EventEditorData
     });
     expect(eventsServiceSpy.deleteEvent).toHaveBeenCalledWith(eventId);
@@ -187,7 +182,7 @@ describe('AdminEventDisplayComponent', () => {
     expect(matDialogSpy.open).toHaveBeenCalledWith(EventEditorDialogComponent, {
       data: {
         event: expectedEvent,
-        mode: EventEditorMode.Create
+        mode: EditorMode.Create
       } as EventEditorData
     });
     expect(eventsServiceSpy.createEvent).not.toHaveBeenCalled();

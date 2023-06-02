@@ -1,14 +1,14 @@
 <div class="container" *transloco="let t; read:'event-editor-dialog'">
   <mat-dialog-actions>
     <h1>
-      <ng-container *ngIf="data.mode === eventEditorMode.Create">{{t('create_event')}}</ng-container>
-      <ng-container *ngIf="data.mode === eventEditorMode.Update">{{t('update_event')}}</ng-container>
+      <ng-container *ngIf="data.mode === editorMode.Create">{{t('create_event')}}</ng-container>
+      <ng-container *ngIf="data.mode === editorMode.Update">{{t('update_event')}}</ng-container>
     </h1>
     <div class="actions-container">
       <button mat-icon-button (click)="onCancel()">
         <mat-icon>cancel</mat-icon>
       </button>
-      <button mat-icon-button (click)="onDelete()" *ngIf="data.mode === eventEditorMode.Update">
+      <button mat-icon-button (click)="onDelete()" *ngIf="data.mode === editorMode.Update">
         <mat-icon>delete</mat-icon>
       </button>
       <button

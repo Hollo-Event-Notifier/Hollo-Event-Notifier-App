@@ -1,0 +1,36 @@
+.container {
+  width: 500px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    mat-dialog-actions {
+      padding-right:24px;
+    }
+  }
+
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0;
+
+    form {
+      width: inherit;
+
+      mat-form-field {
+        width: inherit;
+        padding-top: 10px;
+      }
+
+      input {
+        color: #364354;
+      }
+    }
+  }
+}

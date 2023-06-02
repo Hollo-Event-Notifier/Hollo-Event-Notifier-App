@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SharedModule} from '../../../../shared/shared.module';
 import {EventDto} from '../../../../core/api';
 import {EventDisplayDialogComponent} from './event-display-dialog.component';
+import {getTranslocoModule} from "../../../../core/utils/transloco-testing.factory";
 
 describe('EventDisplayDialogComponent', () => {
   let component: EventDisplayDialogComponent;
@@ -14,7 +15,8 @@ describe('EventDisplayDialogComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         EventDisplayDialogComponent,
-        SharedModule
+        SharedModule,
+        getTranslocoModule()
       ],
     }).overrideComponent(EventDisplayDialogComponent, {
       add: {

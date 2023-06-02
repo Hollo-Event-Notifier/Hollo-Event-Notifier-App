@@ -26,7 +26,7 @@ export class EventDisplayComponent {
     private readonly matDialog: MatDialog,
     private readonly translationService: TranslationService,
   ) {
-    this.events$ = state.events;
+    this.events$ = state.events$;
     this.currentLanguage = this.translationService.currentLanguage;
   }
   changeLanguage(): void {

@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Repository
-sealed interface EventsRepository : JpaRepository<Event, UUID> {
+interface EventsRepository : JpaRepository<Event, UUID> {
     @Query("SELECT e FROM Event e WHERE e.startDate >= :startDate and e.endDate <= :endDate")
     fun findBetweenStartAndEnd(
         startDate: LocalDateTime,

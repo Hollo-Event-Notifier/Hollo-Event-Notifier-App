@@ -3,8 +3,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventDto} from "../../../../core/api";
 import {EventEditorData} from "../../models/event-editor-data";
-import {EventForm} from "../../models/event-form";
-import {EventEditorMode} from "../../enums/event-editor-mode";
+import {EventEditorForm} from "../../models/event-editor-form";
+import {EditorMode} from "../../enums/editor-mode";
 
 @Component({
   selector: 'app-components',
@@ -12,7 +12,7 @@ import {EventEditorMode} from "../../enums/event-editor-mode";
   styleUrls: ['./event-editor-dialog.component.scss']
 })
 export class EventEditorDialogComponent {
-  formGroup = new FormGroup<EventForm>({
+  formGroup = new FormGroup<EventEditorForm>({
     title: new FormControl<string>('', {
       validators: Validators.required,
       nonNullable: true
@@ -42,7 +42,7 @@ export class EventEditorDialogComponent {
       nonNullable: true,
     }),
   });
-  eventEditorMode: typeof EventEditorMode = EventEditorMode;
+  editorMode: typeof EditorMode = EditorMode;
 
   constructor(
     private readonly dialogRef: MatDialogRef<EventEditorDialogComponent>,

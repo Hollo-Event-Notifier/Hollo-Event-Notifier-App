@@ -5,8 +5,8 @@ import {ApplicationStateService} from "../../../../core/services/application-sta
 import {EventsService} from "../../../../core/services/events.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDto} from "../../../../core/api";
-import {EventEditorDialogComponent} from "../event-editor/event-editor-dialog.component";
-import {EventEditorMode} from "../../enums/event-editor-mode";
+import {EventEditorDialogComponent} from "../event-editor-dialog/event-editor-dialog.component";
+import {EditorMode} from "../../enums/editor-mode";
 import {EventEditorData} from "../../models/event-editor-data";
 import {instanceOfEventDto} from "../../../../core/utils/event-dto.type-guard";
 
@@ -23,7 +23,7 @@ export class AdminEventDisplayComponent{
     private readonly eventsService: EventsService,
     private readonly matDialog: MatDialog,
   ) {
-    this.events$ = this.state.events;
+    this.events$ = this.state.events$;
   }
 
   onDateSelect(emptyEventWithDates: EventDto) {
@@ -34,14 +34,14 @@ export class AdminEventDisplayComponent{
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
         event: eventToUpdate,
-        mode: EventEditorMode.Update
+        mode: EditorMode.Update
       } as EventEditorData
-    }).afterClosed().subscribe((value: EventDto | string) => {
-      if (value !== undefined) {
-        if (typeof value === 'string') {
-          this.eventsService.deleteEvent(value);
-        } else if (instanceOfEventDto(value)) {
-          this.eventsService.updateEvent(value);
+    }).afterClosed().subscribe((result: EventDto | string) => {
+      if (result !== undefined) {
+        if (typeof result === 'string') {
+          this.eventsService.deleteEvent(result);
+        } else if (instanceOfEventDto(result)) {
+          this.eventsService.updateEvent(result);
         }
       }
     });
@@ -69,7 +69,7 @@ export class AdminEventDisplayComponent{
     this.matDialog.open(EventEditorDialogComponent, {
       data: {
         event: event,
-        mode: EventEditorMode.Create
+        mode: EditorMode.Create
       } as EventEditorData
     }).afterClosed().subscribe((value: EventDto) => {
       if (value !== undefined && instanceOfEventDto(value)) {

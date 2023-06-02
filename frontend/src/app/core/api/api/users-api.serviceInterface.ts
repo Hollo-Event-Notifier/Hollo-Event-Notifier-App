@@ -13,7 +13,9 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs';
 
+import { CreateUserRequestDto } from '../model/models';
 import { UserCredentialsDto } from '../model/models';
+import { UserDto } from '../model/models';
 
 
 import { Configuration }                                     from '../configuration';
@@ -28,13 +30,40 @@ export interface UsersApiServiceInterface {
      * Checks if the user has valid JWT token in cookie
      * 
      */
-    checkToken(extraHttpRequestParams?: any): Observable<{}>;
+    checkToken(extraHttpRequestParams?: any): Observable<UserDto>;
+
+    /**
+     * Creates new user
+     * 
+     * @param createUserRequestDto user to create
+     */
+    createUser(createUserRequestDto: CreateUserRequestDto, extraHttpRequestParams?: any): Observable<UserDto>;
+
+    /**
+     * Deletes user with given ID
+     * 
+     * @param id UUID of user to delete
+     */
+    deleteUserById(id: string, extraHttpRequestParams?: any): Observable<{}>;
+
+    /**
+     * Provides all user in application
+     * 
+     */
+    getAllUsers(extraHttpRequestParams?: any): Observable<Array<UserDto>>;
 
     /**
      * Logs user into the system
      * 
      * @param userCredentialsDto user credentials
      */
-    login(userCredentialsDto: UserCredentialsDto, extraHttpRequestParams?: any): Observable<{}>;
+    login(userCredentialsDto: UserCredentialsDto, extraHttpRequestParams?: any): Observable<UserDto>;
+
+    /**
+     * Updates existing user in application
+     * 
+     * @param userDto user credentials
+     */
+    updateUser(userDto: UserDto, extraHttpRequestParams?: any): Observable<UserDto>;
 
 }

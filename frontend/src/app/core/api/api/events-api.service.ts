@@ -168,9 +168,9 @@ export class EventsApiService implements EventsApiServiceInterface {
     }
 
     /**
-     * Deltes event with given ID
+     * Deletes event with given ID
      * 
-     * @param id UUID of event to update
+     * @param id UUID of event to delete
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

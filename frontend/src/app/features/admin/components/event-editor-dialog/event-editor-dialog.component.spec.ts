@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {EventDto} from '../../../../core/api';
 import {EventEditorData} from '../../models/event-editor-data';
-import {EventEditorMode} from '../../enums/event-editor-mode';
+import {EditorMode} from '../../enums/editor-mode';
 import {EventEditorDialogComponent} from './event-editor-dialog.component';
 import {MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -10,6 +10,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {getTranslocoModule} from "../../../../core/utils/transloco-testing.factory";
 
 describe('EventEditorDialogComponent', () => {
   let component: EventEditorDialogComponent;
@@ -26,7 +27,7 @@ describe('EventEditorDialogComponent', () => {
       endDate: new Date().toISOString(),
       link: 'https://example.com',
     },
-    mode: EventEditorMode.Create
+    mode: EditorMode.Create
   }
 
   beforeEach(waitForAsync(() => {
@@ -39,7 +40,8 @@ describe('EventEditorDialogComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        getTranslocoModule()
       ],
       providers: [
         {

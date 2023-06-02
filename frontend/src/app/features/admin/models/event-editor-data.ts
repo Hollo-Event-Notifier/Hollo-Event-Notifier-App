@@ -1,7 +1,7 @@
 import {EventDto} from "../../../core/api";
-import {EventEditorMode} from "../enums/event-editor-mode";
+import {EditorMode} from "../enums/editor-mode";
 
 export interface EventEditorData {
   event: EventDto;
-  mode: EventEditorMode;
+  mode: EditorMode;
 }

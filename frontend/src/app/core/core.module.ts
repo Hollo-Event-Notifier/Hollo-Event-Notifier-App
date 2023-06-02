@@ -9,10 +9,10 @@ import {EventMapperService} from "./services/event-mapper.service";
 import {EventsService} from "./services/events.service";
 import {TranslationService} from "./services/translation.service";
 import {TranslocoRootModule} from "./transloco-root.module";
+import {UsersService} from "./services/users.service";
 
 const IMPORTS = [
   MatSnackBarModule,
-  HttpClientModule,
   TranslocoRootModule,
   HttpClientModule,
   ApiModule.forRoot(() => {
@@ -32,6 +32,7 @@ const PROVIDERS: Provider[] = [
   AuthGuardService,
   EventsService,
   EventMapperService,
+  UsersService,
   TranslationService,
 ];
 
@@ -45,8 +46,7 @@ const API_SERVICES: Provider[] = [
   providers: [...PROVIDERS, ...API_SERVICES]
 })
 export class CoreModule {
-  constructor(
-    @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error(`CoreModule has already been loaded. Import CoreModule in the AppModule only.`);
     }

@@ -7,9 +7,9 @@ export class SnackbarService {
   private config: MatSnackBarConfig = {
     duration: 1000,
     verticalPosition: 'bottom',
-    horizontalPosition: 'right',
+    horizontalPosition: 'center',
     panelClass: '', // TODO define panel classes
-    politeness: 'polite'
+    politeness: 'polite',
   }
 
   constructor(private snackBar: MatSnackBar) {

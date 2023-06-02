@@ -5,8 +5,10 @@
 */
 package hu.hollo.news.api
 
+import hu.hollo.news.model.dto.CreateUserRequestDto
 import hu.hollo.news.model.dto.ErrorDto
 import hu.hollo.news.model.dto.UserCredentialsDto
+import hu.hollo.news.model.dto.UserDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -39,7 +41,38 @@ interface UsersApi {
             value = ["/users/check-token"],
             produces = ["application/json"]
     )
-    fun checkToken(): ResponseEntity<Unit> {
+    fun checkToken(): ResponseEntity<UserDto> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.PUT],
+            value = ["/users"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun createUser( @Valid @RequestBody createUserRequestDto: CreateUserRequestDto): ResponseEntity<UserDto> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.DELETE],
+            value = ["/users/{id}"],
+            produces = ["application/json"]
+    )
+    fun deleteUserById( @PathVariable("id") id: java.util.UUID): ResponseEntity<Unit> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.GET],
+            value = ["/users"],
+            produces = ["application/json"]
+    )
+    fun getAllUsers(): ResponseEntity<List<UserDto>> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
@@ -50,7 +83,18 @@ interface UsersApi {
             produces = ["application/json"],
             consumes = ["application/json"]
     )
-    fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<Unit> {
+    fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<UserDto> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.POST],
+            value = ["/users"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun updateUser( @Valid @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 }

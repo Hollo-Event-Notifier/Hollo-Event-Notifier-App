@@ -1,44 +1,39 @@
-<ng-container *transloco="let t; read:'admin-root'">
-  <mat-toolbar
-    color="primary"
-  >
-    <div class="main-menu">
-      <button
-        mat-flat-button
-        color="primary"
-        class="menu-element"
-        [routerLink]="adminRoutes.Settings"
-      >
-        <mat-icon id="settingsIcon">settings</mat-icon>
-        <mat-label>{{t('settings')}}</mat-label>
+<mat-toolbar color="primary" *transloco="let t; read:'admin-root'">
+  <div class="menu-group">
+    <ng-container *ngIf="(currentUser$ | async)?.role === roles.SystemAdmin">
+      <button mat-icon-button [routerLink]="adminRoutes.Settings">
+        <mat-icon>settings</mat-icon>
       </button>
-      <button
-        mat-flat-button
-        color="primary"
-        class="menu-element"
-        [routerLink]="adminRoutes.EventDisplay"
-      >
-        <mat-icon id="eventsIcon">calendar_today</mat-icon>
-        <label for="eventsIcon">{{t('events')}}</label>
+      <button mat-icon-button [routerLink]="adminRoutes.EventDisplay">
+        <mat-icon>calendar_today</mat-icon>
       </button>
-    </div>
-    <div class="secondary-menu">
-    <button class="language-button"
-            mat-flat-button
-            color="primary"
-            (click)="changeLanguage()"
-    >
-      <mat-icon>language</mat-icon>
-    </button>
+    </ng-container>
+  </div>
+  <div class="title">
+    <h1 class="white">{{t("title")}}</h1>
+  </div>
+  <div class="menu-group">
     <button
+      class="language-button"
       mat-flat-button
       color="primary"
-      class="menu-element"
+      (click)="changeLanguage()"
     >
-      <mat-icon id="logout-icon">logout</mat-icon>
-      <label for="logout-icon">{{t('logout')}}</label>
+      <mat-icon>language</mat-icon>
+      <mat-label>{{currentLanguage}}</mat-label>
     </button>
-    </div>
-  </mat-toolbar>
-</ng-container>
+    <button
+      mat-icon-button
+      (click)="openEditorDialog()"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      [routerLink]="appRoutes.EventDisplay"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
