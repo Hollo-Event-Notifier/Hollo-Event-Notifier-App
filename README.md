@@ -1,7 +1,7 @@
 # Hollo-Event-Notifier-App
 
 ## Description
-This archive repository contains the Holló Event Notifier application. The actual repository under development with the corresponding issues can be found [here](https://github.com/Hollo-Event-Notifier/Hollo-Event-Notifier-App/tree/development)
+This repository contains the Holló Event Notifier application.
 
 # Architecture
 
