@@ -4,7 +4,7 @@ import {EventInput} from "@fullcalendar/core";
 import {ApplicationStateService} from "../../../../core/services/application-state.service";
 import {EventsService} from "../../../../core/services/events.service";
 import {MatDialog} from "@angular/material/dialog";
-import {EventDto} from "../../../../core/api";
+import {EventDto, EventDtoTypeEnum} from "../../../../core/api";
 import {EventEditorDialogComponent} from "../event-editor-dialog/event-editor-dialog.component";
 import {EditorMode} from "../../enums/editor-mode";
 import {EventEditorData} from "../../models/event-editor-data";
@@ -61,7 +61,8 @@ export class AdminEventDisplayComponent{
       hasPoints: false,
       organizer: '',
       place: '',
-      title: ''
+      title: '',
+      type: EventDtoTypeEnum.Other
     });
   }
 

@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EventDto} from "../../../../core/api";
+import {EventDto, EventDtoTypeEnum} from "../../../../core/api";
 import {EventEditorData} from "../../models/event-editor-data";
 import {EventEditorForm} from "../../models/event-editor-form";
 import {EditorMode} from "../../enums/editor-mode";
@@ -63,7 +63,8 @@ export class EventEditorDialogComponent {
     this.dialogRef.close({
       ...this.formGroup.value,
       id: this.data.event.id,
-      link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined
+      link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined,
+      type: EventDtoTypeEnum.Other // TODO add form field
     } as EventDto);
   }
 

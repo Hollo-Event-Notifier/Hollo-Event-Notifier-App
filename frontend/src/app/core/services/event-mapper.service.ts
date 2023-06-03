@@ -20,6 +20,7 @@ export class EventMapperService {
         organizer: dto.organizer,
         hasPoints: dto.hasPoints,
         link: dto.link,
+        type: dto.type
       }
     }
   }
@@ -34,6 +35,7 @@ export class EventMapperService {
       endDate: new Date(input.end!!.toString()).toISOString(),
       id: input.id!!,
       link: input.extendedProps!!['link'],
+      type:input.extendedProps!!['type'],
     }
   }
 }

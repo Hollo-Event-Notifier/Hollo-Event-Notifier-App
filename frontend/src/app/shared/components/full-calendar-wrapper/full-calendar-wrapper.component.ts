@@ -12,7 +12,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import {EventDto} from "../../../core/api";
+import {EventDto, EventDtoTypeEnum} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
 import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
@@ -137,7 +137,8 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       place: '',
       title: '',
       organizer: '',
-      hasPoints: false
+      hasPoints: false,
+      type: EventDtoTypeEnum.Other
     });
   }
 
