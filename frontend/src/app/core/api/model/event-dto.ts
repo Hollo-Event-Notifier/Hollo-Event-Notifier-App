@@ -21,7 +21,15 @@ export interface EventDto {
     hasPoints: boolean;
     startDate: string;
     endDate: string;
+    type: EventDtoTypeEnum;
     link?: string;
     id?: string;
 }
+export enum EventDtoTypeEnum {
+    Professional = 'Professional',
+    Community = 'Community',
+    Other = 'Other'
+};
+
+
 
