@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.time.ZoneOffset
 
 @Service
-class EventsAdapter : Adapter<EventDto, Event> {
+class EventsAdapter(private val eventTypeAdapter: EventTypeAdapter) : Adapter<EventDto, Event> {
     override fun adaptDtoToDb(dto: EventDto): Event = Event(
         title = dto.title,
         place = dto.place,
@@ -14,6 +14,7 @@ class EventsAdapter : Adapter<EventDto, Event> {
         hasPoints = dto.hasPoints,
         startDate = dto.startDate.toLocalDateTime(),
         endDate = dto.endDate.toLocalDateTime(),
+        type = eventTypeAdapter.adaptDtoToDb(dto.type),
         link = dto.link?.toURL(),
         id = dto.id
     )
@@ -25,6 +26,7 @@ class EventsAdapter : Adapter<EventDto, Event> {
         hasPoints = db.hasPoints,
         startDate = db.startDate.atOffset(ZoneOffset.UTC),
         endDate = db.endDate.atOffset(ZoneOffset.UTC),
+        type = eventTypeAdapter.adaptDbToDto(db.type),
         link = db.link?.toURI(),
         id = db.id
     )
