@@ -368,6 +368,7 @@ components:
         - hasPoints
         - startDate
         - endDate
+        - type
       properties:
         title:
           type: string
@@ -383,6 +384,9 @@ components:
         endDate:
           type: string
           format: date-time
+        type:
+          type: string
+          enum: [ Professional, Community, Other ]
         link:
           type: string
           format: uri
