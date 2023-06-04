@@ -100,10 +100,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   handleDateSet(datesSetArgs: DatesSetArg) {
     let viewStartDate: Date = datesSetArgs.start;
     let viewEndDate: Date = datesSetArgs.end;
-    console.log("currentMonthStart" + this.currentMonthStart)
-    console.log("currentMonthEnd" + this.currentMonthEnd)
-    console.log("viewStartDate" + viewStartDate)
-    console.log("viewEndDate" + viewEndDate)
 
     if (!this.loaded) {
       this.loaded = true;
