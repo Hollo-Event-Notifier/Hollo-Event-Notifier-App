@@ -62,7 +62,7 @@ export class AdminEventDisplayComponent{
       organizer: '',
       place: '',
       title: '',
-      type: EventDtoTypeEnum.Other
+      type: EventDtoTypeEnum.Professional
     });
   }
 

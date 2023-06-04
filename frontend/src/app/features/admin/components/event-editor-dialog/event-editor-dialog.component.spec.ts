@@ -1,9 +1,9 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {EventDto} from '../../../../core/api';
+import {EventDto, EventDtoTypeEnum} from '../../../../core/api';
 import {EventEditorData} from '../../models/event-editor-data';
 import {EditorMode} from '../../enums/editor-mode';
 import {EventEditorDialogComponent} from './event-editor-dialog.component';
-import {MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -26,6 +26,7 @@ describe('EventEditorDialogComponent', () => {
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
       link: 'https://example.com',
+      type: EventDtoTypeEnum.Community
     },
     mode: EditorMode.Create
   }
@@ -73,7 +74,8 @@ describe('EventEditorDialogComponent', () => {
       hasPoints: eventEditorDataMock.event.hasPoints,
       startDate: eventEditorDataMock.event.startDate,
       endDate: eventEditorDataMock.event.endDate,
-      link: eventEditorDataMock.event.link
+      link: eventEditorDataMock.event.link,
+      type: eventEditorDataMock.event.type
     };
 
     // Act

@@ -3,7 +3,7 @@ import {
   Calendar,
   CalendarOptions,
   DateSelectArg,
-  DatesSetArg, EventApi,
+  DatesSetArg,
   EventChangeArg,
   EventClickArg, EventContentArg,
   EventInput, EventMountArg
@@ -18,7 +18,6 @@ import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
 import {Subscription} from 'rxjs';
 import {EventsService} from "../../../core/services/events.service";
-import {ar} from "@fullcalendar/core/internal-common";
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -55,12 +54,14 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     initialView: 'timeGridWeek',
     selectMirror: true,
     dayMaxEvents: true,
+    eventDisplay: 'block',
     firstDay: 1,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
     datesSet: this.handleDateSet.bind(this),
-    eventDidMount: this.customizeEvent
+    eventDidMount: this.customizeEvent.bind(this),
+    eventContent : this.refreshEvent.bind(this)
   };
 
   private languageSubscription!: Subscription;
@@ -85,8 +86,30 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  refreshEvent(any : EventContentArg) :void {
+    console.log("now")
+  }
   customizeEvent(eventContent : EventMountArg) {
-    eventContent.el.classList.contains('type')
+    const eventType = eventContent.event.extendedProps['type']
+    const eventElement: HTMLElement = eventContent.el;
+    const blue: string = '#3f51b5'
+    const green: string = '#1c8f15'
+    const mango: string = '#F09300'
+
+    switch (eventType){
+      case EventDtoTypeEnum.Professional:
+        eventElement.style.backgroundColor = blue
+        eventElement.style.borderColor = blue
+        break
+      case EventDtoTypeEnum.Community:
+        eventElement.style.backgroundColor = green
+        eventElement.style.borderColor = green
+        break
+      case EventDtoTypeEnum.Other:
+        eventElement.style.backgroundColor = mango
+        eventElement.style.borderColor = mango
+        break
+    }
   }
 
   ngOnInit(): void {

@@ -17,6 +17,10 @@ export class EventEditorDialogComponent {
       validators: Validators.required,
       nonNullable: true
     }),
+    type: new FormControl<string>('', {
+      validators: Validators.required,
+      nonNullable: true
+    }),
     place: new FormControl<string>('', {
       validators: Validators.required,
       nonNullable: true
@@ -41,10 +45,6 @@ export class EventEditorDialogComponent {
       validators: Validators.pattern(/^(http|https):\/\/[a-z0-9]+([\-.][a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/),
       nonNullable: true,
     }),
-    type: new FormControl<string>('', {
-      validators: Validators.required,
-      nonNullable: true
-    }),
   });
   editorMode: typeof EditorMode = EditorMode;
 
@@ -68,7 +68,6 @@ export class EventEditorDialogComponent {
       ...this.formGroup.value,
       id: this.data.event.id,
       link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined,
-      //TODO: yet not working
       type: this.formGroup.value.type === 'Professional' ? EventDtoTypeEnum.Professional: (this.formGroup.value.type === 'Community' ? EventDtoTypeEnum.Community : EventDtoTypeEnum.Other)
     } as EventDto);
   }
