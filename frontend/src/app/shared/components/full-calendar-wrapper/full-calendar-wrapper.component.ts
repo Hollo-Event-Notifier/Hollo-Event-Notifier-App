@@ -5,7 +5,7 @@ import {
   DateSelectArg,
   DatesSetArg,
   EventChangeArg,
-  EventClickArg,
+  EventClickArg, EventContentArg,
   EventInput
 } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -58,7 +58,8 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
-    datesSet: this.handleDateSet.bind(this)
+    datesSet: this.handleDateSet.bind(this),
+    eventContent: this.eventContent
   };
 
   private languageSubscription!: Subscription;
@@ -118,6 +119,10 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     }
 
     this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
+  }
+
+  eventContent(eventContent: EventContentArg) {
+
   }
 
 
