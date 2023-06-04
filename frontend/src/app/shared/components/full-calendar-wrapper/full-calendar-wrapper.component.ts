@@ -103,21 +103,22 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
 
     if (!this.loaded) {
       this.loaded = true;
+      this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
+
     } else if (viewStartDate < this.currentMonthStart) {
       this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
       this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth(), 0);
-
       this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
       this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+      this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
+
     } else if (viewEndDate > this.currentMonthEnd) {
       this.currentMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() + 1, 1);
       this.currentMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
-
       this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
       this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
+      this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
     }
-
-    this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
   }
 
 
