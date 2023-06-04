@@ -3,10 +3,10 @@ import {
   Calendar,
   CalendarOptions,
   DateSelectArg,
-  DatesSetArg,
+  DatesSetArg, EventApi,
   EventChangeArg,
   EventClickArg, EventContentArg,
-  EventInput
+  EventInput, EventMountArg
 } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -18,6 +18,7 @@ import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
 import {Subscription} from 'rxjs';
 import {EventsService} from "../../../core/services/events.service";
+import {ar} from "@fullcalendar/core/internal-common";
 
 @Component({
   selector: 'app-full-calendar-wrapper',
@@ -59,7 +60,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
     datesSet: this.handleDateSet.bind(this),
-    eventContent: this.eventContent
+    eventDidMount: this.customizeEvent
   };
 
   private languageSubscription!: Subscription;
@@ -82,6 +83,10 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     private readonly eventMapperService: EventMapperService,
     private readonly eventsService: EventsService
   ) {
+  }
+
+  customizeEvent(eventContent : EventMountArg) {
+    eventContent.el.classList.contains('type')
   }
 
   ngOnInit(): void {
@@ -120,11 +125,6 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
 
     this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
   }
-
-  eventContent(eventContent: EventContentArg) {
-
-  }
-
 
   ngOnDestroy(): void {
     if (this.languageSubscription) {
