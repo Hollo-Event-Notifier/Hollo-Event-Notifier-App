@@ -41,6 +41,10 @@ export class EventEditorDialogComponent {
       validators: Validators.pattern(/^(http|https):\/\/[a-z0-9]+([\-.][a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/),
       nonNullable: true,
     }),
+    type: new FormControl<string>('', {
+      validators: Validators.required,
+      nonNullable: true
+    }),
   });
   editorMode: typeof EditorMode = EditorMode;
 
@@ -56,15 +60,16 @@ export class EventEditorDialogComponent {
       startDate: data.event.startDate,
       endDate: data.event.endDate,
       link: data.event.link!! ? data.event.link : '',
+      type: data.event.type,
     });
   }
-
   onSave() {
     this.dialogRef.close({
       ...this.formGroup.value,
       id: this.data.event.id,
       link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined,
-      type: EventDtoTypeEnum.Other // TODO add form field
+      //TODO: yet not working
+      type: this.formGroup.value.type === 'Professional' ? EventDtoTypeEnum.Professional: (this.formGroup.value.type === 'Community' ? EventDtoTypeEnum.Community : EventDtoTypeEnum.Other)
     } as EventDto);
   }
 

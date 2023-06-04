@@ -27,7 +27,11 @@
     "end_date" : "Befejezés időpont",
     "has_points" : "Pontot ér",
     "required_field": "A mező kitöltése kötelező",
-    "invalid_url" : "Nem érvényes URL"
+    "invalid_url" : "Nem érvényes URL",
+    "type": "Típus",
+    "professional": "Szakmai",
+    "community": "Közösségi",
+    "other": "Egyéb"
   },
   "user-editor-dialog": {
     "title": "Felhasználó szerkesztése",

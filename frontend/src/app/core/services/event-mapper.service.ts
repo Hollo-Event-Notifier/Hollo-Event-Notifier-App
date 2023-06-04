@@ -21,7 +21,8 @@ export class EventMapperService {
         hasPoints: dto.hasPoints,
         link: dto.link,
         type: dto.type
-      }
+      },
+      backgroundColor: dto.type === 'Professional' ? '#3f51b5': (dto.type === 'Community' ? '#1c8f15' : '#F09300')
     }
   }
 

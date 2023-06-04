@@ -8,4 +8,5 @@ export interface EventEditorForm {
   startDate: FormControl<string>;
   endDate: FormControl<string>;
   link: FormControl<string>;
+  type: FormControl<string>;
 }
