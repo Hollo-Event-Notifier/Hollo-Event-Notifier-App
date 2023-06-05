@@ -61,7 +61,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     eventChange: this.handleEventChange.bind(this),
     datesSet: this.handleDateSet.bind(this),
     eventDidMount: this.customizeEvent.bind(this),
-    eventContent : this.refreshEvent.bind(this)
+    eventClassNames : this.refreshEvent.bind(this)
   };
 
   private languageSubscription!: Subscription;
@@ -86,8 +86,20 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  refreshEvent(any : EventContentArg) :void {
+  refreshEvent(eventContent : EventContentArg) : string[] {
+    var className = []
     console.log("now")
+    const eventType = eventContent.event.extendedProps['type']
+    if (eventType === EventDtoTypeEnum.Professional){
+      className.push('change_background_professional')
+    }
+    else if (eventType === EventDtoTypeEnum.Community){
+      className.push('change_background_community')
+    }
+    else {
+      className.push('change_background_other')
+    }
+    return className
   }
   customizeEvent(eventContent : EventMountArg) {
     const eventType = eventContent.event.extendedProps['type']

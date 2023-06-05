@@ -4,6 +4,7 @@ import hu.hollo.news.exception.BadRequestException
 import hu.hollo.news.exception.EventNotFoundException
 import hu.hollo.news.model.dto.EventDto
 import hu.hollo.news.repository.EventsRepository
+import hu.hollo.news.service.adapter.EventTypeAdapter
 import hu.hollo.news.service.adapter.EventsAdapter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -13,7 +14,8 @@ import java.util.*
 @Service
 class EventsService(
     private val eventsRepository: EventsRepository,
-    private val eventsAdapter: EventsAdapter
+    private val eventsAdapter: EventsAdapter,
+    private val eventTypeAdapter: EventTypeAdapter
 ) {
     fun getEventsBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<EventDto> =
         // TODO: add start and end date checks and exceptions
@@ -51,6 +53,7 @@ class EventsService(
         eventInDb.startDate = eventDto.startDate.toLocalDateTime()
         eventInDb.endDate = eventDto.endDate.toLocalDateTime()
         eventInDb.link = eventDto.link?.toURL()
+        eventInDb.type = eventTypeAdapter.adaptDtoToDb(eventDto.type)
 
         return eventsAdapter.adaptDbToDto(eventsRepository.save(eventInDb))
     }
