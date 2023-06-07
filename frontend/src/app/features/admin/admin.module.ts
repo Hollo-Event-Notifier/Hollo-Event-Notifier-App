@@ -32,7 +32,7 @@ const PROVIDERS: Provider[] = [
 
 @NgModule({
   declarations: [...DECLARATIONS],
-    imports: [...IMPORTS, KeyValuePipe],
+    imports: [...IMPORTS],
   providers: [...PROVIDERS]
 })
 export class AdminModule {
