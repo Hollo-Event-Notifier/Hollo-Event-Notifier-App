@@ -2,6 +2,7 @@ package hu.hollo.news.model.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonValue
 import javax.validation.constraints.DecimalMax
 import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.Email
@@ -20,6 +21,7 @@ import javax.validation.Valid
  * @param hasPoints 
  * @param startDate 
  * @param endDate 
+ * @param type 
  * @param link 
  * @param id 
  */
@@ -37,11 +39,24 @@ data class EventDto(
 
     @get:JsonProperty("endDate", required = true) val endDate: java.time.OffsetDateTime,
 
+    @get:JsonProperty("type", required = true) val type: EventDto.Type,
+
     @field:Valid
     @get:JsonProperty("link") val link: java.net.URI? = null,
 
     @get:JsonProperty("id") val id: java.util.UUID? = null
 ) {
+
+    /**
+    * 
+    * Values: professional,community,other
+    */
+    enum class Type(val value: kotlin.String) {
+
+        @JsonProperty("Professional") professional("Professional"),
+        @JsonProperty("Community") community("Community"),
+        @JsonProperty("Other") other("Other")
+    }
 
 }
 

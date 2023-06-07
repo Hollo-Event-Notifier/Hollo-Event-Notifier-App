@@ -5,14 +5,14 @@ import {
   DateSelectArg,
   DatesSetArg,
   EventChangeArg,
-  EventClickArg,
-  EventInput
+  EventClickArg, EventContentArg,
+  EventInput, EventMountArg
 } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import {EventDto} from "../../../core/api";
+import {EventDto, EventDtoTypeEnum} from "../../../core/api";
 import {EventMapperService} from "../../../core/services/event-mapper.service";
 import {Language} from "../../../core/models/language";
 import {ApplicationStateService} from "../../../core/services/application-state.service";
@@ -54,11 +54,14 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     initialView: 'timeGridWeek',
     selectMirror: true,
     dayMaxEvents: true,
+    eventDisplay: 'block',
     firstDay: 1,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventChange: this.handleEventChange.bind(this),
-    datesSet: this.handleDateSet.bind(this)
+    datesSet: this.handleDateSet.bind(this),
+    eventDidMount: this.customizeEvent.bind(this),
+    eventClassNames : this.refreshEvent.bind(this)
   };
 
   private languageSubscription!: Subscription;
@@ -75,6 +78,9 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   private currentMonthEnd: Date = this.realLifeMonthEnd;
   private nextMonthEnd: Date = this.realLifeNextMonthEnd;
   private previousMonthStart: Date = this.realLifePreviousMonthStart;
+
+
+
 
   constructor(
     private readonly state: ApplicationStateService,
@@ -97,7 +103,50 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleDateSet(datesSetArgs: DatesSetArg) {
+  ngOnDestroy(): void {
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
+  private refreshEvent(eventContent : EventContentArg) : string[] {
+    var className = []
+    const eventType = eventContent.event.extendedProps['type']
+    if (eventType === EventDtoTypeEnum.Professional){
+      className.push('change-background-professional')
+    }
+    else if (eventType === EventDtoTypeEnum.Community){
+      className.push('change-background-community')
+    }
+    else {
+      className.push('change-background-other')
+    }
+    return className
+  }
+  private customizeEvent(eventContent : EventMountArg) {
+    const eventType = eventContent.event.extendedProps['type']
+    const eventElement: HTMLElement = eventContent.el;
+    const blue: string = '#3f51b5'
+    const green: string = '#1c8f15'
+    const mango: string = '#F09300'
+
+    switch (eventType){
+      case EventDtoTypeEnum.Professional:
+        eventElement.style.backgroundColor = blue
+        eventElement.style.borderColor = blue
+        break
+      case EventDtoTypeEnum.Community:
+        eventElement.style.backgroundColor = green
+        eventElement.style.borderColor = green
+        break
+      case EventDtoTypeEnum.Other:
+        eventElement.style.backgroundColor = mango
+        eventElement.style.borderColor = mango
+        break
+    }
+  }
+
+  private handleDateSet(datesSetArgs: DatesSetArg) {
     let viewStartDate: Date = datesSetArgs.start;
     let viewEndDate: Date = datesSetArgs.end;
 
@@ -119,13 +168,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
       this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
     }
-  }
-
-
-  ngOnDestroy(): void {
-    if (this.languageSubscription) {
-      this.languageSubscription.unsubscribe();
-    }
+    this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
   }
 
   private handleDateSelect(selectInfo: DateSelectArg): void {
@@ -138,7 +181,8 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       place: '',
       title: '',
       organizer: '',
-      hasPoints: false
+      hasPoints: false,
+      type: EventDtoTypeEnum.Other
     });
   }
 

@@ -29,6 +29,9 @@ class Event(
     @Column(nullable = false)
     var endDate: LocalDateTime,
 
+    @Column(nullable = false)
+    var type: Type,
+
     var link: URL? = null,
 
     @Id
@@ -50,6 +53,12 @@ class Event(
 
     override fun toString(): String {
         return "${this.javaClass.simpleName}(title='$title', place='$place', hasPoints='$hasPoints',  " +
-                "startDate='$startDate', endDate='$endDate, link='$link, id='$id')"
+                "startDate='$startDate', endDate='$endDate, type='$type' link='$link, id='$id')"
+    }
+
+    enum class Type {
+        Community,
+        Professional,
+        Other
     }
 }

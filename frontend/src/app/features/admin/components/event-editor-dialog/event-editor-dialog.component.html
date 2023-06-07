@@ -32,6 +32,13 @@
         <mat-error *ngIf="formGroup.controls.title.hasError('required')">{{t('required_field')}}</mat-error>
       </mat-form-field>
       <mat-form-field>
+        <mat-label>{{t('type')}}</mat-label>
+        <mat-select [formControl]="formGroup.controls.type">
+          <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{t(eventType)}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.controls.type.hasError('required')">{{t('required_field')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
         <mat-label>{{t('place')}}</mat-label>
         <input
           matInput

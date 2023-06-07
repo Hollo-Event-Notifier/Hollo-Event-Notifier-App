@@ -92,6 +92,7 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             hasPoints = false,
             startDate = LocalDateTime.parse("2023-05-01T12:00:00.00"),
             endDate = LocalDateTime.parse("2023-05-01T15:00:00.00"),
+            type = Event.Type.Professional
         ),
         Event(
             title = "Európa szerepe a világban",
@@ -100,6 +101,7 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             hasPoints = true,
             startDate = LocalDateTime.parse("2023-05-01T17:00:00.00"),
             endDate = LocalDateTime.parse("2023-05-01T20:00:00.00"),
+            type = Event.Type.Professional
         ),
         Event(
             title = "Akkumulátoripar - töltőre tett gazdaság",
@@ -108,6 +110,7 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             hasPoints = true,
             startDate = LocalDateTime.parse("2023-05-02T09:00:00.00"),
             endDate = LocalDateTime.parse("2023-05-02T11:00:00.00"),
+            type = Event.Type.Professional
         ),
         Event(
             title = "Környezetvédelmi akció a feneketlen tó körül",
@@ -116,6 +119,7 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             hasPoints = false,
             startDate = LocalDateTime.parse("2023-05-03T16:00:00.00"),
             endDate = LocalDateTime.parse("2023-05-03T19:00:00.00"),
+            type = Event.Type.Community
         ),
     );
 

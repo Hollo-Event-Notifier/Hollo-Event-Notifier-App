@@ -6,5 +6,6 @@ export function instanceOfEventDto(object: object): object is EventDto {
     'organizer' in object &&
     'hasPoints' in object &&
     'startDate' in object &&
-    'endDate' in object
+    'endDate' in object &&
+    'type' in object;
 }
