@@ -17,7 +17,7 @@ export class EventEditorDialogComponent {
       validators: Validators.required,
       nonNullable: true
     }),
-    type: new FormControl<string>('', {
+    type: new FormControl<EventDtoTypeEnum>(EventDtoTypeEnum.Professional, {
       validators: Validators.required,
       nonNullable: true
     }),
@@ -47,6 +47,7 @@ export class EventEditorDialogComponent {
     }),
   });
   editorMode: typeof EditorMode = EditorMode;
+  eventTypes: EventDtoTypeEnum[] = Object.values(EventDtoTypeEnum);
 
   constructor(
     private readonly dialogRef: MatDialogRef<EventEditorDialogComponent>,
@@ -68,7 +69,7 @@ export class EventEditorDialogComponent {
       ...this.formGroup.value,
       id: this.data.event.id,
       link: this.formGroup.value.link !== '' ? this.formGroup.value.link : undefined,
-      type: this.formGroup.value.type === 'Professional' ? EventDtoTypeEnum.Professional: (this.formGroup.value.type === 'Community' ? EventDtoTypeEnum.Community : EventDtoTypeEnum.Other)
+      type: this.formGroup.value.type,
     } as EventDto);
   }
 

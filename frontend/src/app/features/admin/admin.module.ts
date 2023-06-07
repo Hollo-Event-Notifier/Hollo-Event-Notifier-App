@@ -9,6 +9,7 @@ import {UserDeleteDialogComponent} from './components/user-delete-dialog/user-de
 import {UserEditorDialogComponent} from './components/user-editor-dialog/user-editor-dialog.component';
 import {UserCreatorDialogComponent} from './components/user-creator-dialog/user-creator-dialog.component';
 import {SettingsGuardService} from "./services/settings-guard.service";
+import {KeyValuePipe} from "@angular/common";
 
 const DECLARATIONS = [
   AdminRootComponent,
@@ -31,7 +32,7 @@ const PROVIDERS: Provider[] = [
 
 @NgModule({
   declarations: [...DECLARATIONS],
-  imports: [...IMPORTS],
+    imports: [...IMPORTS, KeyValuePipe],
   providers: [...PROVIDERS]
 })
 export class AdminModule {

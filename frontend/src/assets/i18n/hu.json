@@ -29,9 +29,9 @@
     "required_field": "A mező kitöltése kötelező",
     "invalid_url" : "Nem érvényes URL",
     "type": "Típus",
-    "professional": "Szakmai",
-    "community": "Közösségi",
-    "other": "Egyéb"
+    "Professional": "Szakmai",
+    "Community": "Közösségi",
+    "Other": "Egyéb"
   },
   "user-editor-dialog": {
     "title": "Felhasználó szerkesztése",

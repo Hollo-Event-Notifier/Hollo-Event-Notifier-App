@@ -79,6 +79,9 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   private nextMonthEnd: Date = this.realLifeNextMonthEnd;
   private previousMonthStart: Date = this.realLifePreviousMonthStart;
 
+
+
+
   constructor(
     private readonly state: ApplicationStateService,
     private readonly eventMapperService: EventMapperService,
@@ -86,22 +89,41 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  refreshEvent(eventContent : EventContentArg) : string[] {
+  ngOnInit(): void {
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      weekends: this.hasWeekends,
+      editable: this.isEditable,
+      selectable: this.isSelectable,
+      locale: Language.Hu,
+    }
+    this.languageSubscription = this.state.language
+      .subscribe(language => {
+        this.changeLanguage(language);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
+  }
+
+  private refreshEvent(eventContent : EventContentArg) : string[] {
     var className = []
-    console.log("now")
     const eventType = eventContent.event.extendedProps['type']
     if (eventType === EventDtoTypeEnum.Professional){
-      className.push('change_background_professional')
+      className.push('change-background-professional')
     }
     else if (eventType === EventDtoTypeEnum.Community){
-      className.push('change_background_community')
+      className.push('change-background-community')
     }
     else {
-      className.push('change_background_other')
+      className.push('change-background-other')
     }
     return className
   }
-  customizeEvent(eventContent : EventMountArg) {
+  private customizeEvent(eventContent : EventMountArg) {
     const eventType = eventContent.event.extendedProps['type']
     const eventElement: HTMLElement = eventContent.el;
     const blue: string = '#3f51b5'
@@ -124,21 +146,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
-    this.calendarOptions = {
-      ...this.calendarOptions,
-      weekends: this.hasWeekends,
-      editable: this.isEditable,
-      selectable: this.isSelectable,
-      locale: Language.Hu,
-    }
-    this.languageSubscription = this.state.language
-      .subscribe(language => {
-        this.changeLanguage(language);
-      });
-  }
-
-  handleDateSet(datesSetArgs: DatesSetArg) {
+  private handleDateSet(datesSetArgs: DatesSetArg) {
     let viewStartDate: Date = datesSetArgs.start;
     let viewEndDate: Date = datesSetArgs.end;
 
@@ -157,14 +165,7 @@ export class FullCalendarWrapperComponent implements OnInit, OnDestroy {
       this.previousMonthStart = new Date(this.currentMonthStart.getFullYear(), this.currentMonthStart.getMonth() - 1, 1);
       this.nextMonthEnd = new Date(this.currentMonthEnd.getFullYear(), this.currentMonthEnd.getMonth() + 2, 0);
     }
-
     this.eventsService.getEvents(this.previousMonthStart, this.nextMonthEnd);
-  }
-
-  ngOnDestroy(): void {
-    if (this.languageSubscription) {
-      this.languageSubscription.unsubscribe();
-    }
   }
 
   private handleDateSelect(selectInfo: DateSelectArg): void {

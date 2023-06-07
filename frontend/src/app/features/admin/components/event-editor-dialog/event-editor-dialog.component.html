@@ -34,9 +34,7 @@
       <mat-form-field>
         <mat-label>{{t('type')}}</mat-label>
         <mat-select [formControl]="formGroup.controls.type">
-          <mat-option value="Professional">{{t('professional')}}</mat-option>
-          <mat-option value="Community">{{t('community')}}</mat-option>
-          <mat-option value="Other">{{t('other')}}</mat-option>
+          <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{t(eventType)}}</mat-option>
         </mat-select>
         <mat-error *ngIf="formGroup.controls.type.hasError('required')">{{t('required_field')}}</mat-error>
       </mat-form-field>

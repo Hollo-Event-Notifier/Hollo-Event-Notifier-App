@@ -29,9 +29,9 @@
     "required_field": "This field is required!",
     "invalid_url": "Not a valid URL",
     "type": "Type",
-    "professional": "Professional",
-    "community": "Community",
-    "other": "Other"
+    "Professional": "Professional",
+    "Community": "Community",
+    "Other": "Other"
   },
   "user-editor-dialog": {
     "title": "Edit User",
