@@ -42,7 +42,8 @@ export class UserEditorDialogComponent {
     this.dialogRef.close({
       ...this.formGroup.value,
       userType: this.data.user.userType,
-      id: this.data.user.id
+      id: this.data.user.id,
+      approved: this.data.user.approved
     } as User);
   }
 
