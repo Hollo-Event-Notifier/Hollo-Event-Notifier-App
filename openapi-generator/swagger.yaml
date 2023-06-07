@@ -172,6 +172,26 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Registers a user into the system
+      description: ''
+      operationId: registerUser
+      security: [ ] # no auth for this endpoint
+      requestBody:
+        description: user registration form
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: successful operation
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /events:
     get:
       tags:
@@ -401,6 +421,7 @@ components:
         - username
         - email
         - role
+        - approved
       properties:
         username:
           type: string
@@ -410,9 +431,27 @@ components:
         role:
           type: string
           enum: [ SystemAdmin, EventAdmin ]
+        approved:
+          type: boolean
         id:
           type: string
           format: uuid
+    UserRegistration:
+      title: A users registration data
+      description: This DTO represents a the information needed to register a user
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
     Error:
       type: object
       properties:

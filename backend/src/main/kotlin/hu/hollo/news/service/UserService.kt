@@ -10,8 +10,10 @@ import hu.hollo.news.model.db.User
 import hu.hollo.news.model.dto.CreateUserRequestDto
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.model.dto.UserDto
+import hu.hollo.news.model.dto.UserRegistrationDto
 import hu.hollo.news.repository.UserRepository
 import hu.hollo.news.service.adapter.UserAdapter
+import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.Jwt
@@ -20,6 +22,7 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters.from
 import org.springframework.stereotype.Service
+import java.net.URI
 import java.time.Instant
 import java.time.temporal.ChronoUnit.HOURS
 import java.util.*
@@ -29,11 +32,22 @@ class UserService(
     private val jwtEncoder: JwtEncoder,
     private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
-    private val userAdapter: UserAdapter
+    private val userAdapter: UserAdapter,
+    private val emailService: EmailService
 ) {
+
+    companion object {
+        private val log = LoggerFactory.getLogger(Companion::class.java)
+    }
+
     fun loginUser(credentials: UserCredentialsDto): AuthenticatedUser {
         val foundUser = userRepository.findByUsername(credentials.username)
             ?: throw BadCredentialsException()
+
+        if (!foundUser.approved) {
+            throw BadCredentialsException()
+        }
+
         if (!passwordEncoder.matches(credentials.password, foundUser.password)) {
             throw BadCredentialsException()
         }
@@ -62,7 +76,7 @@ class UserService(
     fun updateUser(userToUpdate: UserDto, token: Jwt): UserDto {
         val userIdFromDto: UUID = userToUpdate.id ?: throw BadRequestException("User id is required!")
         val userFromToken = getUserFromToken(token)
-        if (userFromToken.role != Role.SystemAdmin && userFromToken.id != userIdFromDto)
+        if (userFromToken.role != Role.SystemAdmin && userFromToken.approvementId != userIdFromDto)
             throw ForbiddenException("User has no right to update this entity!")
 
         val dbUserToUpdate: User = userAdapter.adaptDtoToDb(userToUpdate)
@@ -92,21 +106,7 @@ class UserService(
             throw BadRequestException("User id can't be provided!")
         }
 
-        if (!userToCreate.email.matches("""^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$""".toRegex())) {
-            throw BadRequestException("Email format isn't valid!")
-        }
-
-        if (!userToCreate.password.matches("""^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}${'$'}""".toRegex())) {
-            throw BadRequestException("User's password isn't complex enough!")
-        }
-
-        if(userRepository.existsByUsername(userToCreate.username)) {
-            throw BadRequestException("Users with username '${userToCreate.username}' already exists!")
-        }
-
-        if(userRepository.existsByEmail(userToCreate.email)) {
-            throw BadRequestException("Users with email '${userToCreate.email}' already exists!")
-        }
+        validateUserFields(userToCreate.username, userToCreate.email, userToCreate.password)
 
         return userAdapter.adaptDbToDto(
             userRepository.save(
@@ -117,10 +117,38 @@ class UserService(
                         CreateUserRequestDto.Role.systemAdmin -> Role.SystemAdmin
                         CreateUserRequestDto.Role.eventAdmin -> Role.EventAdmin
                     },
-                    password = passwordEncoder.encode(userToCreate.password)
+                    password = passwordEncoder.encode(userToCreate.password),
+                    approved = true
                 )
             )
         )
+    }
+
+    fun registerUser(userToRegister: UserRegistrationDto): URI {
+        validateUserFields(userToRegister.username, userToRegister.email, userToRegister.password)
+
+        val approvementId = userRepository.save(
+            User(
+                username = userToRegister.username,
+                email = userToRegister.email,
+                role = Role.EventAdmin,
+                password = passwordEncoder.encode(userToRegister.password),
+                approved = false
+            )
+        ).approvementId
+
+        emailService.sendRegistrationEmail(userToRegister.email, approvementId)
+
+        return URI.create(approvementId.toString())
+    }
+
+    fun approveUser(approvementId: UUID) {
+        val userToApprove = userRepository.findByApprovementId(approvementId)
+            ?: throw BadRequestException("User approvement with id=$approvementId doesn't exist!")
+
+        userToApprove.approved = true
+
+        userRepository.save(userToApprove)
     }
 
     private fun generateToken(user: User): Jwt {
@@ -137,6 +165,24 @@ class UserService(
         )
     }
 
+    private fun validateUserFields(username: String, email: String, password: String) {
+        if (!email.matches("""^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$""".toRegex())) {
+            throw BadRequestException("Email format isn't valid!")
+        }
+
+        if (!password.matches("""^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}${'$'}""".toRegex())) {
+            throw BadRequestException("User's password isn't complex enough!")
+        }
+
+        if (userRepository.existsByUsername(username)) {
+            throw BadRequestException("Users with username '${username}' already exists!")
+        }
+
+        if (userRepository.existsByEmail(email)) {
+            throw BadRequestException("Users with email '${email}' already exists!")
+        }
+    }
+
     private fun getUserIdFromToken(token: Jwt): UUID =
         UUID.fromString(token.claims[JwtClaimNames.SUB].toString())
 
@@ -145,5 +191,4 @@ class UserService(
         return userRepository.findByIdOrNull(id)
             ?: throw BadRequestException("User not found with id=$id}")
     }
-
 }

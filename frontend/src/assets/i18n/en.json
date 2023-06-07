@@ -9,7 +9,8 @@
     "login_title": "LOGIN",
     "username": "Username",
     "password": "Password",
-    "login_button": "Login"
+    "login_button": "Login",
+    "register_button": "Registration"
   },
   "admin-root": {
     "settings": "Settings",
@@ -53,6 +54,14 @@
     "role": "Role",
     "password": "Password",
     "password_format_error": "Password is not complex enough! Please use upper- and lowercase letters and numbers."
+  },
+  "registration": {
+    "title": "REGISTRATION",
+    "email": "E-mail",
+    "username": "Username",
+    "password": "Password",
+    "register_button": "Send",
+    "back_button": "Back"
   }
 }
 

@@ -20,68 +20,23 @@ class FillDatabase(passwordEncoder: PasswordEncoder) {
             username = "vbkristof",
             password = passwordEncoder.encode("pwd"),
             role = Role.SystemAdmin,
-            email = "kristofvargabalazs@gmail.com"
+            email = "kristofvargabalazs@gmail.com",
+            approved = true
         ),
         User(
             username = "ferenczyandras",
             password = passwordEncoder.encode("pwd"),
             role = Role.EventAdmin,
-            email = "aferenczy.business@gmail.com"
+            email = "aferenczy.business@gmail.com",
+            approved = true
         ),
         User(
-            username = "ferenczyandras2",
+            username = "notApproved",
             password = passwordEncoder.encode("pwd"),
             role = Role.EventAdmin,
-            email = "aferenczy2.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras3",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy3.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras4",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy4.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras5",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy5.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras6",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy6.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras7",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy7.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras8",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy8.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras9",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy9.business@gmail.com"
-        ),
-        User(
-            username = "ferenczyandras10",
-            password = passwordEncoder.encode("pwd"),
-            role = Role.EventAdmin,
-            email = "aferenczy10.business@gmail.com"
-        ),
+            email = "aferenczy.asd@gmail.com",
+            approved = false
+        )
     )
 
     private val events = listOf(

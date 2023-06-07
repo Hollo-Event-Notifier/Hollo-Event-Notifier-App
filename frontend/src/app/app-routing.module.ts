@@ -13,15 +13,19 @@ const routes: Routes = [
     loadComponent: () => import('./features/login/login.component').then(c => c.LoginComponent),
   },
   {
+    path: AppRoutes.Registration,
+    loadChildren: () => import('./features/registration/registration.module').then(m => m.RegistrationModule),
+  },
+  {
     path: AppRoutes.Admin,
     loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
     canActivate: [AuthGuardService],
   },
-  {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '',
+  //   pathMatch: 'full'
+  // },
 ];
 
 @NgModule({

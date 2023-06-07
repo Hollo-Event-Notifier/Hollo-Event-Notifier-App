@@ -25,7 +25,16 @@ class User(
     var role: Role,
 
     @Column(nullable = false)
+    var approved: Boolean,
+
+    @Column(nullable = false)
     var password: String = "",
+
+    @Column(
+        unique = true,
+        nullable = false
+    )
+    val approvementId: UUID = UUID.randomUUID(),
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -39,12 +48,12 @@ class User(
         if (this === other) return true
         if (other == null) return false
         if (javaClass != other.javaClass) return false
-        return id != null && id == (other as User).id
+        return approvementId != null && approvementId == (other as User).approvementId
     }
 
     override fun hashCode() = 13
 
     override fun toString(): String {
-        return "${this.javaClass.simpleName}(username='$username', password='$password', email='$email', role='$role',  id='$id')"
+        return "${this.javaClass.simpleName}(username='$username', password='$password', email='$email', role='$role',  approved='$approved' approvementId='$approvementId' id='$id')"
     }
 }

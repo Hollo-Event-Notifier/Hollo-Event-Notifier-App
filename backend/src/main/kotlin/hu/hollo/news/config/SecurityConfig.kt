@@ -40,8 +40,10 @@ class SecurityConfig {
             it.contentSecurityPolicy("script-src 'self'")
         }
         .authorizeHttpRequests {
-            it.requestMatchers("/users/login").permitAll()
-            it.requestMatchers(HttpMethod.GET,"/events").permitAll()
+            it.requestMatchers(HttpMethod.POST, "/users/login").permitAll()
+            it.requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+            it.requestMatchers(HttpMethod.GET, "/users/approve/{id}").permitAll()
+            it.requestMatchers(HttpMethod.GET, "/events").permitAll()
             it.anyRequest().authenticated()
         }
         .oauth2ResourceServer {

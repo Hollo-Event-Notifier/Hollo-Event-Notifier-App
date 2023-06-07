@@ -1,17 +1,15 @@
-<div class="container" *transloco="let t; read:'login-component'">
+<div class="container" *transloco="let t; read:'registration'">
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        <img mat-card-image src="../../../assets/img/hollo_logo.png" width="100px" height="100px" alt="hollo_logo">
+        <img mat-card-image src="../../../../../assets/img/hollo_logo.png" width="100px" height="100px" alt="hollo_logo">
+        <h1>{{t("title")}}</h1>
       </mat-card-title>
-      <mat-card-subtitle>
-        {{t("administrator_title")}} <br> {{t("login_title")}}
-      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <form
         [formGroup]="formGroup"
-        (keyup.enter)="login()"
+        (keyup.enter)="register()"
       >
         <mat-form-field hideRequiredMarker="true">
           <mat-label>{{t("username")}}</mat-label>
@@ -19,6 +17,14 @@
             matInput
             type="text"
             [formControl]="formGroup.controls.username"
+          >
+        </mat-form-field>
+        <mat-form-field hideRequiredMarker="true">
+          <mat-label>{{t("email")}}</mat-label>
+          <input
+            matInput
+            type="text"
+            [formControl]="formGroup.controls.email"
           >
         </mat-form-field>
         <mat-form-field hideRequiredMarker="true">
@@ -39,25 +45,25 @@
         <button
           class="menu-button"
           mat-raised-button
-          (click)="navigateToRegister()"
+          (click)="navigateToLogin()"
         >
-          {{t("register_button")}}
-          <mat-icon>person_add</mat-icon>
+          {{t("back_button")}}
+          <mat-icon>arrow_back</mat-icon>
         </button>
         <button
           class="menu-button"
           mat-raised-button
+          (click)="register()"
           [disabled]="formGroup.invalid"
-          (click)="login()"
         >
-          {{t("login_button")}}
-          <mat-icon>exit_to_app</mat-icon>
+          {{t("register_button")}}
+          <mat-icon>person_add</mat-icon>
         </button>
       </div>
-      <button
-        class="language-button"
-        mat-raised-button
-        (click)="changeLanguage()"
+      <button class="language-button"
+              mat-raised-button
+              color="primary"
+              (click)="changeLanguage()"
       >
         <mat-label>{{currentLanguage}}</mat-label>
         <mat-icon>language</mat-icon>

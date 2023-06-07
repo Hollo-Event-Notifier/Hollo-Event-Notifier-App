@@ -10,6 +10,7 @@ class UserAdapter(private val roleAdapter: RoleAdapter) : Adapter<UserDto, User>
         username = dto.username,
         email = dto.email,
         role = roleAdapter.adaptDtoToDb(dto.role),
+        approved = dto.approved,
         id = dto.id
     )
 
@@ -17,6 +18,7 @@ class UserAdapter(private val roleAdapter: RoleAdapter) : Adapter<UserDto, User>
         username = db.username,
         email = db.email,
         role = roleAdapter.adaptDbToDto(db.role),
+        approved = db.approved,
         id = db.id
     )
 }

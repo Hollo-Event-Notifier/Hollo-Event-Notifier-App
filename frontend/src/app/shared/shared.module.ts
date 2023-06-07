@@ -5,13 +5,15 @@ import {FullCalendarModule} from '@fullcalendar/angular';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FullCalendarWrapperComponent} from "./components/full-calendar-wrapper/full-calendar-wrapper.component";
 import {TranslocoModule} from "@ngneat/transloco";
+import {RouterLink} from "@angular/router";
 
 const DIRECTIVES = [
   NgStyle,
   NgIf,
   AsyncPipe,
   DatePipe,
-  NgForOf
+  NgForOf,
+  RouterLink
 ];
 
 const MODULES = [

@@ -11,18 +11,12 @@
  */
 
 
-export interface CreateUserRequestDto {
+/**
+ * This DTO represents a the information needed to register a user
+ */
+export interface UserRegistrationDto {
     username: string;
     email: string;
-    role: CreateUserRequestDtoRoleEnum;
-    approved: boolean;
-    id?: string;
     password: string;
 }
-export enum CreateUserRequestDtoRoleEnum {
-    SystemAdmin = 'SystemAdmin',
-    EventAdmin = 'EventAdmin'
-};
-
-
 

@@ -27,7 +27,7 @@ const MATERIAL_MODULES = [
   MatChipsModule,
   MatMenuModule,
   MatSelectModule,
-  MatDividerModule
+  MatDividerModule,
 ]
 
 @NgModule({

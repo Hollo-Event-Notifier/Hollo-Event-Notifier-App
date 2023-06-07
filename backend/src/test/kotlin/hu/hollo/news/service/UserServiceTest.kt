@@ -104,25 +104,25 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = UUID.randomUUID()
+                approvementId = UUID.randomUUID()
             )
             val userList = listOf(user)
             val userDto = UserDto(
                 username = user.username,
                 email = user.email,
                 role = UserDto.Role.systemAdmin,
-                id = user.id
+                id = user.approvementId
             )
             val token = Jwt(
                 "token",
                 Instant.now(),
                 Instant.now().plusSeconds(10),
                 mapOf(Pair("key1", "value1")),
-                mapOf(Pair(JwtClaimNames.SUB, user.id))
+                mapOf(Pair(JwtClaimNames.SUB, user.approvementId))
             )
 
 
-            every { userRepository.findById(user.id!!) } returns Optional.of(user)
+            every { userRepository.findById(user.approvementId!!) } returns Optional.of(user)
             every { userRepository.findAll() } returns userList
             every { userAdapter.adaptDbToDto(user) } returns userDto
 
@@ -133,7 +133,7 @@ class UserServiceTest {
             Assertions.assertEquals(1, result.size)
 
             // Verify
-            verify(exactly = 1) { userRepository.findById(user.id!!) }
+            verify(exactly = 1) { userRepository.findById(user.approvementId!!) }
             verify(exactly = 1) { userRepository.findAll() }
             verify(exactly = 1) { userAdapter.adaptDbToDto(user) }
         }
@@ -145,17 +145,17 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.EventAdmin,
-                id = UUID.randomUUID()
+                approvementId = UUID.randomUUID()
             )
             val token = Jwt(
                 "token",
                 Instant.now(),
                 Instant.now().plusSeconds(10),
                 mapOf(Pair("key1", "value1")),
-                mapOf(Pair(JwtClaimNames.SUB, user.id))
+                mapOf(Pair(JwtClaimNames.SUB, user.approvementId))
             )
 
-            every { userRepository.findById(user.id!!) } returns Optional.of(user)
+            every { userRepository.findById(user.approvementId!!) } returns Optional.of(user)
 
             // Act & Assert
             Assertions.assertThrows(ForbiddenException::class.java) {
@@ -163,7 +163,7 @@ class UserServiceTest {
             }
 
             // Verify
-            verify(exactly = 1) { userRepository.findById(user.id!!) }
+            verify(exactly = 1) { userRepository.findById(user.approvementId!!) }
             verify(exactly = 0) { userRepository.findAll() }
             verify(exactly = 0) { userAdapter.adaptDbToDto(any()) }
         }
@@ -181,7 +181,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.EventAdmin,
-                id = userId
+                approvementId = userId
             )
             val userDto = UserDto(
                 username = dbUser.username,
@@ -193,7 +193,7 @@ class UserServiceTest {
                 Instant.now(),
                 Instant.now().plusSeconds(10),
                 mapOf(Pair("key1", "value1")),
-                mapOf(Pair(JwtClaimNames.SUB, dbUser.id))
+                mapOf(Pair(JwtClaimNames.SUB, dbUser.approvementId))
             )
 
             every { userRepository.findById(userId) } returns Optional.of(dbUser)
@@ -255,13 +255,13 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userId
+                approvementId = userId
             )
             val userToUpdate = UserDto(
                 username = dbUserToUpdate.username,
                 email = dbUserToUpdate.email,
                 role = UserDto.Role.systemAdmin,
-                id = dbUserToUpdate.id
+                id = dbUserToUpdate.approvementId
             )
 
             every { userRepository.findByIdOrNull(userId) } returns dbUserToUpdate
@@ -297,13 +297,13 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userId
+                approvementId = userId
             )
             val userToUpdate = UserDto(
                 username = dbUserToUpdate.username,
                 email = dbUserToUpdate.email,
                 role = UserDto.Role.systemAdmin,
-                id = dbUserToUpdate.id
+                id = dbUserToUpdate.approvementId
             )
 
             every { userRepository.findByIdOrNull(userId) } returns dbUserToUpdate
@@ -340,7 +340,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.EventAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
             val userToUpdate = UserDto(
                 username = "test username 2",
@@ -379,7 +379,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
             val userToUpdate = UserDto(
                 username = "test username 2",
@@ -391,7 +391,7 @@ class UserServiceTest {
                 username = userToUpdate.username,
                 email = userToUpdate.email,
                 role = Role.SystemAdmin,
-                id = userIdFromDto
+                approvementId = userIdFromDto
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -435,7 +435,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -466,7 +466,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdToDelete
+                approvementId = userIdToDelete
             )
 
             every { userRepository.findByIdOrNull(userIdToDelete) } returns dbUser
@@ -498,7 +498,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.EventAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -531,7 +531,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -569,7 +569,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.EventAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -603,7 +603,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -637,7 +637,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -671,7 +671,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -705,7 +705,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken
@@ -745,7 +745,7 @@ class UserServiceTest {
                 username = "test username",
                 email = "test@test.com",
                 role = Role.SystemAdmin,
-                id = userIdFromToken
+                approvementId = userIdFromToken
             )
 
             every { userRepository.findByIdOrNull(userIdFromToken) } returns dbUserFromToken

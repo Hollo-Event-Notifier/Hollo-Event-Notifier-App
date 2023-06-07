@@ -9,6 +9,7 @@ import hu.hollo.news.model.dto.CreateUserRequestDto
 import hu.hollo.news.model.dto.ErrorDto
 import hu.hollo.news.model.dto.UserCredentialsDto
 import hu.hollo.news.model.dto.UserDto
+import hu.hollo.news.model.dto.UserRegistrationDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -84,6 +85,17 @@ interface UsersApi {
             consumes = ["application/json"]
     )
     fun login( @Valid @RequestBody userCredentialsDto: UserCredentialsDto): ResponseEntity<UserDto> {
+        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    }
+
+
+    @RequestMapping(
+            method = [RequestMethod.POST],
+            value = ["/users/register"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun registerUser( @Valid @RequestBody userRegistrationDto: UserRegistrationDto): ResponseEntity<Unit> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 

@@ -19,7 +19,8 @@ export class ApplicationStateService {
       username: '',
       email: '',
       role: UserDtoRoleEnum.EventAdmin,
-      userType: 'current'
+      userType: 'current',
+      approved: false
     }
   });
 
@@ -74,6 +75,7 @@ export class ApplicationStateService {
       this.state.next({...oldState, events: [...oldState.events]});
     } else if (instanceOfUser(newState)) {
       // user is passed to patchstate
+      console.log(newState);
       switch (newState.userType) {
         case 'current': {
           // current user

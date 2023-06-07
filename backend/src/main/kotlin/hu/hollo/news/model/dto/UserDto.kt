@@ -18,6 +18,7 @@ import javax.validation.Valid
  * @param username 
  * @param email 
  * @param role 
+ * @param approved 
  * @param id 
  */
 data class UserDto(
@@ -28,6 +29,8 @@ data class UserDto(
     @get:JsonProperty("email", required = true) val email: kotlin.String,
 
     @get:JsonProperty("role", required = true) val role: UserDto.Role,
+
+    @get:JsonProperty("approved", required = true) val approved: kotlin.Boolean,
 
     @get:JsonProperty("id") val id: java.util.UUID? = null
 ) {

@@ -1,5 +1,6 @@
 export enum AppRoutes {
   EventDisplay = '',
   Login = 'login',
-  Admin = 'admin'
+  Admin = 'admin',
+  Registration='registration'
 }

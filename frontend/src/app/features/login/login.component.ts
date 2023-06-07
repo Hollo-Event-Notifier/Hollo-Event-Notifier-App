@@ -4,6 +4,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginForm} from "./models/login-form";
 import {TranslationService} from "../../core/services/translation.service";
 import {UsersService} from "../../core/services/users.service";
+import {Router, RouterLink} from "@angular/router";
+import {AppRoutes} from "../../app-routes";
 
 @Component({
   selector: 'app-login',
@@ -24,11 +26,12 @@ export class LoginComponent {
       nonNullable: true
     })
   });
-  currentLanguage : string;
+  currentLanguage: string;
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly translationService: TranslationService
+    private readonly translationService: TranslationService,
+    private readonly router: Router
   ) {
     this.currentLanguage = this.translationService.currentLanguage;
   }
@@ -46,5 +49,11 @@ export class LoginComponent {
     this.usersService.loginUser({
       ...this.formGroup.getRawValue()
     });
+  }
+
+  protected readonly AppRoutes = AppRoutes;
+
+  navigateToRegister() {
+    this.router.navigate([AppRoutes.Registration])
   }
 }

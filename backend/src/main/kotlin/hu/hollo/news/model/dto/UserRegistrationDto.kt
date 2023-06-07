@@ -2,7 +2,6 @@ package hu.hollo.news.model.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonValue
 import javax.validation.constraints.DecimalMax
 import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.Email
@@ -14,39 +13,20 @@ import javax.validation.constraints.Size
 import javax.validation.Valid
 
 /**
- * 
+ * This DTO represents a the information needed to register a user
  * @param username 
  * @param email 
- * @param role 
- * @param approved 
  * @param password 
- * @param id 
  */
-data class CreateUserRequestDto(
+data class UserRegistrationDto(
 
     @get:JsonProperty("username", required = true) val username: kotlin.String,
 
     @get:Email
     @get:JsonProperty("email", required = true) val email: kotlin.String,
 
-    @get:JsonProperty("role", required = true) val role: CreateUserRequestDto.Role,
-
-    @get:JsonProperty("approved", required = true) val approved: kotlin.Boolean,
-
-    @get:JsonProperty("password", required = true) val password: kotlin.String,
-
-    @get:JsonProperty("id") val id: java.util.UUID? = null
+    @get:JsonProperty("password", required = true) val password: kotlin.String
 ) {
-
-    /**
-    * 
-    * Values: systemAdmin,eventAdmin
-    */
-    enum class Role(val value: kotlin.String) {
-
-        @JsonProperty("SystemAdmin") systemAdmin("SystemAdmin"),
-        @JsonProperty("EventAdmin") eventAdmin("EventAdmin")
-    }
 
 }
 

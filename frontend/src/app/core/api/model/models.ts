@@ -4,3 +4,4 @@ export * from './error-dto';
 export * from './event-dto';
 export * from './user-credentials-dto';
 export * from './user-dto';
+export * from './user-registration-dto';

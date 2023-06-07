@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CreateUserRequestDto, UserCredentialsDto, UserDto, UsersApiService} from "../api";
+import {CreateUserRequestDto, UserCredentialsDto, UserDto, UserRegistrationDto, UsersApiService} from "../api";
 import {ApplicationStateService} from "./application-state.service";
 import {SnackbarService} from "./snackbar.service";
 import {take} from "rxjs";
